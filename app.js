@@ -17,6 +17,21 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const request = require('request')
 
+// a dd login and register function
+const express = require('express')
+const mongoose = require('mongoose')
+const User = require('./model/user')
+const bodyParser = require('body-parser')
+const connectDB = require('./db')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = 'asdasdsandsadnsandsadsa'
+
+app.use(bodyParser.json())
+
+//connect to mongodb
+connectDB();
+
 // Load our custom classes
 const CustomerStore = require('./customerStore.js');
 const MessageRouter = require('./messageRouter.js');
@@ -32,6 +47,7 @@ if(!keyPath) {
 
 // Load and instantiate the Dialogflow client library
 const { SessionsClient } = require('dialogflow');
+const { type } = require('os');
 const dialogflowClient = new SessionsClient({
   keyFilename: keyPath
 })
@@ -56,17 +72,100 @@ const messageRouter = new MessageRouter({
   operatorRoom: io.of('/operator')
 });
 
-// Serve static html files for the customer and operator clients
-app.get('/customer', (req, res) => {
-  res.sendFile(`${__dirname}/static/customer.html`);
-});
+app.get('/agent_selection', (req, res) => {
+  res.sendFile(`${__dirname}/static/agent_selection.html`);
+})
 
-app.get('/operator', (req, res) => {
-  res.sendFile(`${__dirname}/static/operator.html`);
-});
+app.get('/home',(req, res) => {
+  res.sendFile(`${__dirname}/static/home.html`);
+})
+
+app.get('/getAdmin', (req,res) => {
+  res.sendFile(`${__dirname}/static/operator.html`)
+})
+
+app.get('/login', (req,res) => {
+  res.sendFile(`${__dirname}/static/login.html`)
+})
+
+app.get('/registerAdmin', (req, res) =>{
+  res.sendFile(`${__dirname}/static/register.html`)
+})
+
+app.get('/getCustomer', (req,res) => {
+  res.sendFile(`${__dirname}/static/customer.html`)
+})
+
+app.post('/api/login', async (req, res) => {
+  const {username, password } = req.body
+  const user = await User.findOne({username}).lean()
+
+  if(!user) {
+    return res.json({status:'error', error:'Invalid Username/ Password!'})
+  }
+
+  if(await bcrypt.compare(password, user.password)) {
+
+    const token = jwt.sign(
+      {
+        id: user._id, 
+        username: user.username
+      }, JWT_SECRET)
+      return res.json({status:'ok', data: token})
+    }
+  res.json({status:'error', error:'Invalid Username/ Password!'})
+})
+
+app.post('/api/register' ,async (req, res) => {
+  console.log(req.body)
+  const { username, password: plainTextPassword } = req.body
+
+  if(!username || typeof username !== 'string') {
+    return res.json({status:'error', error:'Invalid Username!'})
+  }
+
+  if(!plainTextPassword || typeof plainTextPassword !== 'string') {
+    return res.json({status:'error', error:'Invalid Password!'})
+  }
+
+  const password = await bcrypt.hash(plainTextPassword, 10)
+
+  try {
+    const response = await User.create({
+      username,
+      password
+    })
+    console.log('User creaetd successfully: ',response)
+  } catch(error){
+
+    //duplicate username handled
+    if(error.code === 11000) {
+      return res.json({status:'error', error:'Username has already been registered!'})
+    }
+    console.log(error)
+    return res.json({status:error})
+  }
+  res.json({status:'ok'})
+})
+
+// app.post()
+
+// Serve static html files for the customer and operator clients
+// app.get('/customer', (req, res) => {
+//   res.sendFile(`${__dirname}/static/customer.html`);
+// });
+
+// app.get('/operator', (req, res) => {
+//   res.sendFile(`${__dirname}/static/operator.html`);
+// });
 
 // Begin responding to websocket and http requests
-messageRouter.handleConnections();
-http.listen(3000, () => {
-  console.log('Listening on *:3000');
-});
+
+
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+  messageRouter.handleConnections();
+  http.listen(3000, () => {
+    console.log('Listening on *:3000');
+  });
+})
