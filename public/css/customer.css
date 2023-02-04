@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.main {
+    border: 8px solid #dddddd;
+    border-radius: 24px; 
+    overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    width: 400px;
+    margin:auto
+  }
+
+#main-container{
+  display: none;
+}
+
+.side-selection {
+  float: left;
+  background:white;
+  border: 8px solid;
+  width: 400px;
+  height: 100%;
+}
+
+.side-container {
+
+}
+
+h1 { text-align: center; padding: 20px; }
+
+
+/* body {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f6f6;
+  width: 400px;
+  height: 600px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.message-left,
+.message-right {
+  list-style: none;
+  padding: 8px 12px;
+  margin: 12px;
+  max-width: 250px;
+  font-size: 18px;
+  word-wrap: break-word;
+}
+
+.message-left {
+  border-radius: 20px 20px 20px 0px;
+  align-self: flex-start;
+  background-color: #fff;
+  box-shadow: -2px 2px 4px #dcdcdc;
+}
+
+.message-right {
+  border-radius: 20px 20px 0px 20px;
+  align-self: flex-end;
+  background-color: #2d2d2d;
+  box-shadow: 2px 2px 4px #dcdcdc;
+  color: #f6f6f6;
+}
+
+.message-left > p > span,
+.message-right > p > span {
+  display: block;
+  font-style: italic;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.message-form {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+  }
+  
+
+.message-input {
+    flex-grow: 1;
+    height: 48px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    background-color: #fff;
+} 
+
+.v-divider {
+    height: 48px;
+    width: 2px;
+    background-color: #f6f6f6;
+}
+
+.send-button {
+    height: 48px;
+    font-size: 16px;
+    border: none;
+    padding: 0px 20px;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
+}
