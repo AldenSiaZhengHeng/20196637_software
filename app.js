@@ -38,7 +38,7 @@ app.use(session({
 
 
 // Import the file to store the selected agent type for chatbot system
-const AgentStore = new agentStore();
+// const AgentStore = new agentStore();
 
 //connect to mongodb
 connectDB();
@@ -227,11 +227,11 @@ app.get('/logout', (req,res)=> {
   })
 })
 
-app.post('/getTable' , (req, res) => {
-  console.log(req.body.agent);
-  AgentStore.setAgentType(req.body.agent);
-  res.redirect('/home')
-})
+// app.post('/getTable' , (req, res) => {
+//   console.log(req.body.agent);
+//   AgentStore.setAgentType(req.body.agent);
+//   res.redirect('/home')
+// })
 
 // Serve static html files for the customer and operator clients
 // app.get('/customer', (req, res) => {
