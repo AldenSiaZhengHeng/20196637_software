@@ -1,23 +1,12 @@
-// Copyright 2017, Google, Inc.
-// Licensed under the Apache License, Version 2.0 (the 'License');
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an 'AS IS' BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-// Load third party dependencies
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const request = require('request')
 
-// a dd login and register function
+// add session for login admin
+const session = require("express-session");
+
+// add login and register function
 const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./model/user')
@@ -28,6 +17,29 @@ const jwt = require('jsonwebtoken')
 const JWT_SECRET = 'asdasdsandsadnsandsadsa'
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("./public"));
+app.engine('html', require('ejs').renderFile)
+
+//create session
+const oneDay = 1000*60*60*24;
+app.use(session({
+  name: 'sid',
+  secret:"snfjanjansdosandnsaodnsajnasdjnjas",
+  resave: false,
+  cookie: {
+    maxAge: oneDay,
+    // samesite: true,
+    // secure: true
+  },
+  saveUninitialized: false,
+
+}))
+
+
+// Import the file to store the selected agent type for chatbot system
+const agentStore = require('./agentStore')
+const AgentStore = new agentStore();
 
 //connect to mongodb
 connectDB();
@@ -48,6 +60,8 @@ if(!keyPath) {
 // Load and instantiate the Dialogflow client library
 const { SessionsClient } = require('dialogflow');
 const { type } = require('os');
+const exp = require('constants');
+const e = require('express');
 const dialogflowClient = new SessionsClient({
   keyFilename: keyPath
 })
@@ -80,12 +94,38 @@ app.get('/home',(req, res) => {
   res.sendFile(`${__dirname}/static/home.html`);
 })
 
+app.get('/chatbot-selected', (req,res) =>{
+  res.sendFile(`${__dirname}/static/chatbot-selected.html`);
+})
+
+app.get('/dashboard', (req,res)=>{
+  console.log(req.session.username)
+  if(req.session.username){
+    res.render(`${__dirname}/static/admin_dashboard.html`,{username: req.session.user, session: req.session})
+  }
+  else{
+    res.sendFile(`${__dirname}/static/login.html`)
+  }
+})
+
 app.get('/getAdmin', (req,res) => {
-  res.sendFile(`${__dirname}/static/operator.html`)
+  console.log("asdasdasdasd:" + req.session)
+  if(req.session.username){
+    res.render(`${__dirname}/static/operator.html`,{username: req.session.user, session: req.session})
+  }
+  else{
+    res.sendFile(`${__dirname}/static/login.html`)
+  }
 })
 
 app.get('/login', (req,res) => {
-  res.sendFile(`${__dirname}/static/login.html`)
+  if(req.session.username){
+    res.render(`${__dirname}/static/admin_dashboard.html`,{username: req.session.user, session: req.session})
+  }
+  else{
+    res.sendFile(`${__dirname}/static/login.html`)
+  }
+  // res.sendFile(`${__dirname}/static/login.html`)
 })
 
 app.get('/registerAdmin', (req, res) =>{
@@ -96,8 +136,27 @@ app.get('/getCustomer', (req,res) => {
   res.sendFile(`${__dirname}/static/customer.html`)
 })
 
+app.get('/success', function (req, res) {
+  res.sendFile(`${__dirname}/static/operator.html`)
+});
+
+// add admin session testing
+app.use('/api/login', function(req, res, next) {
+  console.log('your mom is gay')
+  next()
+})
+
 app.post('/api/login', async (req, res) => {
-  const {username, password } = req.body
+  // const {username, password } = req.body.username
+  console.log(req.body)
+  const username = req.body.username
+  const password = req.body.password
+  // sess = req.session
+  // console.log(sess)
+  // req.session.username = req.body.username
+  // req.session.password = req.body.password
+  console.log(username)
+  console.log(password)
   const user = await User.findOne({username}).lean()
 
   if(!user) {
@@ -105,15 +164,24 @@ app.post('/api/login', async (req, res) => {
   }
 
   if(await bcrypt.compare(password, user.password)) {
-
-    const token = jwt.sign(
-      {
-        id: user._id, 
-        username: user.username
-      }, JWT_SECRET)
-      return res.json({status:'ok', data: token})
+    req.session.regenerate(function(err) {
+      if(err){
+        return res.json({status:'error', error:'Failed to Login'})
+      }
+      req.session.username = username
+      req.session.password = password
+      res.redirect('/dashboard')
+    })
+    // const token = jwt.sign(
+    //   {
+    //     id: user._id, 
+    //     username: user.username
+    //   }, JWT_SECRET)
+      // return res.json({status:'ok', data: token})
+      // res.redirect('/dashboard')
+      // res.redirect('/getAdmin')
     }
-  res.json({status:'error', error:'Invalid Username/ Password!'})
+  // res.json({status:'error', error:'Invalid Username/ Password!'})
 })
 
 app.post('/api/register' ,async (req, res) => {
@@ -148,7 +216,23 @@ app.post('/api/register' ,async (req, res) => {
   res.json({status:'ok'})
 })
 
-// app.post()
+app.get('/logout', (req,res)=> {
+  sess = req.session;
+  sess.destroy(function(err) {
+    if(err) {
+      res.send("Unable to logout")
+    }
+    else {
+      res.redirect('/home')
+    }
+  })
+})
+
+app.post('/getTable' , (req, res) => {
+  console.log(req.body.agent);
+  AgentStore.setAgentType(req.body.agent);
+  res.redirect('/home')
+})
 
 // Serve static html files for the customer and operator clients
 // app.get('/customer', (req, res) => {
