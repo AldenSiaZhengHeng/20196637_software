@@ -15,6 +15,10 @@ const AppConstants = require('./appConstants.js');
 const CustomerStore = require('./customerStore.js');
 const CustomerConnectionHandler = require('./customerConnectionHandler.js');
 const OperatorConnectionHandler = require('./operatorConnectionHandler.js');
+const agentStore = require('./agentStore.js');
+const e = require('express');
+
+
 
 // Routes messages between connected customers, operators and Dialogflow agent
 class MessageRouter {
@@ -40,6 +44,10 @@ class MessageRouter {
     this.operatorRoom.on('connection', this._handleOperatorConnection.bind(this));
   }
 
+  give(customerID){
+    this.operatorRoom.emit('customer connected',customerID)
+  }
+
   // Creates an object that stores a customer connection and has
   // the ability to delete itself when the customer disconnects
   _handleCustomerConnection (socket) {
@@ -54,19 +62,42 @@ class MessageRouter {
     const onDisconnect = () => {
       delete this.customerConnections[socket.id];
     };
-    this.operatorConnections[socket.id] = new OperatorConnectionHandler(socket, this, onDisconnect);
+    this.operatorConnections[socket.id] = new OperatorConnectionHandler(socket, this, onDisconnect, this.customerStore);
   }
 
   // Notifies all operators of a customer's connection changing
   _sendConnectionStatusToOperator (customerId, disconnected) {
     console.log('Sending customer id to any operators');
-    const status = disconnected
+
+    // retrieve username of the particular socket id
+    console.log('customer username here')
+    console.log(customerId)
+    var obj = this.customerStore.retrieve(customerId)
+    console.log(obj)
+    console.log(typeof obj)
+    console.log('customer username here')
+    if(obj['username'] !== null){
+      console.log(obj['username'])
+    }
+    // }
+    // var username = obj.username
+
+    if(obj['username'] !== null) {
+      const status = disconnected
       ? AppConstants.EVENT_CUSTOMER_DISCONNECTED
       : AppConstants.EVENT_CUSTOMER_CONNECTED;
-    this.operatorRoom.emit(status, customerId);
-    // We're using Socket.io for our chat, which provides a synchronous API. However, in case
-    // you want to swich it out for an async call, this method returns a promise.
-    return Promise.resolve();
+      this.operatorRoom.emit(status, customerId);
+      // console.log("hey I'm micket mouse")
+      // console.log(this.customerStore.getAllCustomer())
+      // console.log("hey I'm micket mouse")
+      // We're using Socket.io for our chat, which provides a synchronous API. However, in case
+      // you want to swich it out for an async call, this method returns a promise.
+      return Promise.resolve();
+    }
+    else{
+      return Promise.resolve();
+    }
+
   }
 
   // Given details of a customer and their utterance, decide what to do.
@@ -74,17 +105,21 @@ class MessageRouter {
     // If this is the first time we've seen this customer,
     // we should trigger the default welcome intent.
     if (customer.isNew) {
+      console.log(customer)
       return this._sendEventToAgent(customer);
     }
 
     // Since all customer messages should show up in the operator chat,
     // we now send this utterance to all operators
+    console.log("checking is sending to operator or not")
+    console.log(utterance)
+    console.log(customer)
     return this._sendUtteranceToOperator(utterance, customer)
-      .then(() => {
-        this._sendUtteranceToRasa(utterance, customer, function(response){
-          console.log(response)
-        }); 
-      })
+      // .then(() => {
+      //   this._sendUtteranceToRasa(utterance, customer, function(response){
+      //     console.log(response)
+      //   }); 
+      // })
       .then(() => {
         // So all of our logs end up in Dialogflow (for use in training and history),
         // we'll always send the utterance to the agent - even if the customer is in operator mode.
@@ -164,6 +199,7 @@ class MessageRouter {
   // Sends an utterance to Dialogflow and returns a promise with API response.
   _sendUtteranceToAgent (utterance, customer) {
     console.log('Sending utterance to agent');
+    console.log(customer.id)
     return this.client.detectIntent({
       // Use the customer ID as Dialogflow's session ID
       session: this.client.sessionPath(this.projectId, customer.id),

@@ -22,14 +22,20 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
     this.init(socket.id);
     this.attachHandlers();
   }
-
+  
+  // the store customer id function might be able to put here
+  // this part might need to changing to send welcome event to customer then send connection status to operator
   init (customerId) {
     console.log('A customer joined: ', this.socket.id);
-    this.router._sendConnectionStatusToOperator(customerId)
+    // this.router._sendConnectionStatusToOperator(customerId)
     // Determine if this is a new or known customer
-      .then(() => this.router.customerStore.getOrCreateCustomer(customerId))
+      // .then(() => this.router.customerStore.getOrCreateCustomer(customerId))
+    this.router.customerStore.getOrCreateCustomer(customerId)
       .then(customer => {
-        console.log('A customer connected: ', customer);
+        // console.log('A customer connected: ', customer);
+        // console.log("hey I'm micket mouse")
+        // console.log(this.router.customerStore.getAllCustomer())
+        // console.log("hey I'm micket mouse") 
         // If new, begin the Dialogflow conversation
         if (customer.isNew) {
           return this.router._sendEventToAgent(customer)
@@ -49,6 +55,14 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
   }
 
   attachHandlers () {
+    // this.socket.on(AppConstants.EVENT_OPERATOR_MESSAGE, (message) => {
+    this.socket.on('customer-details', (data) =>{
+      // this.router.customerStore.setCustomer(this.socket.id, data)
+      this.router.customerStore.pushToExisitingStore(this.socket.id, data);
+      this.router._sendConnectionStatusToOperator(this.socket.id)
+      console.log(this.router.customerStore.retrieve(this.socket.id))
+    });
+
     this.socket.on(AppConstants.EVENT_CUSTOMER_MESSAGE, (message) => {
       console.log('Received customer message: ', message);
       this._gotCustomerInput(message);
@@ -56,7 +70,7 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
     this.socket.on(AppConstants.EVENT_DISCONNECT, () => {
       console.log('Customer disconnected');
       this.router._sendConnectionStatusToOperator(this.socket.id, true);
-      this.onDisconnect();
+      this.onDisconnect() ;
     });
   }
 
@@ -67,6 +81,10 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
       .getOrCreateCustomer(this.socket.id)
       .then(customer => {
         // Tell the router to perform any next steps
+        console.log("bankai")
+        console.log(typeof customer);
+        console.log(customer.id)
+        console.log(customer)
         return this.router._routeCustomer(utterance, customer, this.socket.id);
       })
       .then(response => {
