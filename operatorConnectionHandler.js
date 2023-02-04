@@ -25,14 +25,59 @@ class CustomerModeError extends Error {
 
 // Handles the connection to an individual operator
 class OperatorConnectionHandler extends ChatConnectionHandler {
-  constructor (socket, messageRouter, onDisconnect) {
+  constructor (socket, messageRouter, onDisconnect, customerStore) {
     super(socket, messageRouter, onDisconnect);
+    this.customerStore = customerStore;
+    this.messageRouter = messageRouter;
     this.init(socket.id);
     this.attachHandlers();
+    this.retrieveExisitingID();
+    // this.deleteDisconnectID();
   }
 
   init (operatorId) {
-    console.log('An operator joined: ', this.socket.id);
+    console.log('An operator joined: ', operatorId);
+  }
+
+  deleteDisconnectID(){
+    this.socket.on('delete_disconnect_id', (customerId) => {
+      console.log("delete ID: " + customerId )
+      this.customerStore.deleteCustomer(customerId);
+    })
+  }
+
+
+  retrieveExisitingID(){
+    this.socket.on('retrieve_existing_id', (message) => {
+      var customerIDDetails = this.customerStore.getAllCustomer()
+      var string = JSON.stringify(customerIDDetails);
+      var objectiveValue = JSON.parse(string);
+      console.log(typeof objectiveValue);
+      var count = Object.keys(objectiveValue).length;
+      for(var attributename in customerIDDetails){
+        console.log("retrieve exisiting id")
+        var check = JSON.parse(objectiveValue[attributename])
+        this.messageRouter.give(check['id'])
+      }      
+    // for(let i=0; i<count; i++){
+    //     console.log(objectiveValue[i])
+    //     if (JSON.parse(objectiveValue[i]) != null){
+    //       var test = JSON.parse(objectiveValue[i])
+    //     }
+    //     else {
+    //      continue;
+    //     }
+    //     console.log(typeof test);
+    //     console.log(test['id']);
+    //     this.messageRouter.give(test['id'])
+    //     for(var key in objectiveValue[i]){
+    //       console.log(objectiveValue["i"][0]["id"]);
+    //     }
+    //     var a = objectiveValue[i].id
+    //     console.log(objectiveValue.[0].id)
+    //   }
+      console.log(message)
+    })
   }
 
   attachHandlers () {
@@ -41,6 +86,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
       this._gotOperatorInput(message);
       
     });
+    
     this.socket.on(AppConstants.EVENT_DISCONNECT, () => {
       console.log('operator disconnected');
       this.onDisconnect();
@@ -81,6 +127,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
         }
         // This indicate the operator only able to answer user when handover occur
         else if (customer.mode === CustomerStore.MODE_AGENT) {
+          console.log("activate is fake here")
           return Promise.reject(
             new CustomerModeError('Cannot respond to customer until they have been escalated.')
           );
