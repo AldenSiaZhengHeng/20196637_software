@@ -3,16 +3,19 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/register.css">
 		<title>Registration</title>
 	</head>
 	<body>
+		<div class="form">
 		<h1>Registration</h1>
-		<form id="reg-form">
-			<input type="text" autocomplete="off" id="username" placeholder="Username" />
-			<input type="password" autocomplete="off" id="password" placeholder="Password" />
-			<input type="submit" value="Submit Form" />
-		</form>
-
+		<hr />
+			<form id="reg-form">
+				<input type="text" autocomplete="off" id="username" placeholder="Username" />
+				<input type="password" autocomplete="off" id="password" placeholder="Password" />
+				<input type="submit" value="Submit Form" />
+			</form>
+		</div>
 		<script>
 			const form = document.getElementById('reg-form')
 			form.addEventListener('submit', registerUser)

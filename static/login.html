@@ -4,16 +4,25 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Login</title>
+        <link rel="stylesheet" type="text/css" href="css/login.css">
 	</head>
 	<body>
-		<h1>Login</h1>
-		<form id="login">
-			<input type="text" autocomplete="off" id="username" placeholder="Username" />
-			<input type="password" autocomplete="off" id="password" placeholder="Password" />
-			<input type="submit" value="Submit Form" />
-		</form>
-
-		<script>
+		<div class="form">
+			<p>Login Page</p>
+			<hr>
+			<form action="/api/login" id="login" method="POST">
+				<label class="label" for="Username"><b>Username</b></label>
+				<br />
+				<input type="text" autocomplete="off" id="username" name="username" placeholder="Enter Username" />
+				<br />
+				<label for="Password"><b>Password</b></label>
+				<br />
+				<input type="password" autocomplete="off" id="password" name="password" placeholder="Enter Password" />
+				<br />
+				<input type="submit" value="Submit Form" />
+			</form>
+		</div>
+		<!-- <script>
 			const form = document.getElementById('login')
 			form.addEventListener('submit', login)
 
@@ -38,11 +47,11 @@
 					console.log('Got the token: ', result.data)
 					localStorage.setItem('token', result.data)
 					alert('Success')
-                    window.location.href = 'http://localhost:3000/home'
+                    window.location.href = 'http://localhost:3000/getAdmin?admin='
 				} else {
 					alert(result.error)
 				}
 			}
-		</script>
+		</script> -->
 	</body>
 </html>

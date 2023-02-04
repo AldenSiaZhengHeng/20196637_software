@@ -1,24 +1,17 @@
 <!doctype html>
-<!--
-Copyright 2017, Google, Inc.
-Licensed under the Apache License, Version 2.0 (the 'License');
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an 'AS IS' BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
 <html>
   <head>
     <title>Operator Interface</title>
+    <link rel="stylesheet" type="text/css" href="css/operator.css">
+    <meta charset="UTF-8">
+    <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
+    <link rel="stylesheet" href="css/admin_dashboard.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
+       * { margin: 0; padding: 0; box-sizing: border-box; }
+      /* body { font: 13px Helvetica, Arial; } */
       h1 { text-align: center; padding: 20px; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
@@ -26,32 +19,106 @@ limitations under the License.
       #chatTabs { list-style-type: none; margin: 0; padding: 0; }
       #chatTabs li.chat-tab { padding: 5px; float: left; border: 1px solid black; border-radius: 10px 10px 0 0; cursor: default; }
       #chatTabs li.chat-tab.selected { font-weight: bold; color: white; background-color: black; }
-      #chatWindows { clear: left; border-top: 1px solid black; }
-      ul.chat-window { list-style-type: none; margin: 0; padding: 0; }
-      ul.chat-window li { padding: 5px 10px; }
-      ul.chat-window li.operator-message { color: blue; }
+      /* #chatWindows { border-top: 1px solid black; width: 100%;} */
+      /* ul.chat-window { list-style-type: none; margin: 0; padding: 0; } */
+      /* ul.chat-window li { padding: 5px 10px; } */
+      /* ul.chat-window li.operator-message { color: blue;} */
       ul.chat-window li.operator-error { color: red; }
-      ul.chat-window li.operator-message::before { content: "> " }
-      ul.chat-window li.customer-message { }
+      /* ul.chat-window li.operator-message::before { content: "> "; } */
+      /* ul.chat-window li.customer-message {align-self: flex-start; } */
       ul.chat-window li.agent-response { font-style: italic; }
-      ul.chat-window li:nth-child(odd) { background: #eee; }
+      /* ul.chat-window li:nth-child(odd) { background: #eee; } */
     </style>
   </head>
   <body>
     <h1>Operator</h1>
-    <ul id="chatTabs">
-    </ul>
-    <div id="chatWindows">
+    <div class="sidebar">
+      <div class="logo-details">
+          <div class="logo_name">Customer Admin Panel</div>
+          <i class='bx bx-menu' id="btn" ></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="/getAdmin">
+            <i class='bx bx-chat'></i>
+            <span class="links_name">Chat</span>
+          </a>
+           <span class="tooltip">Chat</span>
+        </li>
+        
+       <li class="profile">
+           <div class="profile-details">
+             <!--<img src="profile.jpg" alt="profileImg">-->
+             <div class="name_job">
+               <div class="name"> <%= session.username %></div>
+               <!-- <div class="job">Web designer</div> -->
+             </div>
+             <a href="/logout">
+              <i class='bx bx-log-out' id="log_out" ></i>
+            </a>
+           </div>
+       </li>
+      </ul>
     </div>
-    <form>
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <section class="section">
+    <div class="main">
+      <div class="customer-Tabs">
+        <h1>Customer Tabs</h1>
+        <ul id="chatTabs">
+        </ul>
+      </div>
+
+      <div class="chatWindows" id="chatWindows">
+        <h1>Chat Window</h1>
+
+      </div>
+
+      <div class="notification-container">
+        <h1>Notification - Undone</h1>
+      </div>
+
+      <form class="message-form">
+        <input id="m" autocomplete="off" />
+        <div class="v-divider"></div>
+        <button>Send</button>
+      </form>
+    </div>
+    </section>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/operator.js"></script>
     <script>
-      $(function () {
+      let sidebar = document.querySelector(".sidebar");
+      let closeBtn = document.querySelector("#btn");
+      let searchBtn = document.querySelector(".bx-search");
+    
+      closeBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("open");
+        menuBtnChange();//calling the function(optional)
+      });
+    
+      searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+        sidebar.classList.toggle("open");
+        menuBtnChange(); //calling the function(optional)
+      });
+    
+      // following are the code to change sidebar button(optional)
+      function menuBtnChange() {
+       if(sidebar.classList.contains("open")){
+         closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+       }else {
+         closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+       }
+      }
+      </script>
+    <!-- <script>
+      // function codeAddress() {
+      //   var socket = io('/operator');
+      //   socket.emit('ni ma shi le', 'makabaka')
+      // }
+      $(function codeAddress() {
         var socket = io('/operator');
-
+        socket.emit('retrieve_existing_id', 'makabaka')
         // UI elements for all the customers we currently aware of
         var connectedCustomers = {};
         // Pointer to the currently open tab
@@ -61,7 +128,6 @@ limitations under the License.
         var messageObject = function(customerId, utterance) {
           return { customerId: customerId, utterance: utterance };
         };
-
         // When the form is submitted, send an operator message to the server, referencing
         // the current tab's customer
         $('form').submit(function(){
@@ -96,6 +162,7 @@ limitations under the License.
         // In your implementation, you could replace this with the customer's name
         // after fetching it from your datastore.
         var createNewCustomerTab = function(customerId) {
+          console.log('ethics')
           var newChatElements = {};
           newChatElements.customerId = customerId;
           // A tab displaying the customer id
@@ -195,7 +262,8 @@ limitations under the License.
         socket.on('system error', notifySystemError);
 
       });
-    </script>
+      window.onload = codeAddress;
+    </script> -->
   </body>
 </html>
 
