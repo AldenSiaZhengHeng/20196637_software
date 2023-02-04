@@ -15,7 +15,6 @@ const AppConstants = require('./appConstants.js');
 const CustomerStore = require('./customerStore.js');
 const CustomerConnectionHandler = require('./customerConnectionHandler.js');
 const OperatorConnectionHandler = require('./operatorConnectionHandler.js');
-const agentStore = require('./agentStore.js');
 const e = require('express');
 
 

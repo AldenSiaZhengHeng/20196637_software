@@ -38,7 +38,6 @@ app.use(session({
 
 
 // Import the file to store the selected agent type for chatbot system
-const agentStore = require('./agentStore')
 const AgentStore = new agentStore();
 
 //connect to mongodb
