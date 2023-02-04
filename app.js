@@ -101,7 +101,8 @@ app.get('/chatbot-selected', (req,res) =>{
 app.get('/dashboard', (req,res)=>{
   console.log(req.session.username)
   if(req.session.username){
-    res.render(`${__dirname}/static/admin_dashboard.html`,{username: req.session.user, session: req.session})
+    res.render(`../static/admin_dashboard.html`,{username: req.session.user, session: req.session})
+    // res.render(`${__dirname}/static/admin_dashboard.html`,{username: req.session.user, session: req.session})
   }
   else{
     res.sendFile(`${__dirname}/static/login.html`)
@@ -111,7 +112,8 @@ app.get('/dashboard', (req,res)=>{
 app.get('/getAdmin', (req,res) => {
   console.log("asdasdasdasd:" + req.session)
   if(req.session.username){
-    res.render(`${__dirname}/static/operator.html`,{username: req.session.user, session: req.session})
+    res.render(`../static/operator.html`,{username: req.session.user, session: req.session})
+    // res.render(`${__dirname}/static/operator.html`,{username: req.session.user, session: req.session})
   }
   else{
     res.sendFile(`${__dirname}/static/login.html`)
