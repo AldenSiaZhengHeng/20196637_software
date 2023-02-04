@@ -90,7 +90,8 @@ app.get('/agent_selection', (req, res) => {
 })
 
 app.get('/home',(req, res) => {
-  res.sendFile(`${__dirname}/static/home.html`);
+  res.render("../static/home.html")
+  // res.sendFile(`${__dirname}/static/home.html`);
 })
 
 app.get('/chatbot-selected', (req,res) =>{
