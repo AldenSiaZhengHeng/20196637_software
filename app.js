@@ -1,10 +1,14 @@
 const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+// const http = require('http').Server(app);
+const http = require('http').createServer(app)
+const io = require('socket.io')(http, {wsEngine: 'ws'});
 const request = require('request')
 
 // add session for login admin
 const session = require("express-session");
+
+const auth = require("./auth");
+
 
 // add login and register function
 const express = require('express')
@@ -19,6 +23,8 @@ const JWT_SECRET = 'asdasdsandsadnsandsadsa'
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("./public"));
+// app.use(express.static("./router"));
+// app.use(express.static("./static"))
 app.engine('html', require('ejs').renderFile)
 
 //create session
@@ -98,9 +104,11 @@ app.get('/chatbot-selected', (req,res) =>{
   res.sendFile(`${__dirname}/static/chatbot-selected.html`);
 })
 
-app.get('/dashboard', (req,res)=>{
+app.get('/dashboard', (req, res)=>{
+  // res.sendFile(`${__dirname}/static/admin_dashboard.html`)
+
   console.log(req.session.username)
-  if(req.session.username){
+  if(req.session.username){  
     res.render("../static/admin_dashboard.html",{username: req.session.user, session: req.session})
     // res.render(`${__dirname}/static/admin_dashboard.html`,{username: req.session.user, session: req.session})
   }
@@ -108,6 +116,8 @@ app.get('/dashboard', (req,res)=>{
     res.sendFile(`${__dirname}/static/login.html`)
   }
 })
+
+// app.post('/userdetails', auth, (req,res))
 
 app.get('/getAdmin', (req,res) => {
   console.log("asdasdasdasd:" + req.session)
@@ -148,19 +158,24 @@ app.use('/api/login', function(req, res, next) {
   next()
 })
 
+// app.post('/sending', async(req, res)=> {
+//   console.log(req.body)
+//   console.log('my name is mom')
+// })
+
 app.post('/api/login', async (req, res) => {
   // const {username, password } = req.body.username
   console.log(req.body)
   const username = req.body.username
   const password = req.body.password
-  // sess = req.session
-  // console.log(sess)
-  // req.session.username = req.body.username
-  // req.session.password = req.body.password
+  sess = req.session
+  console.log(sess)
+  req.session.username = req.body.username
+  req.session.password = req.body.password
   console.log(username)
   console.log(password)
   const user = await User.findOne({username}).lean()
-
+  console.log(user)
   if(!user) {
     return res.json({status:'error', error:'Invalid Username/ Password!'})
   }
@@ -172,17 +187,20 @@ app.post('/api/login', async (req, res) => {
       }
       req.session.username = username
       req.session.password = password
-      res.redirect('/dashboard')
-    })
-    // const token = jwt.sign(
-    //   {
-    //     id: user._id, 
-    //     username: user.username
-    //   }, JWT_SECRET)
-      // return res.json({status:'ok', data: token})
-      // res.redirect('/dashboard')
-      // res.redirect('/getAdmin')
+      const token = jwt.sign(
+        {
+          id: user._id, 
+          username: user.username
+        }, JWT_SECRET,
+        {
+          expiresIn: "24h",
+        })
+      return res.json({status:'ok', data: token})
     }
+    //   res.redirect('/dashboard')
+    // })
+    )
+  }
   // res.json({status:'error', error:'Invalid Username/ Password!'})
 })
 
