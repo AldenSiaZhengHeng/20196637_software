@@ -1,16 +1,3 @@
-// Copyright 2017, Google, Inc.
-// Licensed under the Apache License, Version 2.0 (the 'License');
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an 'AS IS' BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 const AppConstants = require('./appConstants.js');
 const ChatConnectionHandler = require('./chatConnectionHandler.js');
 
@@ -37,11 +24,16 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
         // console.log(this.router.customerStore.getAllCustomer())
         // console.log("hey I'm micket mouse") 
         // If new, begin the Dialogflow conversation
+
+        // need to change this, only trigger if the username is know
         if (customer.isNew) {
-          return this.router._sendEventToAgent(customer)
+          return this.router._welcomeEventToCustomer(customer, customerId)
+          // return this.router._sendEventToAgent(customer)
             .then(responses => {
-              const response = responses[0];
-              this._respondToCustomer(response.queryResult.fulfillmentText, this.socket);
+              const response = responses.answer;
+              this._respondToCustomer(response, this.socket);
+              // const response = responses[0];
+              // this._respondToCustomer(response.queryResult.fulfillmentText, this.socket);
             });
         }
         // If known, do nothing - they just reconnected after a network interruption
@@ -74,6 +66,10 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
     });
   }
 
+  _checkPurchaseId(purchaseId){
+
+  }
+
   // Called on receipt of input from the customer
   _gotCustomerInput (utterance) {
     // Look up this customer
@@ -90,7 +86,14 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
       .then(response => {
         // Send any response back to the customer
         if (response) {
-          return this._respondToCustomer(response, this.socket);
+          console.log("return response to customer")
+          console.log(response)
+
+          // add condition for refund and purchasing condition
+          // if(response.intent == 'refund_question'){
+          //   return this.socket.emit('refund', response)
+          // }
+          return this._respondToCustomer(response.answer, this.socket);
         }
       })
       .catch(error => {
