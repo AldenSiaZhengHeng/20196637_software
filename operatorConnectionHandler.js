@@ -14,6 +14,8 @@
 const AppConstants = require('./appConstants.js');
 const CustomerStore = require('./customerStore.js');
 const ChatConnectionHandler = require('./chatConnectionHandler.js');
+const chat_message = require('./router/chat_message.js')
+const e = require('express');
 
 // Custom error type for a problem relating to the customer's mode
 class CustomerModeError extends Error {
@@ -32,6 +34,8 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
     this.init(socket.id);
     this.attachHandlers();
     this.retrieveExisitingID();
+    this.getMessage();
+    this.chat_message = new chat_message();
     // this.deleteDisconnectID();
   }
 
@@ -53,30 +57,37 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
       var string = JSON.stringify(customerIDDetails);
       var objectiveValue = JSON.parse(string);
       console.log(typeof objectiveValue);
-      var count = Object.keys(objectiveValue).length;
       for(var attributename in customerIDDetails){
         console.log("retrieve exisiting id")
         var check = JSON.parse(objectiveValue[attributename])
-        this.messageRouter.give(check['id'])
+        console.log(check)
+        if(check.username != null){
+          this.messageRouter.give(check)
+
+        }
       }      
-    // for(let i=0; i<count; i++){
-    //     console.log(objectiveValue[i])
-    //     if (JSON.parse(objectiveValue[i]) != null){
-    //       var test = JSON.parse(objectiveValue[i])
-    //     }
-    //     else {
-    //      continue;
-    //     }
-    //     console.log(typeof test);
-    //     console.log(test['id']);
-    //     this.messageRouter.give(test['id'])
-    //     for(var key in objectiveValue[i]){
-    //       console.log(objectiveValue["i"][0]["id"]);
-    //     }
-    //     var a = objectiveValue[i].id
-    //     console.log(objectiveValue.[0].id)
-    //   }
       console.log(message)
+    })
+  }
+
+  getMessage(){
+    this.socket.on('getMessage', (message) =>{
+      var customerData = this.customerStore.getAllCustomer()
+      var string = JSON.stringify(customerData);
+      var objectiveValue = JSON.parse(string);
+      for(var customer in customerData){
+        var customer_details = JSON.parse(objectiveValue[customer])
+        console.log(customer_details)
+        if(customer_details.username != null){
+          console.log("go to get message")
+          this.chat_message.retrieve_message(this.socket, customer_details)
+
+          // this.socket.emit('testing','check socket path')
+        }
+      }
+      // console.log(customer.username)
+      // console.log(message)
+      console.log("getMessage here")
     })
   }
 
@@ -105,37 +116,58 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
         // Check if we're in agent or human mode
         // If in agent mode, ignore the input
         console.log('Got customer: ', JSON.stringify(customer));
-        if (utterance === 'handover') {
-          customer.mode === CustomerStore.MODE_OPERATOR;
-          console.log('activate')
-          // this.router._switchToOperator(customerId, customer, utterance)
-          this.router.customerStore.setCustomer(customerId, {
-            id: customerId,
-            mode: CustomerStore.MODE_OPERATOR
-          })
-          return this.router._relayOperatorMessage(message);
+
+        // add condition here
+        // 3 type of mode
+        // 1. operator only able to monitor the conversation, only after user request then takeover.
+        if(customer.agent == 'work-together') {
+          
         }
-        else if (utterance === 'return') {
-          customer.mode === CustomerStore.MODE_AGENT;
-          console.log('return to chatbot')
-          // this.router._switchToOperator(customerId, customer, utterance)
-          this.router.customerStore.setCustomer(customerId, {
-            id: customerId,
-            mode: CustomerStore.MODE_AGENT
-          })
-          return this.router._relayOperatorMessage(message);
-        }
-        // This indicate the operator only able to answer user when handover occur
-        else if (customer.mode === CustomerStore.MODE_AGENT) {
+        
+        else if(customer.agent == 'direct-control'){
+          console.log("enter direct-control mode")
+          if (utterance === 'handover' || utterance === 'takeover') {
+            customer.mode === CustomerStore.MODE_OPERATOR;
+            console.log('activate')
+            // this.router._switchToOperator(customerId, customer, utterance)
+            this.router.customerStore.setCustomer(customerId, {
+              id: customerId,
+              mode: CustomerStore.MODE_OPERATOR,
+              username: customer.username,
+              agent: customer.agent
+
+            })
+            return this.router._relayOperatorMessage(message);
+          }
+          else if (utterance === 'return') {
+            customer.mode === CustomerStore.MODE_AGENT;
+            console.log('return to chatbot')
+            // this.router._switchToOperator(customerId, customer, utterance)
+            this.router.customerStore.setCustomer(customerId, {
+              id: customerId,
+              mode: CustomerStore.MODE_AGENT,
+              username: customer.username,
+              agent: customer.agent
+            })
+            return this.router._relayOperatorMessage(message);
+          }
+          // This indicate the operator only able to answer user when handover occur
+        }else if (customer.mode === CustomerStore.MODE_AGENT) {
           console.log("activate is fake here")
           return Promise.reject(
             new CustomerModeError('Cannot respond to customer until they have been escalated.')
           );
         }
+
+
+
+        
+        
         // Otherwise, relay it to all operators
         return this.router._relayOperatorMessage(message)
           // And send it to the appropriate customer
           .then(() => {
+            this.chat_message._saveConversationChat(customer, message)
             const customerConnection = this.router.customerConnections[customerId];
             return customerConnection._respondToCustomer(utterance);
           });
