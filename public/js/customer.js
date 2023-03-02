@@ -1,13 +1,15 @@
 var socket = io('/customer');
 const messageContainer = document.getElementById('messages')
+var Username ='';
 
 $('#selected-agent').submit(function(e){
     document.getElementById("main-container").style.display="block";
+    document.getElementById("main-selection").style.display="none";
     var selected = document.getElementById("agent").value
-    var username = $('#username-input').val();
-    var data = {agent: selected, username: username}
+    Username = $('#username-input').val();
+    var data = {agent: selected, username: Username}
     console.log(selected)
-    console.log(username)
+    console.log(Username)
     console.log(data)
     socket.emit('customer-details',data)
     e.preventDefault()
@@ -28,6 +30,14 @@ $('#user-message').submit(function(e){
     // $('#messages').append($('<li class="customer-message">').text(messageText));
     socket.emit('customer message', messageText);
     $('#m').val('');
+    // $.post("/sending",
+    // {
+    //     messages: messageText,
+    //     username: Username
+    // },
+    // function(data, status){
+    //     alert("Data: " + data + "\nStatus: " + status);
+    // });
     e.preventDefault();
     // return false;
 });

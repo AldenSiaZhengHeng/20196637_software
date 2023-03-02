@@ -3,54 +3,85 @@
   <head>
     <title>Customer Interface</title>
     <link rel="stylesheet" type="text/css" href="css/customer.css">
-    <style>
-    </style>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   </head>
   <body>
-    <div class="side-selection">
-      <div class="side-container">
-        <h1>Please Select one of the agent to chat</h1>
-        <form id="selected-agent">
-          <div>
-            Enter the username:
-            <input class="username-input" id="username-input" autocomplete="off" />
-          </div>
-          <div>
-              <label for="cars">Choose an agent:</label>
+
+
+    <div class="main-selection" id="main-selection">
+        <div class="div-hg">          
+          <h1>Welcome to the Phone Store <br /><br />Please select one agent to chat</h1>
+        </div>
+        <!-- <div class="h_line"></div> -->
+        <div class="form-section">
+          <form id="selected-agent">
+            <label class="label" for="Username"><b>Enter Username</b></label>
+            <div class="form-field">
+              <div>
+                <i class="fa fa-user"></i>
+              </div>
+              <input class="username-input" id="username-input" autocomplete="off" placeholder="Username" type="text" />
+            </div>
+            <label for="cars"><b>Choose an agent:</b></label>
+            <div class="form-field">
+              <div>
+                <i class="fas fa-user-tie"></i>
+              </div>
               <select name="agent" id="agent">
-                <option value="dialogflow">Dialogflow</option>
-                <option value="rasa">Rasa</option>
-                <option value="chatbot-only">David</option>
-                <option value="human-only">Rose</option>
+                <option value="requested-only">Martin</option>
+                <option value="direct-control">Louis</option>
+                <option value="work-together">David</option>
+                <!-- <option value="human-only">Rose</option>
                 <option value="audi">Audi</option>
-                <option value="audi">Audi</option>
+                <option value="audi">Audi</option> -->
               </select>
-              <br><br>
-              <button class="send-button">Send
+            </div>
+            <div>
+              <button class="sendbutton" disabled>Send
               </button>  
-          </div>
-        </form>
+            </div>
+          </form>
+        </div>
     
+    </div>
+
+      <div class="container">
+        <!-- <div class="basket">
+          <h1>basket</h1>
+          <ul></ul>
+        </div> -->
+
+        <div class="main" id="main-container">
+          <h1>Customer</h1>
+
+          <ul class="message-container" id="messages">
+          </ul>
+
+          <form class="message-form" id="user-message">  
+            <input class="message-input" id="m" autocomplete="off" />
+            <div class="v-divider"></div>
+            <button class="send-button">Send
+            </button>
+          </form>
+        </div> 
+
       </div>
-    </div>
 
-    <div class="main" id="main-container">
-      <h1>Customer</h1>
 
-      <ul class="message-container" id="messages">
-      </ul>
-
-      <form class="message-form" id="user-message">  
-        <input class="message-input" id="m" autocomplete="off" />
-        <div class="v-divider"></div>
-        <button class="send-button">Send
-        </button>
-      </form>
-
-    </div>
+  
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="../js/customer.js"></script>
+    <script>
+      $("#username-input").keyup(function(event) {
+        var disableButton = false;
+        var username = $("#username-input").val();
+        if(username == 0){
+          disableButton = true;
+        }
+        $('.sendbutton').attr('disabled',disableButton);
+      })
+    </script>
   </body>
 </html>
 
