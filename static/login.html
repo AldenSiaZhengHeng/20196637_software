@@ -10,7 +10,8 @@
 		<div class="form">
 			<p>Login Page</p>
 			<hr>
-			<form action="/api/login" id="login" method="POST">
+			<!-- <form action="/api/login" id="login" method="POST"> -->
+			<form id="login">
 				<label class="label" for="Username"><b>Username</b></label>
 				<br />
 				<input type="text" autocomplete="off" id="username" name="username" placeholder="Enter Username" />
@@ -22,7 +23,7 @@
 				<input type="submit" value="Submit Form" />
 			</form>
 		</div>
-		<!-- <script>
+		<script>
 			const form = document.getElementById('login')
 			form.addEventListener('submit', login)
 
@@ -45,13 +46,13 @@
 				if (result.status === 'ok') {
 					// everythign went fine
 					console.log('Got the token: ', result.data)
-					localStorage.setItem('token', result.data)
-					alert('Success')
-                    window.location.href = 'http://localhost:3000/getAdmin?admin='
+					window.localStorage.setItem('token',result.data)
+					alert('Success');
+                    window.location.replace('/getAdmin');
 				} else {
 					alert(result.error)
 				}
 			}
-		</script> -->
+		</script>
 	</body>
 </html>
