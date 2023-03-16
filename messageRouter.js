@@ -8,7 +8,8 @@ const Sentiment_analysis = require('./sentiment_analysis.js');
 const e = require('express');
 const mongoose = require('mongoose')
 const User = require('./model/user')
-const userIntent = require('./userIntent');
+const userIntent = require('./userIntentFlow/userIntent');
+const userRefundFlow = require('./userIntentFlow/userRefundFlow');
 const userMessages = require('./model/userMessage')
 
 const { response } = require('express');
@@ -32,6 +33,7 @@ class MessageRouter {
     this.operatorConnections = {};
     this.chatbot = new chatbot();
     this.sentiment = new Sentiment_analysis();
+    this.userRefundFlow = new userRefundFlow();
     this.userDatabase = {};
   }
 
@@ -68,15 +70,15 @@ class MessageRouter {
     console.log('Sending customer id to any operators');
 
     // retrieve username of the particular socket id
-    console.log('customer username here')
-    console.log(customerId)
+    // console.log('customer username here')
+    // console.log(customerId)
     var obj = this.customerStore.retrieve(customerId)
-    console.log(obj)
-    console.log(typeof obj)
-    console.log('customer username here')
-    if(obj['username'] !== null){
-      console.log(obj['username'])
-    }
+    // console.log(obj)
+    // console.log(typeof obj)
+    // console.log('customer username here')
+    // if(obj['username'] !== null){
+    //   console.log(obj['username'])
+    // }
     // }
     // var username = obj.username
 
@@ -100,14 +102,14 @@ class MessageRouter {
 
   async _welcomeEventToCustomer(customer, customerId){
     if(customer.isNew){
-      console.log("zxxcxcsads")
-      console.log(customer)
+      // console.log("zxxcxcsads")
+      // console.log(customer)
       this.userDatabase[customerId] = new userIntent();
-      console.log(this.userDatabase)
+      // console.log(this.userDatabase)
       console.log("here is welcome event")
       var response = await this.chatbot.getAnswer("Welcome event");
       response.answer = [response.answers[0].answer, response.answers[1].answer]
-      console.log(response)
+      // console.log(response)
       return response;
     }
   }
@@ -124,14 +126,14 @@ class MessageRouter {
     // Check the conversational flow is refund or purchase action
     if(this.userDatabase[customerId].currentRequest == 'refund_mode'){
       console.log("user want to refund")
-      chatbot_responses = await this.userDatabase[customerId].onIntent(response,customer);
+      chatbot_responses = await this.userDatabase[customerId].userRefund(response,customer);
     }
     else if (this.userDatabase[customerId].currentRequest == 'purchase_mode'){
       console.log("user buy item")
       chatbot_responses = await this.userDatabase[customerId].onPurchaseMode(response,customer);
     }
     else if (this.userDatabase[customerId].currentRequest == 'tracking_mode'){
-      console.log("user buy item")
+      console.log("user track item")
       chatbot_responses = await this.userDatabase[customerId].trackingProcess(response,customer);
     }    
     else{
@@ -167,113 +169,96 @@ class MessageRouter {
     await m.save();
   }
 
-  _routeCustomer (utterance, customer, customerId){
-
-    // check if the customer is new
-    // if(customer.isNew){
-    //   console.log("zxxcxcsads")
-    //   console.log(customer)
-    //   this.userDatabase[customerId] = new userIntent();
-    //   console.log(userDatabase)
-    //   console.log("here is welcome event")
-    //   return this.chatbot.getAnswer("Welcome event");
-    // }
-    console.log("checking is sending to operator or not")
-    console.log(utterance)
-    console.log(customer)
+  async _routeCustomer (utterance, customer, customerId){
+    // console.log("checking is sending to operator or not")
+    // console.log(utterance)
+    // console.log(customer)
 
     // sending customer messsage first to operator
-    return this._sendUtteranceToOperator(utterance, customer)
-      .then(() =>{
-        // get response from chatbot
-        return this.chatbot.getAnswer(utterance)
-      })
-        .then(async response =>{
-          console.log('xxxxxxxxxxxxxxxxxxxxxxxxx')
-          console.log(response)
-          console.log('xxxxxxxxxxxxxxxxxxxxxxxxx')   
+    await this._sendUtteranceToOperator(utterance, customer);
 
-          
-          // Sending the sentiment analysis result to operator page
-          const sentiment_result = this.sentiment.getSentiment(utterance)
-          var chatbot_responses = response;
-          let customer_sentiment = {
-            id: customerId, 
-            sentiment: sentiment_result,
-            username: customer.username
-          }
-          this.operatorRoom.emit('customer_feelings', customer_sentiment)
+    // determine the time that the chatbot get the answer
+    const startTime = new Date().getTime(); // start timer
+    const response = await this.chatbot.getAnswer(utterance);
+    const endTime = new Date().getTime(); // end timer
+    const responseTime = endTime - startTime;
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxx');
+    console.log(`Response: ${response.answer} | Response Time: ${responseTime} ms`);
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxx');
+    // Sending the sentiment analysis result to operator page
+    const sentiment_result = this.sentiment.getSentiment(utterance);
+    var chatbot_responses = response;
+    let customer_sentiment = {
+      id: customerId,
+      sentiment: sentiment_result,
+      username: customer.username
+    };
+    this.operatorRoom.emit('customer_feelings', customer_sentiment);
+   
+    // if (customer.agent === 'work-together') {
 
-          // this condition trigger when the human operator work together with chatbot to reply customer
-          if(customer.agent === 'work-together'){
+    //   // the operator request is not used in this mode as the operator is work with chatbot
+    //   // if (this._checkOperatorMode(response)) {
+    //   //   return this._switchToOperator(customerId, customer, response);
+    //   // }
+    //   chatbot_responses = await this._checkUtterance(response, customer, customerId);
+    //   console.log("--------");
+    //   console.log(chatbot_responses);
+    //   var chatbot_suggestion_wrapper = {
+    //     customer: customer,
+    //     customerId: customerId,
+    //     responses: chatbot_responses
+    //   };
 
-            // the operator request is not used in this mode as the operator is work with chatbot
-            // if (this._checkOperatorMode(response)) {
-            //   return this._switchToOperator(customerId, customer, response);
-            // }
+    //   // send the chatbot answer to operator and let operator to decide the next action
+    //   this.operatorRoom.emit('chatbot_suggestion', chatbot_suggestion_wrapper);
+    //   console.log("------------------");
+    //   console.log(chatbot_responses);
+    //   console.log(this.userDatabase);
+    //   // If not in operator mode, just grab the agent's response
+    //   const speech = chatbot_responses.answer;
 
-            chatbot_responses = await this._checkUtterance(response, customer, customerId);
-            console.log("--------")
-            console.log(chatbot_responses)
-            var chatbot_suggestion_wrapper = {
-              customer: customer,
-              customerId: customerId,
-              responses: chatbot_responses
-            }
-            this.operatorRoom.emit('chatbot_suggestion', chatbot_suggestion_wrapper);
-            console.log("------------------")
-            console.log(chatbot_responses)
-            console.log(this.userDatabase)
-            // If not in operator mode, just grab the agent's response
-            const speech = chatbot_responses.answer;
+    //   // return nothing as this will be chatbot work with human operator
+    //   return null;
+    // }
 
-            // return nothing as this will be chatbot work with human operator
-            return null;
-          }
-          // Check handover action
-          else if (customer.mode === CustomerStore.MODE_AGENT) {
-            // If the agent indicated that the customer should be switched to operator
-            // mode, do so
-            if (this._checkOperatorMode(response)) {
-              console.log("check operator mode")
-              return this._switchToOperator(customerId, customer, response);
-            }
-
-            chatbot_responses = await this._checkUtterance(response, customer, customerId)
-
-            await this._saveConversationChat(utterance, customer,chatbot_responses)
-            console.log("------------------")
-            console.log(chatbot_responses)
-            console.log(this.userDatabase)
-            // If not in operator mode, just grab the agent's response
-            const speech = chatbot_responses.answer;
-
-            // Send the chatbotagent's response to the operator so they see both sides
-            // of the conversation.
-            this._sendUtteranceToOperator(speech, customer, true);
-
-            // Return the agent's response so it can be sent to the customer down the chain
-            return chatbot_responses;
-          } else if (customer.mode === CustomerStore.MODE_OPERATOR) {
-            await this._saveConversationChat(utterance, customer, undefined)
-          }
-        })
-  }
-
-  // Sends an utterance to Dialogflow and returns a promise with API response.
-  _sendUtteranceToAgent (utterance, customer) {
-    console.log('Sending utterance to agent');
-    console.log(customer.id)
-    return this.client.detectIntent({
-      // Use the customer ID as Dialogflow's session ID
-      session: this.client.sessionPath(this.projectId, customer.id),
-      queryInput: {
-        text: {
-          text: utterance,
-          languageCode: 'en'
-        }
+    // Check handover action
+    if (customer.mode == CustomerStore.MODE_AGENT || customer.mode === CustomerStore.MODE_OPERATOR_GUIDE) {
+      // If the agent indicated that the customer should be switched to operator
+      // mode, do so
+      if (this._checkOperatorMode(response)) {
+        console.log("check operator mode");
+        return this._switchToOperator(customerId, customer, response);
       }
-    });
+
+      chatbot_responses = await this._checkUtterance(response, customer, customerId);
+
+      await this._saveConversationChat(utterance, customer, chatbot_responses);
+      console.log("------------------");
+
+      // Send alert to operator that the customer might need help
+      if(this.userDatabase[customerId].operator_alert == true){
+        let message = {
+          customer: customer,
+          customerId: customerId,
+          response: chatbot_responses
+        }
+        this.operatorRoom.emit('customer_alert', message)
+      }
+      // console.log(chatbot_responses);
+      // console.log(this.userDatabase);
+      // If not in operator mode, just grab the agent's response
+      const speech_1 = chatbot_responses.answer;
+
+      // Send the chatbotagent's response to the operator so they see both sides
+      // of the conversation.
+      this._sendUtteranceToOperator(speech_1, customer, true);
+
+      // Return the agent's response so it can be sent to the customer down the chain
+      return chatbot_responses;
+    } else if (customer.mode === CustomerStore.MODE_OPERATOR) {
+      await this._saveConversationChat(utterance, customer, undefined);
+    }
   }
 
   // Send an utterance, or an array of utterances, to the operator channel so that
@@ -352,6 +337,24 @@ class MessageRouter {
   //   return operatorMode;
   // }
 
+  _OperatorRequestHandle(customerId, customer){
+    console.log('operator request handover')
+    this.customerStore.setCustomer(customerId,customer)
+    if(customer.agent == 'chatbot-show'){
+      const output = [AppConstants.REQUESTED_OPERATOR_GREETING]
+      return this.customerConnections[customerId]._respondToCustomer(output);
+    }
+    else if(customer.agent =='chatbot-hidden'){
+      return false;
+    }
+  }
+
+  // _OperatorRequestHandle_hidden(customerId, customer){
+  //   console.log('operator request control in hidden mode')
+  //   this.customerStore.setCustomer(customerId, customer)
+  //   return this.customerConnections
+  // }
+
   _switchToOperator(customerId, customer, response){
     console.log('Handover customer to operator mode');
     customer.mode = CustomerStore.MODE_OPERATOR;
@@ -364,6 +367,7 @@ class MessageRouter {
         const output = [ response.answer, AppConstants.OPERATOR_GREETING ];
         // Also send everything to the operator so they can see how the agent responded
         this._sendUtteranceToOperator(output, customer, true);
+        this._saveConversationChat(response.utterance, customer, response)
         const responses = {
           answer: output
         }
@@ -511,4 +515,21 @@ module.exports = MessageRouter;
   //       }
   //     }
   //   )
+  // }
+
+
+  // Sends an utterance to Dialogflow and returns a promise with API response.
+  // _sendUtteranceToAgent (utterance, customer) {
+  //   console.log('Sending utterance to agent');
+  //   console.log(customer.id)
+  //   return this.client.detectIntent({
+  //     // Use the customer ID as Dialogflow's session ID
+  //     session: this.client.sessionPath(this.projectId, customer.id),
+  //     queryInput: {
+  //       text: {
+  //         text: utterance,
+  //         languageCode: 'en'
+  //       }
+  //     }
+  //   });
   // }
