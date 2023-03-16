@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/admin_dashboard.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/purchase.css">
+    <title>Purchase</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <div class="logo_name">Customer Admin Panel</div>
+            <i class='bx bx-menu' id="btn" ></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="/getAdmin">
+                  <i class='bx bx-chat'></i>
+                  <span class="links_name">Chat</span>
+                </a>
+                 <span class="tooltip">Chat</span>
+              </li>
+              <li>
+                <a href="/getPurchase">
+                  <i class='bx bx-purchase-tag-alt'></i>
+                    <span class="links_name">Purchase</span>
+                    </a>
+              </li> 
+              <li>
+                <a href="/getRefund">
+                  <i class='bx bxs-package'></i>
+                    <span class="links_name">Refund</span>
+                    </a>
+              </li>    
+         <li class="profile">
+             <div class="profile-details">
+               <!--<img src="profile.jpg" alt="profileImg">-->
+               <div class="name_job">
+                 <div class="name"> <%= session.username %></div>
+                 <!-- <div class="job">Web designer</div> -->
+               </div>
+               <a href="/logout">
+                <i class='bx bx-log-out' id="log_out" ></i>
+              </a>
+             </div>
+         </li>
+        </ul>
+    </div>    
+    <section class="section">
+        <div class="main">
+            <form id="submit" onsubmit="return false">
+                <fieldset>
+                    <legend>Purchase</legend>
+                <label for="Username">Username:</label>
+                <input name="Username" type="text" id="username" required placeholder=""/>
+                <label for="purchase">Product Purchases:</label>
+                <textarea id="purchase" rows="5" cols="50" name="product"></textarea>
+                <label for="location">Location:</label>
+                <input id="location" name="location" type="text" required placeholder=""/>
+                <br />
+                <input type="submit" value="Submit Form" />
+
+            </fieldset>
+
+            </form>
+        </div>
+    </section>
+    <div class="main-2">
+        <div class="tracking_number" id="tracking_number">Tracking Number: </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    const form = document.getElementById('submit')
+    form.addEventListener('submit', submit)
+
+    async function submit(event){
+        const customer_name = document.getElementById('username').value;
+        const purchase = document.getElementById('purchase').value;
+        const location = document.getElementById('location').value;
+        var item =[];
+        console.log(purchase)
+        var purchase_item = purchase.split(',')
+        for(let i=0; i<purchase_item.length; i++){
+            item.push(purchase_item[i])
+        }
+        console.log(item)
+        const result = await fetch('/api/purchase', {
+            method:'POST',
+            headers: {
+				'Content-Type': 'application/json'
+			},
+            body: JSON.stringify({
+                customer_name,
+                item,
+                location
+            })
+        }).then((res)=> res.json())
+
+        console.log(result)
+        if(result.status =='ok'){
+            console.log(result)
+            console.log("successful add the customer purchase item")
+            alert("Success\n"+result.tracking_number)
+            document.getElementById('tracking_number').innerHTML = 'Tracking Number: ' + result.tracking_number;
+        } else{
+            alert("Failed to create the tracking number\n" + result.error)
+        }
+        event.preventDefault();
+
+    }
+</script>
+<script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+  
+    closeBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("open");
+      menuBtnChange();//calling the function(optional)
+    });
+  
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+      sidebar.classList.toggle("open");
+      menuBtnChange(); //calling the function(optional)
+    });
+  
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+     if(sidebar.classList.contains("open")){
+       closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+     }else {
+       closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+     }
+    }
+    </script>
+    </body>
+
+</html>

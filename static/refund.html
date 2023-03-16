@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/admin_dashboard.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/refund.css">
+    <title>Purchase</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <div class="logo_name">Customer Admin Panel</div>
+            <i class='bx bx-menu' id="btn" ></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="/getAdmin">
+                  <i class='bx bx-chat'></i>
+                  <span class="links_name">Chat</span>
+                </a>
+                 <span class="tooltip">Chat</span>
+              </li>
+              <li>
+                <a href="/getPurchase">
+                  <i class='bx bx-purchase-tag-alt'></i>
+                    <span class="links_name">Purchase</span>
+                    </a>
+              </li> 
+              <li>
+                <a href="/getRefund">
+                  <i class='bx bxs-package'></i>
+                    <span class="links_name">Refund</span>
+                    </a>
+              </li>      
+         <li class="profile">
+             <div class="profile-details">
+               <!--<img src="profile.jpg" alt="profileImg">-->
+               <div class="name_job">
+                 <div class="name"> <%= session.username %></div>
+                 <!-- <div class="job">Web designer</div> -->
+               </div>
+               <a href="/logout">
+                <i class='bx bx-log-out' id="log_out" ></i>
+              </a>
+             </div>
+         </li>
+        </ul>
+    </div>    
+    <section class="section">
+        <div class="find_item">
+            <form id="submit_trackingNum" onsubmit="return false">
+                <fieldset>
+                    <legend>Search</legend>
+                    <label for="trackingNum">Tracking Number:</label>
+                    <input name="trackingNum" type="text" id="trackingNum" required placeholder=""/>
+                    <br />
+                    <input type="submit" value="Submit Form" />
+                </fieldset>
+            </form>
+        </div>
+        <div class="show">
+            <fieldset>
+                <legend>Item Found</legend>
+                <div class="item_list" id="item_list">
+
+                    <p id="item"></p>
+                </div>
+            </fieldset>
+        </div>
+  
+        <div class="main">
+            <form id="refund" onsubmit="return false">
+                <fieldset>
+                    <legend>Refund</legend>
+                    <label for="Username">Username:</label>
+                    <input name="Username" type="text" id="username" required placeholder=""/>
+                    <label for="tracking_number">Tracking Number:</label>
+                    <input name="tracking_number" type="text" id="tracking_number" required placeholder=""/>
+                    <label for="reason">Reason:</label>
+                    <textarea id="reason" rows="5" cols="50" name="reason"></textarea>
+                    <label for="addition_reason">Addition Reason:</label>
+                    <textarea id="addition_reason" rows="5" cols="50" name="addition_reason"></textarea>
+                    <br />
+                    <input type="submit" value="Submit Form" />
+
+                </fieldset>
+            </form>
+            <fieldset>
+                <legend>Refund Status</legend>
+                <div id="refund_status"></div>
+            </fieldset>
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        const form2 = document.getElementById('refund')
+        form2.addEventListener('submit',submit_refund)
+
+        async function submit_refund(e){
+            const tracking_number = document.getElementById('tracking_number').value;
+            const username = document.getElementById('username').value;
+            const reason = document.getElementById('reason').value;
+            const addition_reason = document.getElementById('addition_reason').value;
+            const inner_item = document.getElementById('item').innerHTML;
+            const item = inner_item.split(",");
+            var user_reason = []
+            var item_list = []
+            user_reason.push(reason)
+            console.log(item)
+            console.log(typeof(item))
+            if(addition_reason){
+                user_reason.push(addition_reason)
+            }
+            if(item == ""){
+                alert('Please search the tracking number provided by customer!')
+                return false;
+            }
+            const result = await fetch('/api/refund', {
+                method:'POST',
+                headers: {
+				    'Content-Type': 'application/json'
+			    },
+                body: JSON.stringify({
+                    tracking_number,
+                    username,
+                    user_reason,
+                    item
+                })
+            }).then((res)=> res.json())
+
+            if(result.status == 'ok'){
+                console.log("successful to create refund ticket");
+                alert("Success\n"+result.refund_ticket)
+                document.getElementById('refund_status').innerHTML = 'Refund Ticket: ' + result.refund_ticket;
+                
+            }else{
+                alert(result.error)
+            }
+
+            // console.log(user_reason)
+            // console.log(typeof(item_list))
+
+        }
+    </script>
+    <script>
+        const form = document.getElementById('submit_trackingNum')
+        form.addEventListener('submit', submit)
+
+        async function submit(event){
+            const tracking_number = document.getElementById('trackingNum').value; 
+            console.log(tracking_number)
+            const result = await fetch('/api/checking_trackNum', {
+                method:'POST',
+                headers: {
+            		'Content-Type': 'application/json'
+            	},
+                body: JSON.stringify({
+                    tracking_number
+                })
+            }).then((res)=> res.json())
+
+            if(result.status =='ok'){
+                console.log("successful find the item")
+                alert("Success\n"+result.item)
+                document.getElementById('item').innerHTML = result.item;
+            } else{
+                alert(result.error)
+            }
+            event.preventDefault();
+
+        }
+    </script>
+<script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+  
+    closeBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("open");
+      menuBtnChange();//calling the function(optional)
+    });
+  
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+      sidebar.classList.toggle("open");
+      menuBtnChange(); //calling the function(optional)
+    });
+  
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+     if(sidebar.classList.contains("open")){
+       closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+     }else {
+       closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+     }
+    }
+    </script>
+    </body>
+
+</html>
