@@ -14,6 +14,8 @@ const auth = require("./auth");
 const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./model/user')
+const purchases = require('./model/purchase')
+const refundTicket = require('./model/refund_ticket')
 const bodyParser = require('body-parser')
 const connectDB = require('./db')
 const bcrypt = require('bcryptjs')
@@ -130,9 +132,31 @@ app.get('/getAdmin', (req,res) => {
   }
 })
 
+app.get('/getPurchase' ,(req,res) =>{
+  if(req.session.username){
+    res.render("../static/purchase.html",{username: req.session.user, session: req.session})
+    // res.render(`${__dirname}/static/operator.html`,{username: req.session.user, session: req.session})
+  }
+  else{
+    res.sendFile(`${__dirname}/static/login.html`)
+  }
+})
+
+app.get('/getRefund' ,(req,res) =>{
+  if(req.session.username){
+    res.render("../static/refund.html",{username: req.session.user, session: req.session})
+    // res.render(`${__dirname}/static/operator.html`,{username: req.session.user, session: req.session})
+  }
+  else{
+    res.sendFile(`${__dirname}/static/login.html`)
+  }
+})
+
 app.get('/login', (req,res) => {
   if(req.session.username){
-    res.render(`${__dirname}/static/admin_dashboard.html`,{username: req.session.user, session: req.session})
+    res.render("../static/operator.html",{username: req.session.user, session: req.session})
+
+    // res.render(`${__dirname}/static/admin_dashboard.html`,{username: req.session.user, session: req.session})
   }
   else{
     res.sendFile(`${__dirname}/static/login.html`)
@@ -153,15 +177,104 @@ app.get('/success', function (req, res) {
 });
 
 // add admin session testing
-app.use('/api/login', function(req, res, next) {
-  console.log('your mom is gay')
-  next()
-})
+// app.use('/api/login', function(req, res, next) {
+//   console.log('your mom is gay')
+//   next()
+// })
 
 // app.post('/sending', async(req, res)=> {
 //   console.log(req.body)
 //   console.log('my name is mom')
 // })
+
+app.post('/api/checking_trackNum', async (req,res)=>{
+  console.log(req.body)
+  const tracking_number = req.body.tracking_number;
+  try{
+    const result = await purchases
+    .find({
+        trackingNumber:{$all:tracking_number}
+    })
+    if(result.length > 0){
+      var item_list = result[0].item; 
+      console.log(item_list)
+      return res.json({status:'ok', item: item_list})
+    }
+  }catch(e){
+
+  }
+})
+
+app.post('/api/refund', async (req,res)=>{
+  console.log(req.body)
+  const tracking_number = req.body.tracking_number;
+  const username = req.body.username
+  const reason = req.body.user_reason
+  const item = req.body.item
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < 10) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  const refund_ticket = result;
+  let ticket ={
+    RefundTicketId: refund_ticket,
+    TrackingNumber: tracking_number,
+    username: username,
+    item: item,
+    reason: reason,
+    status: 'pending'
+  }
+
+  try{
+    const m = new refundTicket(ticket);
+    await m.save();
+    return res.json({status:'ok', refund_ticket:refund_ticket})
+  } catch (e){
+    console.log(e.text())
+    return res.json({status:'error', error:e})
+  }
+
+})
+
+app.post('/api/purchase', async (req, res)=> {
+  console.log(req.body)
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < 10) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  const tracking_number = result;
+  const customer_name = req.body.customer_name;
+  const item = req.body.item;
+  const location = req.body.location;
+  
+  console.log(req.body)
+    
+  let basket = {
+    trackingNumber: tracking_number,
+    username: customer_name,
+    item: item,
+    location: location,
+    status: 'pending'
+  }
+  try{
+    const m = new purchases(basket);
+    await m.save();
+    return res.json({status:'ok', tracking_number:tracking_number})
+
+  } catch (e){
+    return res.json({status:'error', error:e})
+  }
+  
+})
+
 
 app.post('/api/login', async (req, res) => {
   // const {username, password } = req.body.username
