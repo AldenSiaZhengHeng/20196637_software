@@ -11,21 +11,56 @@ body {
 }
 
 body{
-  background-color: rgb(147, 236, 92);
+  /* background-color: #bfdbce; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Poppins";
 }
 
+.background{
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  background-color: #bfdbce;
+  top: 0;
+  left: 0;
+  z-index: -100;
+}
+
+.background:after{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  content: '';
+  background: inherit;
+  transform-origin: top right;
+  transform: skewY(-4deg);
+}
+
 
 .div-hg{
   /* background: url("bg_1.jpg") no-repeat; */
-  background-size: cover;
-  background-position-y: 80%;
+  /* background-size: cover; */
+  /* background-position-y: 80%; */
   width: 100%;
   height: 100%;
   display: flex;
+  /* border-right: 10px solid red; */
+  
+  background-color:rgb(187, 211, 226);
+}
+
+.diagonal-line{
+  width: 10px;
+  height: 100%;  
+  display: flex;
+  background-color:rgb(126, 165, 140);
+
 }
 
 h1 {
@@ -34,7 +69,16 @@ h1 {
   text-align: center;
   align-items: center;
   justify-content: center;
+  color: rgb(18, 18, 18);
+  text-align: center; 
+  padding: 20px; 
 }
+
+
+.customer-tag{
+  background-color: white;
+}
+
 
 input[type=text], select {
   outline: none;
@@ -64,6 +108,7 @@ input[type=text], select {
   transition: 200ms box-shadow ease-in-out;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 10px 0px;
+  background-color: white;
 
 }
 
@@ -107,25 +152,15 @@ input[type=text], select {
 
 }
 
-/* .basket{
-  border: 8px solid #dddddd;
-  border-radius: 24px; 
-  overflow: hidden;
-  font-family: 'Open Sans', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: right;
-  align-items: right;
-  text-align: center;
-  width: 400px;
-  margin:auto;
-  float:right;
-} */
+.sendbutton {
+  margin-top: 10px;
+}
 
 .main-selection {
+  border-radius: 10px;
   width: 900px;
   height: 450px;
-  background-color: white;
+  background-color: rgb(157, 144, 144);
   display: flex;
   box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.15);
   /* border-radius: 5px;
@@ -147,7 +182,7 @@ input[type=text], select {
 .form-section{
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: rgb(117, 167, 79);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -161,11 +196,6 @@ input[type=text], select {
   padding: 25px;
 }
 
-h1 { 
-  background-color: white;
-  text-align: center; 
-  padding: 20px; 
-}
 
 
 /* body {

@@ -1,3 +1,7 @@
+body{
+    background-color: aquamarine;
+}
+
 .container {
     /* margin: 0 auto; */
     margin: 200px auto 100px;
@@ -6,9 +10,9 @@
     padding: 10px;
     box-shadow: 5px 5px;
     position: relative;
-
-
+    background-color:#fff;
 }
+
 
 .button {
     display: inline-block;
