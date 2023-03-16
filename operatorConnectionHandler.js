@@ -43,6 +43,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
     console.log('An operator joined: ', operatorId);
   }
 
+  // delete disconnected customer id
   deleteDisconnectID(){
     this.socket.on('delete_disconnect_id', (customerId) => {
       console.log("delete ID: " + customerId )
@@ -50,7 +51,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
     })
   }
 
-
+  // get exisiting customer id that is active
   retrieveExisitingID(){
     this.socket.on('retrieve_existing_id', (message) => {
       var customerIDDetails = this.customerStore.getAllCustomer()
@@ -70,6 +71,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
     })
   }
 
+  // retrieve old message from customer
   getMessage(){
     this.socket.on('getMessage', (message) =>{
       var customerData = this.customerStore.getAllCustomer()
@@ -107,7 +109,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
   // Called on receipt of input from the operator
   _gotOperatorInput (message) {
     // Operator messages take the form of an object with customerId and utterance properties
-    const { customerId, utterance } = message;
+    var { customerId, utterance } = message;
     console.log('Got operator input: ', message);
     // Look up the customer referenced in the operator's message
     this.router.customerStore
@@ -120,39 +122,63 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
         // add condition here
         // 3 type of mode
         // 1. operator only able to monitor the conversation, only after user request then takeover.
-        if(customer.agent == 'work-together') {
-          
+        if(utterance =='handover' || utterance =='takeover'){
+          customer.mode = CustomerStore.MODE_OPERATOR;
+          console.log('activate')
+          this.router.customerStore.setCustomer(customerId, customer)     
+          this.router._OperatorRequestHandle(customerId, customer);
+          return this.router._relayOperatorMessage(message);
+          // if(customer.agent == 'chatbot-show'){
+          //   this.router._OperatorRequestHandle(customerId, customer);
+          //   return this.router._relayOperatorMessage(message);
+          // }
+          // if(customer.agent == 'chatbot-hidden'){
+          //   this.router.
+          // }
+        }
+        else if(customer.agent =='chatbot-guide'){
+          if(utterance == 'guide'){
+            customer.mode = CustomerStore.MODE_OPERATOR_GUIDE;
+            this.router.customerStore.setCustomer(customerId, customer)
+            return this.router._relayOperatorMessage(message);          
+          }
+        }
+        else if(utterance == 'return') {
+          customer.mode = CustomerStore.MODE_AGENT;
+          console.log('return to chatbot')
+          this.router.customerStore.setCustomer(customerId, customer)
+          return this.router._relayOperatorMessage(message);
         }
         
-        else if(customer.agent == 'direct-control'){
-          console.log("enter direct-control mode")
-          if (utterance === 'handover' || utterance === 'takeover') {
-            customer.mode === CustomerStore.MODE_OPERATOR;
-            console.log('activate')
-            // this.router._switchToOperator(customerId, customer, utterance)
-            this.router.customerStore.setCustomer(customerId, {
-              id: customerId,
-              mode: CustomerStore.MODE_OPERATOR,
-              username: customer.username,
-              agent: customer.agent
-
-            })
-            return this.router._relayOperatorMessage(message);
-          }
-          else if (utterance === 'return') {
-            customer.mode === CustomerStore.MODE_AGENT;
-            console.log('return to chatbot')
-            // this.router._switchToOperator(customerId, customer, utterance)
-            this.router.customerStore.setCustomer(customerId, {
-              id: customerId,
-              mode: CustomerStore.MODE_AGENT,
-              username: customer.username,
-              agent: customer.agent
-            })
-            return this.router._relayOperatorMessage(message);
-          }
+        // else if(customer.agent == 'direct-control'){
+        //   console.log("enter direct-control mode")
+        //   if (utterance === 'handover' || utterance === 'takeover') {
+        //     customer.mode === CustomerStore.MODE_OPERATOR;
+        //     console.log('activate')
+        //     // this.router._switchToOperator(customerId, customer, utterance)
+        //     this.router.customerStore.setCustomer(customerId, {
+        //       id: customerId,
+        //       mode: CustomerStore.MODE_OPERATOR,
+        //       username: customer.username,
+        //       agent: customer.agent
+        //     })
+        //     return this.router._relayOperatorMessage(message);
+        //   }
+        //   else if (utterance === 'return') {
+        //     customer.mode === CustomerStore.MODE_AGENT;
+        //     console.log('return to chatbot')
+        //     // this.router._switchToOperator(customerId, customer, utterance)
+        //     this.router.customerStore.setCustomer(customerId, {
+        //       id: customerId,
+        //       mode: CustomerStore.MODE_AGENT,
+        //       username: customer.username,
+        //       agent: customer.agent
+        //     })
+        //     return this.router._relayOperatorMessage(message);
+        //   }
+        // }
           // This indicate the operator only able to answer user when handover occur
-        }else if (customer.mode === CustomerStore.MODE_AGENT) {
+        else if (customer.mode === CustomerStore.MODE_AGENT) {
           console.log("activate is fake here")
           return Promise.reject(
             new CustomerModeError('Cannot respond to customer until they have been escalated.')
@@ -169,6 +195,9 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
           .then(() => {
             this.chat_message._saveConversationChat(customer, message)
             const customerConnection = this.router.customerConnections[customerId];
+            if(customer.mode === CustomerStore.MODE_OPERATOR_GUIDE){
+              utterance = 'Operator: ' + utterance
+            }
             return customerConnection._respondToCustomer(utterance);
           });
       })
