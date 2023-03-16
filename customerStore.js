@@ -12,6 +12,10 @@ class CustomerStore {
     return 'OPERATOR';
   }
 
+  static get MODE_OPERATOR_GUIDE (){
+    return 'OPERATOR_GUIDE';
+  }
+
   getOrCreateCustomer (customerId) {
     if (!customerId || customerId.length === 0) {
       return Promise.reject(new Error('You must specify a customer id'));
@@ -43,11 +47,11 @@ class CustomerStore {
   
 
   setCustomer (customerId, customerData) {
-    console.log('CustomerStore.setCustomer called with ', customerData);
+    // console.log('CustomerStore.setCustomer called with ', customerData);
     if (!customerId || customerId.length === 0 || !customerData) {
       return Promise.reject(new Error('You must specify a customer id and provide data to store'));
     }
-    console.log('Updating customer with id: ', customerId);
+    // console.log('Updating customer with id: ', customerId);
     this.store(customerId, customerData);
 
     return Promise.resolve(customerData);
@@ -83,10 +87,10 @@ class CustomerStore {
     var mode = obj['mode']
     var username = customerData.username;
     var agent = customerData.agent;
-    console.log(username)
-    console.log(agent)
-    console.log(socketId)
-    console.log(mode)
+    // console.log(username)
+    // console.log(agent)
+    // console.log(socketId)
+    // console.log(mode)
     let data = {
       id: socketId,
       mode: mode,
@@ -94,9 +98,9 @@ class CustomerStore {
       agent: agent
     }
     this.customers[customerId] = JSON.stringify(data);
-    console.log(this.customers[customerId])
-    console.log(data)
-    console.log('hahaah')
+    // console.log(this.customers[customerId])
+    // console.log(data)
+    // console.log('hahaah')
     // obj.push(customerData)
     // console.log(obj)
     // console.log('hahaah')
@@ -135,10 +139,10 @@ class CustomerStore {
     //     return test;
     //   }
     //   return null;
-    console.log(this.customers)
-    console.log(customerId)
+    // console.log(this.customers)
+    // console.log(customerId)
     const customerData = this.customers[customerId];
-    console.log(customerData)
+    // console.log(customerData)
     return customerData ? JSON.parse(customerData) : null;
   }
 
@@ -151,8 +155,8 @@ class CustomerStore {
     var name_list = JSON.stringify(list)
     var objective = JSON.parse(name_list)
     for(var id in list){
-      console.log("hello_Store")
-      console.log(objective[id])
+      // console.log("hello_Store")
+      // console.log(objective[id])
       var check = JSON.parse(objective[id])
       if(customerId == check['id']){
         delete this.customers[id]
