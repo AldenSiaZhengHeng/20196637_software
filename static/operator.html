@@ -9,30 +9,10 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/operator.css">
-
     <style>
-       /* * { margin: 0; padding: 0; box-sizing: border-box; } */
-      /* body { font: 13px Helvetica, Arial; } */
-      /* h1 { text-align: center; padding: 20px; } */
-      /* form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; } */
-      /* form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; } */
-      /* form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; } */
-      /* #chatTabs { list-style-type: none; margin: 0; padding: 0; } */
-      /* #chatTabs li.chat-tab { padding: 5px; float: left; border: 1px solid black; border-radius: 10px 10px 0 0; cursor: default; } */
-      /* #chatTabs li.chat-tab.selected { display:flex; font-weight: bold; color: white; background-color: black; } */
-      /* #chatWindows { border-top: 1px solid black; width: 100%;} */
-      /* ul.chat-window { list-style-type: none; margin: 0; padding: 0; } */
-      /* ul.chat-window li { padding: 5px 10px; } */
-      /* ul.chat-window li.operator-message { color: blue;} */
-      /* ul.chat-window li.operator-error { color: red; } */
-      /* ul.chat-window li.operator-message::before { content: "> "; } */
-      /* ul.chat-window li.customer-message {align-self: flex-start; } */
-      /* ul.chat-window li.agent-response { font-style: italic; } */
-      /* ul.chat-window li:nth-child(odd) { background: #eee; } */
     </style>
   </head>
   <body>
-    <h1>Operator</h1>
     <div class="sidebar">
       <div class="logo-details">
           <div class="logo_name">Customer Admin Panel</div>
@@ -46,6 +26,18 @@
           </a>
            <span class="tooltip">Chat</span>
         </li>
+        <li>
+          <a href="/getPurchase">
+            <i class='bx bx-purchase-tag-alt'></i>
+              <span class="links_name">Purchase</span>
+              </a>
+        </li> 
+        <li>
+          <a href="/getRefund">
+            <i class='bx bxs-package'></i>
+              <span class="links_name">Refund</span>
+              </a>
+        </li>  
         
        <li class="profile">
            <div class="profile-details">
@@ -61,33 +53,48 @@
        </li>
       </ul>
     </div>
+
+
     <section class="section">
-    <div class="main">
-      <div class="customer-Tabs">
-        <h1>Customer Tabs</h1>
-        <ul class="chatTabs" id="chatTabs">
-        </ul>
+      <div class="main">
+        <div class="title">
+          <h1>Phone Store Admin Panel</h1>
+        </div>
+
+        <div class="border"></div>
+
+        <div class="tab-container">
+          <h1>Customer Tabs</h1>
+          <div class="customer-Tabs">
+            <ul class="chatTabs" id="chatTabs">
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="chatWindow" id="chatWindow">
+          <h1>Chat Window</h1>
+          <div class="chatWindows"></div>
+          <div class="user-input">
+            <form class="message-form">
+              <input class="message-input" id="m" autocomplete="off" />
+              <div class="v-divider"></div>
+              <button class="send-button">Send</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="notify-container">
+          <h1>Notification</h1>
+
+          <div class="notification-container">
+            <ul class="notification">
+  
+            </ul>
+          </div>
+        </div>
+        
       </div>
-
-      <div class="chatWindows" id="chatWindows">
-        <h1>Chat Window</h1>
-
-      </div>
-
-      <div class="notification-container">
-        <h1>Notification</h1>
-        <ul class="notification">
-
-        </ul>
-      </div>
-
-      <form class="message-form">
-        <input class="message-input" id="m" autocomplete="off" />
-        <div class="v-divider"></div>
-        <button class="send-button">Send</button>
-      </form>
-      
-    </div>
     </section>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
