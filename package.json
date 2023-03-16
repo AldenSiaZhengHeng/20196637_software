@@ -1,7 +1,7 @@
 {
   "name": "agent-human-handoff-sample",
   "version": "0.0.1",
-  "description": "Code sample for agent-human handoff with Dialogflow",
+  "description": "Code sample for agent-human handoff with Nlp.js",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
