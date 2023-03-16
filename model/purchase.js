@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const purchaseSchema = new mongoose.Schema(
     {
-        purchaseId:{type: String, required:true, unique:true},
+        trackingNumber:{type: String, required:true, unique:true},
         username: { type: String, required: true},
         item:{type: Array, required:true},
         location:{type:String, required:true},
