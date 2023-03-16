@@ -22,5 +22,7 @@ module.exports = {
 
   CONTEXT_OPERATOR_REQUEST: 'operator_request',
 
-  OPERATOR_GREETING: `Hello, I'm a human. How can I help you?`
+  REQUESTED_OPERATOR_GREETING: `Hello, I'm your customer service agent. How can I help you?`,
+  OPERATOR_GREETING: "A human operator has been requested, plesae wait patiently and someone will get in touch with you soon."
+
 };
