@@ -52,7 +52,7 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
       // this.router.customerStore.setCustomer(this.socket.id, data)
       this.router.customerStore.pushToExisitingStore(this.socket.id, data);
       this.router._sendConnectionStatusToOperator(this.socket.id)
-      console.log(this.router.customerStore.retrieve(this.socket.id))
+      // console.log(this.router.customerStore.retrieve(this.socket.id))
     });
 
     this.socket.on(AppConstants.EVENT_CUSTOMER_MESSAGE, (message) => {
@@ -75,27 +75,17 @@ class CustomerConnectionHandler extends ChatConnectionHandler {
     // Look up this customer
     this.router.customerStore
       .getOrCreateCustomer(this.socket.id)
-      .then(customer => {
-        // Tell the router to perform any next steps
-        console.log("bankai")
-        console.log(typeof customer);
-        console.log(customer.id)
-        console.log(customer)
-        return this.router._routeCustomer(utterance, customer, this.socket.id);
-      })
-      .then(response => {
-        // Send any response back to the customer
-        if (response) {
-          console.log("return response to customer")
-          console.log(response)
-
-          // add condition for refund and purchasing condition
-          // if(response.intent == 'refund_question'){
-          //   return this.socket.emit('refund', response)
-          // }
-          return this._respondToCustomer(response.answer, this.socket);
-        }
-      })
+        .then(customer => {
+          // process customer message in messageRouter
+          return this.router._routeCustomer(utterance, customer, this.socket.id);
+        })
+        .then(response => {
+          // Send any response back to the customer
+          if (response) {
+            console.log("return response to customer")
+            return this._respondToCustomer(response.answer, this.socket);
+          }
+        })
       .catch(error => {
         // Log this unspecified error to the console and
         // inform the customer there has been a problem
