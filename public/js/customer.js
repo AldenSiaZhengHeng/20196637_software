@@ -24,12 +24,14 @@ $('#selected-agent').submit(function(e){
 // When the form is submitted, send a customer message to the server
 $('#user-message').submit(function(e){
     var messageText = $('#m').val();
-    console.log(messageText)
-    addMessageToUI(true, messageText)
-
-    // $('#messages').append($('<li class="customer-message">').text(messageText));
-    socket.emit('customer message', messageText);
-    $('#m').val('');
+    if(messageText  != ''){
+        console.log(messageText)
+        addMessageToUI(true, messageText)
+    
+        // $('#messages').append($('<li class="customer-message">').text(messageText));
+        socket.emit('customer message', messageText);
+        $('#m').val('');
+    }
     // $.post("/sending",
     // {
     //     messages: messageText,
