@@ -18,6 +18,15 @@ class userPurchaseFlow{
         this.chosen_item = [];
     }
 
+    clearparam(){
+        this.item_number = [];
+        this.item = [];
+        this.current_item = null;
+        this.basket = [];
+        this.nextintent = undefined;
+        this.previousintent = undefined;
+    }
+
     removeItemOnce(arr, value) {
         console.log(arr)
         console.log('---------')
@@ -400,7 +409,7 @@ class userPurchaseFlow{
             if(output.intent == 'UK_location'){
                 if(this.basket.length > 0){
                     console.log('customer checkout')
-                    let purchaseId = this.makeid(10)
+                    let purchaseId = this.makeid(20)
                     let basket = {
                         trackingNumber: purchaseId,
                         username: customer.username,
@@ -415,11 +424,9 @@ class userPurchaseFlow{
                         output.answer = [e];
                         return output;
                     }
-                    var successMsg = "Thank you for your patient. Your tracking number will be "+ purchaseId +"<br />Please keep this number with you"
-                    output.answer = [successMsg];
-                    this.basket = [];
-                    this.nextintent = undefined;
-                    this.previousintent = undefined;
+                    var successMsg = "Thank you for your patient. Your tracking number will be "+ "<strong>" + purchaseId + "</strong>"  +"<br />Please keep this number with you"
+                    output.answer = [successMsg, "Is there anything I can do for you?"];
+                    this.clearparam();
                     output.intent = 'end_purchase_flow';
                     // this.currentRequest = undefined;
                     return output;
@@ -548,7 +555,7 @@ class userPurchaseFlow{
 
     makeid(length) {
         let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const characters = '0123456789';
         const charactersLength = characters.length;
         let counter = 0;
         while (counter < length) {

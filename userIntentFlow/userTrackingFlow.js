@@ -4,7 +4,15 @@ const refundTicket = require('../model/refund_ticket');
 class userTrackingFlow{
     constructor(){
         this.nextintent;
+        this.tracking_number;
     }
+
+    clearintent(){
+        this.nextintent = undefined;
+        this.tracking_number = null;
+    }
+
+    
 
     async userTrackingProcess(input, customer){
         const output = input;
@@ -12,6 +20,18 @@ class userTrackingFlow{
         if(this.nextintent){
             output.intent = this.nextintent;
             this.nextintent = undefined;
+        }
+
+        if(output.intent === 'tracking_package' || output.intent === 'tracking_refund'){
+            if(output.entities){
+                for(let i = 0; i < output.entities.length; i++){
+                    switch(output.entities[i].entity){
+                        case "number":
+                            this.tracking_number = output.entities[i].utteranceText
+                            break;
+                    }
+                }    
+            }
         }
 
         if(output.intent == 'track.purchase'){
@@ -29,14 +49,14 @@ class userTrackingFlow{
             try{
                 const result = await purchases
                 .find({
-                    trackingNumber:{$all:input.utterance}
+                    trackingNumber:this.tracking_number
                 })
                 if(result.length > 0){
                     console.log('find in database')
                     console.log(result[0])
-                    var response = 'Tracking Number: ' + result[0].trackingNumber + '<br />Purchase item: ' + result[0].item + '<br />Shipped address: ' + result[0].location + '<br />Status: ' + result[0].status;
+                    var response = 'Tracking Number: ' + "<strong>" + result[0].trackingNumber + "</strong>"+ '<br />Purchase item: ' + "<strong>" + result[0].item + "</strong>" +'<br />Shipped address: ' + "<strong>" + result[0].location + "</strong>" + '<br />Status: ' + "<strong>" + result[0].status + "</strong>";
                     output.answer = [response, 'Is there anything I can do for you?']
-                    this.nextintent = undefined
+                    this.clearintent();
                     output.intent = 'end_tracking_flow';
                     return output;
                 }else{
@@ -55,14 +75,14 @@ class userTrackingFlow{
             try{
                 const result = await refundTicket
                 .find({
-                    RefundTicketId:input.utterance
+                    RefundTicketId:this.tracking_number
                 })
                 if(result.length > 0){
                     console.log('find in database')
                     console.log(result[0])
-                    var response = 'Refund Ticket: ' + result[0].RefundTicketId + '<br />Purchase item: ' + result[0].item + '<br />Reason: ' + result[0].reason + '<br />Status: ' + result[0].status;
+                    var response = 'Refund Ticket: ' + "<strong>" + result[0].RefundTicketId + "</strong>" + '<br />Purchase item: ' + "<strong>" + result[0].item + "</strong>" +'<br />Reason: ' + "<strong>" + result[0].reason + "</strong>" + '<br />Status: ' + "<strong>" + result[0].status + "</strong>";
                     output.answer = [response, 'Is there anything I can do for you?']
-                    this.nextintent = undefined
+                    this.clearintent();
                     output.intent = 'end_tracking_flow';
                     return output;
                 }else{

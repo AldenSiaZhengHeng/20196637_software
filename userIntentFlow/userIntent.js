@@ -62,6 +62,7 @@ class userIntent{
     async trackingProcess(input, customer){
         if(input.intent == 'action.quit'){
             this.currentRequest = undefined;
+            this.userTrackingFlow.clearintent();
             return input;
         }
 
@@ -138,6 +139,7 @@ class userIntent{
         if(input.intent == 'action.quit'){
             this.basket = [];
             this.currentRequest = undefined;
+            this.userPurchaseFlow.clearparam();
             return input;
         }
         var responses = await this.userPurchaseFlow.userPurchase(input, customer);
@@ -163,6 +165,7 @@ class userIntent{
 
         if(input.intent == 'action.quit'){
             this.currentRequest = undefined;
+            this.userRefundFlow.clearparam();
             return input;
         }
 
