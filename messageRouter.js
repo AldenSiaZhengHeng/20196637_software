@@ -73,6 +73,7 @@ class MessageRouter {
     // console.log('customer username here')
     // console.log(customerId)
     var obj = this.customerStore.retrieve(customerId)
+    console.log(obj)
     // console.log(obj)
     // console.log(typeof obj)
     // console.log('customer username here')
@@ -86,7 +87,7 @@ class MessageRouter {
       const status = disconnected
       ? AppConstants.EVENT_CUSTOMER_DISCONNECTED
       : AppConstants.EVENT_CUSTOMER_CONNECTED;
-      this.operatorRoom.emit(status, {id: customerId, username: obj['username']});
+      this.operatorRoom.emit(status, {id: customerId, username: obj['username'], agent:obj['agent']});
       // console.log("hey I'm micket mouse")
       // console.log(this.customerStore.getAllCustomer())
       // console.log("hey I'm micket mouse")
