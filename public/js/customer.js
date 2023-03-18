@@ -49,6 +49,7 @@ function addMessageToUI(isOwnMessage, message){
       <li class="${isOwnMessage ? 'message-right' : 'message-left'}">
           <p class="message">
             ${message}
+            <span>${moment(new Date()).format('lll')}</span>
           </p>
         </li>
         `

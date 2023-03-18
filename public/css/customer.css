@@ -216,6 +216,7 @@ input[type=text], select {
   overflow-x: hidden;
 }
 
+.customer-error,
 .message-left,
 .message-right {
   list-style: none;
