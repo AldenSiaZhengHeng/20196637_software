@@ -1,16 +1,3 @@
-// Copyright 2017, Google, Inc.
-// Licensed under the Apache License, Version 2.0 (the 'License');
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an 'AS IS' BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 const AppConstants = require('./appConstants.js');
 const CustomerStore = require('./customerStore.js');
 const ChatConnectionHandler = require('./chatConnectionHandler.js');
@@ -127,6 +114,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
           console.log('activate')
           this.router.customerStore.setCustomer(customerId, customer)     
           this.router._OperatorRequestHandle(customerId, customer);
+          this.chat_message._saveConversationChat(customer, message)
           return this.router._relayOperatorMessage(message);
           // if(customer.agent == 'chatbot-show'){
           //   this.router._OperatorRequestHandle(customerId, customer);
@@ -140,6 +128,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
           if(utterance == 'guide'){
             customer.mode = CustomerStore.MODE_OPERATOR_GUIDE;
             this.router.customerStore.setCustomer(customerId, customer)
+            this.chat_message._saveConversationChat(customer, message)
             return this.router._relayOperatorMessage(message);          
           }
         }
@@ -147,6 +136,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
           customer.mode = CustomerStore.MODE_AGENT;
           console.log('return to chatbot')
           this.router.customerStore.setCustomer(customerId, customer)
+          this.chat_message._saveConversationChat(customer, message)
           return this.router._relayOperatorMessage(message);
         }
         
@@ -184,9 +174,6 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
             new CustomerModeError('Cannot respond to customer until they have been escalated.')
           );
         }
-
-
-
         
         
         // Otherwise, relay it to all operators
@@ -196,6 +183,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
             this.chat_message._saveConversationChat(customer, message)
             const customerConnection = this.router.customerConnections[customerId];
             if(customer.mode === CustomerStore.MODE_OPERATOR_GUIDE){
+              console.log("guidance")
               utterance = 'Operator: ' + utterance
             }
             return customerConnection._respondToCustomer(utterance);
