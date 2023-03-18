@@ -105,7 +105,7 @@
             console.log(result)
             console.log("successful add the customer purchase item")
             alert("Success\n"+result.tracking_number)
-            document.getElementById('tracking_number').innerHTML = 'Tracking Number: ' + result.tracking_number;
+            document.getElementById('tracking_number').innerHTML = 'Tracking Number: ' + "<strong>" + result.tracking_number + "</strong>";
         } else{
             alert("Failed to create the tracking number\n" + result.error)
         }
