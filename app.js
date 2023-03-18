@@ -193,12 +193,13 @@ app.post('/api/checking_trackNum', async (req,res)=>{
   try{
     const result = await purchases
     .find({
-        trackingNumber:{$all:tracking_number}
+        trackingNumber:tracking_number
     })
     if(result.length > 0){
       var item_list = result[0].item; 
+      console.log(result)
       console.log(item_list)
-      return res.json({status:'ok', item: item_list})
+      return res.json({status:'ok', result:result[0]})
     }
   }catch(e){
 
@@ -212,10 +213,10 @@ app.post('/api/refund', async (req,res)=>{
   const reason = req.body.user_reason
   const item = req.body.item
   let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters = '0123456789';
   const charactersLength = characters.length;
   let counter = 0;
-  while (counter < 10) {
+  while (counter < 20) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
     counter += 1;
   }
@@ -243,10 +244,10 @@ app.post('/api/refund', async (req,res)=>{
 app.post('/api/purchase', async (req, res)=> {
   console.log(req.body)
   let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters = '0123456789';
   const charactersLength = characters.length;
   let counter = 0;
-  while (counter < 10) {
+  while (counter < 20) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
     counter += 1;
   }
