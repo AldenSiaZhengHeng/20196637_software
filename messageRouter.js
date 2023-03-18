@@ -145,15 +145,15 @@ class MessageRouter {
     return chatbot_responses;
   }
 
-  async _saveConversationChat (utterance, customer, responses){
+  async _saveConversationChat (utterance, customer, responses, response_time){
     var messageAttributes ={};
     if(responses ==undefined){
       messageAttributes = {
         username: customer.username,
         message: utterance,
         agent: customer.agent,
-
-        userType: 'user'
+        userType: 'user',
+        response_time: response_time
       }
     }else{
       messageAttributes = {
@@ -162,7 +162,8 @@ class MessageRouter {
         agent: customer.agent,
         agentMessage: [responses.answer],
         intent:responses.intent,
-        userType: 'user'
+        userType: 'user',
+        response_time: response_time
       }
     }
     const m = new userMessages(messageAttributes);
@@ -181,7 +182,7 @@ class MessageRouter {
     const startTime = new Date().getTime(); // start timer
     const response = await this.chatbot.getAnswer(utterance);
     const endTime = new Date().getTime(); // end timer
-    const responseTime = endTime - startTime;
+    const responseTime = endTime - startTime + " ms";
     console.log('xxxxxxxxxxxxxxxxxxxxxxxxx');
     console.log(`Response: ${response.answer} | Response Time: ${responseTime} ms`);
     console.log('xxxxxxxxxxxxxxxxxxxxxxxxx');
@@ -228,12 +229,12 @@ class MessageRouter {
       // mode, do so
       if (this._checkOperatorMode(response)) {
         console.log("check operator mode");
-        return this._switchToOperator(customerId, customer, response);
+        return this._switchToOperator(customerId, customer, response, responseTime);
       }
 
       chatbot_responses = await this._checkUtterance(response, customer, customerId);
 
-      await this._saveConversationChat(utterance, customer, chatbot_responses);
+      await this._saveConversationChat(utterance, customer, chatbot_responses, responseTime);
       console.log("------------------");
 
       // Send alert to operator that the customer might need help
@@ -355,7 +356,7 @@ class MessageRouter {
   //   return this.customerConnections
   // }
 
-  _switchToOperator(customerId, customer, response){
+  _switchToOperator(customerId, customer, response, responseTime){
     console.log('Handover customer to operator mode');
     customer.mode = CustomerStore.MODE_OPERATOR;
     return this.customerStore
@@ -367,7 +368,7 @@ class MessageRouter {
         const output = [ response.answer, AppConstants.OPERATOR_GREETING ];
         // Also send everything to the operator so they can see how the agent responded
         this._sendUtteranceToOperator(output, customer, true);
-        this._saveConversationChat(response.utterance, customer, response)
+        this._saveConversationChat(response.utterance, customer, response, responseTime)
         const responses = {
           answer: output
         }

@@ -9,7 +9,8 @@ const userMessageSchema = new mongoose.Schema(
         agentMessage: {type:Array},
         intent:{type:String},
         operatorMessage:{type:String},
-        userType:{type:String}
+        userType:{type:String},
+        response_time:{type:String}
     }, 
     {collection: 'userMessages',timestamps:true}
 )
