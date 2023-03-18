@@ -66,6 +66,8 @@ input[type="submit"]{
     color: #fff;
     font-size: .8em;
 }
+
+.refund_status,
 .item_list{
     border: 2px solid red;
     padding: 50px;
@@ -78,6 +80,9 @@ input[type="submit"]{
     align-items: center;
     width: 80%;
 }
+
+.refund_ticket,
 .item{
     font-size: 2em;
+    text-align: left;
 }

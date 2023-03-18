@@ -65,7 +65,6 @@
             <fieldset>
                 <legend>Item Found</legend>
                 <div class="item_list" id="item_list">
-
                     <p id="item"></p>
                 </div>
             </fieldset>
@@ -88,10 +87,14 @@
 
                 </fieldset>
             </form>
-            <fieldset>
-                <legend>Refund Status</legend>
-                <div id="refund_status"></div>
-            </fieldset>
+            <div class="show">
+                <fieldset>
+                    <legend>Refund Status</legend>
+                    <div class="refund_status">
+                        <p id="refund_ticket"></p>
+                    </div>
+                </fieldset>
+            </div>
         </div>
     </section>
 
@@ -135,8 +138,7 @@
             if(result.status == 'ok'){
                 console.log("successful to create refund ticket");
                 alert("Success\n"+result.refund_ticket)
-                document.getElementById('refund_status').innerHTML = 'Refund Ticket: ' + result.refund_ticket;
-                
+                document.getElementById('refund_ticket').innerHTML = 'Refund Ticket: ' + "<strong>" + result.refund_ticket + "</strong>";
             }else{
                 alert(result.error)
             }
@@ -165,8 +167,9 @@
 
             if(result.status =='ok'){
                 console.log("successful find the item")
-                alert("Success\n"+result.item)
-                document.getElementById('item').innerHTML = result.item;
+                alert("Success Found\n")
+                var text = 'Username: ' + "<strong>" + result.result.username + "</strong>" + "<br />Tracking Number: " + "<strong>" + result.result.trackingNumber + "</strong>" + "<br />Item: " + "<strong>" + result.result.item + "</strong>" + "<br />Location: " + "<strong>" + result.result.location + "</strong>"+ "<br />Status: " + "<strong>" + result.result.status + "</strong>";
+                document.getElementById('item').innerHTML = text;
             } else{
                 alert(result.error)
             }
