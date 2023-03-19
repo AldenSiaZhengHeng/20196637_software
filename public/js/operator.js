@@ -340,13 +340,24 @@ function getExisitingId (){
       return;
     }
     if(msg.message.message){
-      const $li = $('<li class="customer-message">').html('Customer: ' + msg.message.message + "<span>" + moment(msg.createdAt).format('lll') + "</span>");
-      connectedCustomers[msg.customerId]
-        .window
-        .append($li);
-      scrollToBottom(connectedCustomers[msg.customerId]
-        .window
-        .append($li))
+      if(msg.message.userType === 'disconnect'){
+        const $li = $('<li class="customer-message">').html("-----" + msg.message.message + "-----" + "<span>" + moment(msg.createdAt).format('lll') + "</span>");
+        connectedCustomers[msg.customerId]
+          .window
+          .append($li);
+        scrollToBottom(connectedCustomers[msg.customerId]
+          .window
+          .append($li))
+      }
+      else{
+        const $li = $('<li class="customer-message">').html('Customer: ' + msg.message.message + "<span>" + moment(msg.createdAt).format('lll') + "</span>");
+        connectedCustomers[msg.customerId]
+          .window
+          .append($li);
+        scrollToBottom(connectedCustomers[msg.customerId]
+          .window
+          .append($li))
+      }
 
     }
     if(msg.message.agentMessage){
