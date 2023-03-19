@@ -66,7 +66,7 @@ class MessageRouter {
   }
 
   // Notifies all operators of a customer's connection changing
-  _sendConnectionStatusToOperator (customerId, disconnected) {
+  async _sendConnectionStatusToOperator (customerId, disconnected) {
     console.log('Sending customer id to any operators');
 
     // retrieve username of the particular socket id
@@ -87,6 +87,11 @@ class MessageRouter {
       const status = disconnected
       ? AppConstants.EVENT_CUSTOMER_DISCONNECTED
       : AppConstants.EVENT_CUSTOMER_CONNECTED;
+      if(obj['username'] !== null) {
+        if(status === AppConstants.EVENT_CUSTOMER_DISCONNECTED){
+          await this._saveConversationChat(status, obj, status, 0);
+        }
+      }
       this.operatorRoom.emit(status, {id: customerId, username: obj['username'], agent:obj['agent']});
       // console.log("hey I'm micket mouse")
       // console.log(this.customerStore.getAllCustomer())
@@ -148,7 +153,16 @@ class MessageRouter {
 
   async _saveConversationChat (utterance, customer, responses, response_time){
     var messageAttributes ={};
-    if(responses ==undefined){
+    if(responses === AppConstants.EVENT_CUSTOMER_DISCONNECTED){
+      messageAttributes = {
+        username: customer.username,
+        message: utterance,
+        agent: customer.agent,
+        userType: 'disconnect',
+        response_time: response_time
+      }
+    }
+    else if(responses ==undefined){
       messageAttributes = {
         username: customer.username,
         message: utterance,
