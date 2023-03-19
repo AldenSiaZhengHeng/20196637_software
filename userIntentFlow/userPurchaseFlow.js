@@ -119,7 +119,7 @@ class userPurchaseFlow{
                         this.item_number = [];
                     }
                     else{
-                        output.answer = ['Your cart:', this.basket]
+                        output.answer = ['Your cart:<br />' + this.basket, "Is there anything I can do for you?"]
                         this.chosen_item = [];
                         this.item_number = [];
                     }
@@ -139,7 +139,7 @@ class userPurchaseFlow{
                 this.item_number = [];
             }
             else{
-                output.answer = ['Your cart:', this.basket]
+                output.answer = ['Your cart:<br />' + this.basket, "Is there anything I can do for you?"]
                 this.chosen_item = [];
                 this.item_number = [];
             }
@@ -235,7 +235,7 @@ class userPurchaseFlow{
                     console.log('enter here')
                     current[1] = parseInt(current[1].trim()) + parseInt(this.item_number);
                     this.basket[i] = this.chosen_item + ' - ' + current[1]
-                    output.answer = ['Your cart:', this.basket]
+                    output.answer = ['Your cart:<br />' + this.basket, 'Is there anything I can do for you?']
                     this.chosen_item = [];
                     this.item_number = [];
                     return output
@@ -244,7 +244,7 @@ class userPurchaseFlow{
             if(this.item_number){
                 this.basket.push(this.current_item + ' - ' + this.item_number)
             }
-            output.answer = ['Your cart:', this.basket]
+            output.answer = ['Your cart:<br />' + this.basket, 'Is there anything I can do for you?']
             console.log(this.basket)
             output.basket = this.basket
             this.item_number = [];
@@ -291,7 +291,7 @@ class userPurchaseFlow{
             if(this.basket.length <= 0){
                 output.answer = 'All item has been removed from the cart!'
             }else{
-                output.answer = ["Your cart:",this.basket]
+                output.answer = ["Your cart: <br />" + this.basket, "Is there anything I can do for you?"]
             }
             this.item_number = []
             output.basket = this.basket;
@@ -363,7 +363,7 @@ class userPurchaseFlow{
         else if(output.intent === 'customer.checkout'){
             console.log("customer checkout")
             if(this.basket.length>0){
-                output.answer = ['Your cart:\n' + this.basket,'Do you want to add Sim card?']
+                output.answer = ['Your cart:<br />' + this.basket,'Do you want to add Sim card?']
                 this.additional_item = 'sim_card';
                 // output.answer = 'Alright, can you please provide your address?'
                 this.previousintent = 'customer.checkout';
