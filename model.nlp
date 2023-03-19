@@ -16765,7 +16765,7 @@
             "answer": "Hi! I'm an agent designed to demonstrate operator requests. You can ask me about my purpose, or ask to speak with a person. If I fail to understand your statement, I'll connect you with a person automatically. How can I help you?"
           },
           {
-            "answer": "You can ask me for several tasks:<br/ >1) Ask Information for product selling<br />2) Purchase<br />3) Refund<br />4) Track package status<br />5) Track Refund process"
+            "answer": "You can ask me for several tasks:<br/ >• Ask Information for product selling<br />• Purchase<br />• Refund<br />• Track package status<br />• Track Refund process"
           }
         ],
         "basket.clean": [
@@ -16858,7 +16858,7 @@
         ],
         "item.list": [
           {
-            "answer": "Our product is:<br />1) Iphone 14 pro<br />2) Samsung S22<br />3) ASUS ROG Phone 6"
+            "answer": "Our product is:<br />• Iphone 14 pro<br />• Samsung S22<br />• ASUS ROG Phone 6<br /><br />*Each phone will not come with a sim card and other accessories."
           }
         ],
         "item.phone_case": [
