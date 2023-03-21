@@ -5,12 +5,24 @@ var Username ='';
 $('#selected-agent').submit(function(e){
     document.getElementById("main-container").style.display="block";
     document.getElementById("main-selection").style.display="none";
+    // var tag = document.getElementById("customer-tag").value
     var selected = document.getElementById("agent").value
     Username = $('#username-input').val();
     var data = {agent: selected, username: Username}
     console.log(selected)
     console.log(Username)
     console.log(data)
+    if(selected ==='chatbot-show'){
+        document.getElementById("customer-tag").innerHTML = "Martin";
+
+    }
+    else if(selected === 'chatbot-hidden'){
+        document.getElementById("customer-tag").innerHTML = "Louis";
+    }
+    else if(selected === 'chatbot-guide'){
+        document.getElementById("customer-tag").innerHTML = "David";
+    }
+    
     socket.emit('customer-details',data)
     e.preventDefault()
 });
