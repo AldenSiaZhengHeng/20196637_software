@@ -252,6 +252,8 @@ class userPurchaseFlow{
             return output
         }
         else if(output.intent === 'remove.item_amount'){
+            var original_length = this.basket.length;
+            var remove_item;
             for(let i = 0; i<this.basket.length; i++){
                 var current = this.basket[i].split("-")
                 console.log(this.chosen_item)
@@ -265,16 +267,17 @@ class userPurchaseFlow{
                         break;
                     }
                     else{
+                        remove_item = this.chosen_item[i];
                         console.log(this.basket)
                         this.basket.splice(i,1)
                         break;
                     }
                 }
-                console.log(this.basket)
-                console.log(current[1])
-                console.log(typeof(current[1]))
-                console.log(current)
-                console.log(';;;;;;;;')
+                // console.log(this.basket)
+                // console.log(current[1])
+                // console.log(typeof(current[1]))
+                // console.log(current)
+                // console.log(';;;;;;;;')
 
             }
             console.log('pppppppp')
@@ -289,10 +292,14 @@ class userPurchaseFlow{
             }
 
             if(this.basket.length <= 0){
-                output.answer = 'All item has been removed from the cart!'
-            }else{
+                output.answer = 'All item has been ad from the cart!'
+            }else if(this.basket.length < original_length){
+                output.answer = ["Item " + a_item + " has been removed as the amount to remove is larger than the amount in the basket.", "Your cart: <br />" + this.basket, "Is there anything I can do for you?"]
+            }
+            else{
                 output.answer = ["Your cart: <br />" + this.basket, "Is there anything I can do for you?"]
             }
+            
             this.item_number = []
             output.basket = this.basket;
             return output;
@@ -390,6 +397,7 @@ class userPurchaseFlow{
                 this.previousintent = 'customer.address';
                 return output;
             }
+            return output;
         }
         else if(output.intent === 'disagreement'){
             if(this.additional_item == 'sim_card'){
@@ -402,7 +410,13 @@ class userPurchaseFlow{
                 this.nextintent = undefined;
                 this.previousintent = 'customer.address'
                 return output;
-            }        
+            }    
+            if(this.basket != null || this.basket.length > 0){
+                output.answer = ["Alright, you can ask me any questions at anytime when you want to do so.","However, I have found that you have added item to your cart. You can ask for 'check out' to me if you want to complete your purchasing action."];
+                this.nextintent = undefined;
+                return output;
+            }  
+            return output;  
         }
         else if(this.previousintent == 'customer.address'){
             console.log("customer provide location")
