@@ -118,6 +118,15 @@ class userIntent{
             }
             return output;
         }
+
+        if(output.intent === 'additional_info'){
+            this.counter +=1;
+            if(this.counter >= 2){
+                this.operator_alert = true;
+                this.counter = 0;
+            }
+            return output;
+        }
         
 
         if(output.intent === 'checkBasket'){
