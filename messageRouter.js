@@ -35,6 +35,7 @@ class MessageRouter {
     this.sentiment = new Sentiment_analysis();
     this.userRefundFlow = new userRefundFlow();
     this.userDatabase = {};
+    this.informMessage = true;
   }
 
   // Attach event handlers and begin handling connections
@@ -133,14 +134,19 @@ class MessageRouter {
     if(this.userDatabase[customerId].currentRequest == 'refund_mode'){
       console.log("user want to refund")
       chatbot_responses = await this.userDatabase[customerId].userRefund(response,customer);
+      this.informMessage = true;
     }
     else if (this.userDatabase[customerId].currentRequest == 'purchase_mode'){
       console.log("user buy item")
       chatbot_responses = await this.userDatabase[customerId].onPurchaseMode(response,customer);
+      this.informMessage = true;
+
     }
     else if (this.userDatabase[customerId].currentRequest == 'tracking_mode'){
       console.log("user track item")
       chatbot_responses = await this.userDatabase[customerId].trackingProcess(response,customer);
+      this.informMessage = true;
+
     }    
     else{
       console.log("perform other tasks");
@@ -248,18 +254,49 @@ class MessageRouter {
       }
 
       chatbot_responses = await this._checkUtterance(response, customer, customerId);
-
       await this._saveConversationChat(utterance, customer, chatbot_responses, responseTime);
+
+      // to send again the flow that will be perform by user after quit the current flow
+      var notify = this.userDatabase[customerId].currentRequest;
+
+      if(chatbot_responses.informMessage === true){
+        this.informMessage = chatbot_responses.informMessage
+        notify = chatbot_responses.quitMode;
+      }
+
       console.log("------------------");
+      console.log(chatbot_responses)
+      if(this.informMessage){
+        if(this.userDatabase[customerId].currentRequest){
+          let information = {
+            customer: customer,
+            customerId: customerId,
+            response: notify
+          }
+          this.operatorRoom.emit('customer_alert', information)
+          this.informMessage = false;
+        }
+        else{
+          let information = {
+            customer: customer,
+            customerId: customerId,
+            response: notify
+          }
+          this.operatorRoom.emit('customer_alert', information)
+          this.informMessage = false;
+        }
+      }
+
 
       // Send alert to operator that the customer might need help
       if(this.userDatabase[customerId].operator_alert == true){
         let message = {
           customer: customer,
           customerId: customerId,
-          response: chatbot_responses
+          response: 'chatbot_confused'
         }
         this.operatorRoom.emit('customer_alert', message)
+        this.userDatabase[customerId].operator_alert = false;
       }
       // console.log(chatbot_responses);
       // console.log(this.userDatabase);

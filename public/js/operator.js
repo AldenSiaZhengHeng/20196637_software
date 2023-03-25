@@ -406,10 +406,36 @@ function getExisitingId (){
   var notifyCustomerAlert = function(msg){
     console.log("add customer alert")
     console.log(msg)
-    $('.notification')
-    .append($('<li class="alert">')
-    .append($('<p class="' + msg.customerId + '">').html("Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is confusing"))
-    .append($('<p class="customer_id">').text('CustomerID: ' + msg.customerId)));
+    var string = null;
+    if(msg.response === 'purchase_mode'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is try for purchase action."
+    }
+    else if(msg.response === 'refund_mode'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is try for refund items."
+
+    }
+    else if(msg.response === 'tracking_mode'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is try for tracking action."
+    }
+    else if(msg.response === 'chatbot_confused'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is confusing"    
+    }
+    else if(msg.response === 'quit_refund'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is quit for refund flow."    
+    }
+    else if(msg.response === 'quit_tracking'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is quit for tracking flow."    
+    }
+    else if(msg.response === 'quit_purchase'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is quit for purchase flow."    
+    }
+    
+    if(string!=null){
+      $('.notification')
+      .append($('<li class="alert">')
+      .append($('<p class="' + msg.customerId + '">').html(string))
+      .append($('<p class="customer_id">').text('CustomerID: ' + msg.customerId)));
+    }
 
     $( ".alert" ).click(function() {
       var $this = $(this);
