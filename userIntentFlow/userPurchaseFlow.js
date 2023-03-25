@@ -66,6 +66,11 @@ class userPurchaseFlow{
             this.nextintent = undefined;
         }
 
+        if(output.intent ==='customer.want_purchase'){
+            this.nextintent = 'add.item_1';
+            return output;
+        }
+
 
         // extract the target entities and decide the action
         if(output.entities){
@@ -102,6 +107,7 @@ class userPurchaseFlow{
                 }
             }
         }
+
         if(output.intent === 'multiple_item.amount'){
             console.log('user enter the multiple item amount')
             for(let i = 0; i<this.basket.length; i++){
@@ -188,6 +194,10 @@ class userPurchaseFlow{
         else if(output.intent == 'add.item_1' || output.intent == 'add.item_2' || output.intent == 'add.item_3'){
             console.log("hello there")
             console.log(this.item)
+            if(this.item.length == 0){
+                return output;
+            }
+
             if(this.item.length > 1){
                 console.log('array item list')
                 for(let i = 0; i<this.item.length; i++){
