@@ -134,18 +134,15 @@ class MessageRouter {
     if(this.userDatabase[customerId].currentRequest == 'refund_mode'){
       console.log("user want to refund")
       chatbot_responses = await this.userDatabase[customerId].userRefund(response,customer);
-      this.informMessage = true;
     }
     else if (this.userDatabase[customerId].currentRequest == 'purchase_mode'){
       console.log("user buy item")
       chatbot_responses = await this.userDatabase[customerId].onPurchaseMode(response,customer);
-      this.informMessage = true;
 
     }
     else if (this.userDatabase[customerId].currentRequest == 'tracking_mode'){
       console.log("user track item")
       chatbot_responses = await this.userDatabase[customerId].trackingProcess(response,customer);
-      this.informMessage = true;
 
     }    
     else{

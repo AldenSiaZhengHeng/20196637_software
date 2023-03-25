@@ -180,7 +180,7 @@ body {
 .angry{
     list-style: none;
     padding: 5px 12px;
-    height: 60px;
+    height: 80px;
     width: 80%;
     display: flex;
     flex-direction: column;
