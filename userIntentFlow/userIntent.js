@@ -44,11 +44,11 @@ class userIntent{
 
     checkmode(input){
         if(this.currentRequest == null){
-            if(input.intent == 'user.refund' || input.intent =='reason.item_broken'){
+            if(input.intent == 'user.refund' || input.intent =='reason.item_broken' || input.intent =='readon.item_delayed'){
                 console.log("set refund mode")
                 this.currentRequest = 'refund_mode';
             }
-            else if(input.intent == 'customer_purchase' || input.intent == 'add.item_1' || input.intent == 'add.item_2' || input.intent == 'add.item_3' ){
+            else if(input.intent =='customer.want_purchase' ||input.intent == 'customer_purchase' || input.intent == 'add.item_1' || input.intent == 'add.item_2' || input.intent == 'add.item_3' ){
                 console.log("set purchase mode")
                 this.currentRequest = 'purchase_mode';
             }
@@ -63,6 +63,8 @@ class userIntent{
         if(input.intent == 'action.quit'){
             this.currentRequest = undefined;
             this.userTrackingFlow.clearintent();
+            input.informMessage = true;
+            input.quitMode = 'quit_tracking';
             return input;
         }
 
@@ -149,6 +151,8 @@ class userIntent{
             this.basket = [];
             this.currentRequest = undefined;
             this.userPurchaseFlow.clearparam();
+            input.informMessage = true;
+            input.quitMode = 'quit_purchase';
             return input;
         }
         var responses = await this.userPurchaseFlow.userPurchase(input, customer);
@@ -175,6 +179,8 @@ class userIntent{
         if(input.intent == 'action.quit'){
             this.currentRequest = undefined;
             this.userRefundFlow.clearparam();
+            input.informMessage = true;
+            input.quitMode = 'quit_refund';
             return input;
         }
 
