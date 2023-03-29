@@ -174,7 +174,7 @@ class userPurchaseFlow{
                 output.answer = ['Please enter the amount that you would like to purchase for ' + this.chosen_item[0]]
                 this.item_number = [];
             }
-            else {
+            else if(this.item_number.length = 1){
                 console.log("1 item only")
                 this.chosen_item = itemList.getitem(this.item_number)
                 console.log(this.chosen_item)
@@ -201,6 +201,7 @@ class userPurchaseFlow{
             console.log("hello there")
             console.log(this.item)
             if(this.item.length == 0){
+                output.answer = 'There is no such item number/ items in the store. Please re-enter again.'
                 return output;
             }
 
@@ -223,11 +224,13 @@ class userPurchaseFlow{
                 this.chosen_item = itemList.getitem(this.item)
                 console.log(this.chosen_item)
                 this.nextintent = 'item.amount';
+                
                 output.answer = ['Please enter the amount that you would like to purchase for ' + this.chosen_item]
                 this.current_item = this.chosen_item;
                 this.item = [];
                 this.item_number = [];
             }
+
             return output;
             // console.log("hello")
             // console.log(this.item.length)
