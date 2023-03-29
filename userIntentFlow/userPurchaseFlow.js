@@ -44,7 +44,7 @@ class userPurchaseFlow{
     async userPurchase(input, customer){
         const output = input;
 
-        // Directly return response to customer due as the questions is unable to answer by it/
+        // Directly return response to customer due as the questions is unable to answer by it
         if(output.intent ==='additional_info'){
             output.intent = 'chatbot_confused'
             return output;
