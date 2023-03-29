@@ -125,12 +125,12 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
           // }
         }
         else if(customer.agent =='chatbot-guide'){
-          if(utterance == 'guide'){
+          // if(utterance == 'guide'){
             customer.mode = CustomerStore.MODE_OPERATOR_GUIDE;
             this.router.customerStore.setCustomer(customerId, customer)
-            this.chat_message._saveConversationChat(customer, message)
-            return this.router._relayOperatorMessage(message);          
-          }
+            // this.chat_message._saveConversationChat(customer, message)
+            // return this.router._relayOperatorMessage(message);          
+          // }
         }
         else if(utterance == 'return') {
           customer.mode = CustomerStore.MODE_AGENT;
@@ -184,7 +184,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
             const customerConnection = this.router.customerConnections[customerId];
             if(customer.mode === CustomerStore.MODE_OPERATOR_GUIDE){
               console.log("guidance")
-              utterance = 'Operator: ' + utterance
+              utterance = '<span>----------------------------------<br />' + 'Guidance from Operator<br />' + '----------------------------------</span>' + 'Operator: ' + utterance + '<br /><span>Please don\'t reply to this message.</span>'
             }
             return customerConnection._respondToCustomer(utterance);
           });
