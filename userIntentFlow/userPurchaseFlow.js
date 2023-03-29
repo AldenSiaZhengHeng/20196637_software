@@ -44,6 +44,12 @@ class userPurchaseFlow{
     async userPurchase(input, customer){
         const output = input;
 
+        // Directly return response to customer due as the questions is unable to answer by it/
+        if(output.intent ==='additional_info'){
+            output.intent = 'chatbot_confused'
+            return output;
+        }
+        
         if(output.intent === 'checkBasket'){
             if(!this.basket.length){
                 output.answer = 'There is no item in the cart. Would you like to add something on it?'
@@ -462,10 +468,6 @@ class userPurchaseFlow{
                 output.intent = 'chatbot_confused';
                 return output;
             }
-        }
-        else if(output.intent =='additional_info'){
-            output.intent = 'chatbot_confused'
-            return output;
         }
         else if(output.answer == undefined){
             output.answer = ['Sorry, I can\'t recognize what you are saying. Can you state your answer clearly or more details?', 'Please make sure that your asked questions is under the purchase flow, if you want to quit, please type any command like "quit, leave"']

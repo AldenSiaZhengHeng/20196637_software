@@ -123,7 +123,7 @@ class userIntent{
 
         if(output.intent === 'additional_info'){
             this.counter +=1;
-            if(this.counter >= 2){
+            if(this.counter >= 1){
                 this.operator_alert = true;
                 this.counter = 0;
             }

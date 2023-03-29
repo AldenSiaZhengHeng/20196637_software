@@ -26,6 +26,11 @@ class userRefundFlow{
     async userRefund(input, customer){
         const output = input;
 
+        if(output.intent ==='additional_info'){
+            output.intent = 'chatbot_confused'
+            return output;
+        }
+
         // directly return if the user request for operator
         if(output.intent === 'operator_request'){
             return output;

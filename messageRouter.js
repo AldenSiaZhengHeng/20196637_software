@@ -280,7 +280,7 @@ class MessageRouter {
             response: notify
           }
           this.operatorRoom.emit('customer_alert', information)
-          this.informMessage = false;
+          // this.informMessage = false;
         }
       }
 

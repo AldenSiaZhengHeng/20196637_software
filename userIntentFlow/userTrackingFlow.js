@@ -17,6 +17,11 @@ class userTrackingFlow{
     async userTrackingProcess(input, customer){
         const output = input;
 
+        if(output.intent ==='additional_info'){
+            output.intent = 'chatbot_confused'
+            return output;
+        }
+
         if(this.nextintent){
             output.intent = this.nextintent;
             this.nextintent = undefined;
