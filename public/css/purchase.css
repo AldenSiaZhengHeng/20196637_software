@@ -42,6 +42,10 @@ input{
     padding: .5em;
     border:solid 1px #999
 }
+
+select{
+    height: 35px;
+}
 input[type="text"]{
     width: 15em;
 }
@@ -58,6 +62,8 @@ fieldset{
     border-radius: 6px;
     min-width: 200px;
 }
+
+button,
 input[type="submit"]{
     margin-top: 1em;
     padding: .5em 1em;

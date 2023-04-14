@@ -66,8 +66,23 @@
                     <legend>Purchase</legend>
                 <label for="Username">Username:</label>
                 <input name="Username" type="text" id="username" required placeholder=""/>
-                <label for="purchase">Product Purchases:</label>
+                <label for="item">Select items: </label>
+                <select id="item" name="item">
+                  <option value="Iphone 14 pro">Iphone 14 pro</option>
+                  <option value="Samsung S22">Samsung S22</option>
+                  <option value="ASUS ROG Phone 6">ASUS ROG phone 6</option>
+                  <option value="Phone Case">Phone Case</option>
+                  <option value="SIM Card">SIM Card</option>
+                </select>
+                <input name="amount" type="amount" id="amount" placeholder="amount" />
+                <br />
+                <button onclick="myFunction()">Add</button>
+                <br />
+                <br />
                 <textarea id="purchase" rows="5" cols="50" name="product"></textarea>
+
+                <!-- <label for="purchase">Product Purchases:</label>
+                <textarea id="purchase" rows="5" cols="50" name="product"></textarea> -->
                 <label for="location">Location:</label>
                 <input id="location" name="location" type="text" required placeholder=""/>
                 <br />
@@ -83,11 +98,19 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      function myFunction() {
+        const item = document.getElementById('item').value;
+        const amount = document.getElementById('amount').value;
+        document.getElementById("purchase").innerHTML += item + " - " + amount + ",";
+      }
+    </script>
 <script>
     const form = document.getElementById('submit')
     form.addEventListener('submit', submit)
 
     async function submit(event){
+      console.log(form)
         const customer_name = document.getElementById('username').value;
         const purchase = document.getElementById('purchase').value;
         const location = document.getElementById('location').value;
@@ -95,7 +118,9 @@
         console.log(purchase)
         var purchase_item = purchase.split(',')
         for(let i=0; i<purchase_item.length; i++){
+          if(purchase_item[i].length > 0){
             item.push(purchase_item[i])
+          }
         }
         console.log(item)
         const result = await fetch('/api/purchase', {
