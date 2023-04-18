@@ -1,3 +1,6 @@
+// This class function indicated the purchase flow that has been implemented
+// The action about refund request such as asking for refund, ask for reason and addition reason in more details, ask for tracking number and determine whether it is valid have been implemented
+
 const refundTicket = require('../model/refund_ticket');
 const purchases = require('../model/purchase');
 
@@ -12,6 +15,7 @@ class userRefundFlow{
         this.tracking_number;
     }
 
+    // this function will clear the parameter once the purchase action completed in order to process the other tasks.
     clearparam(){
         this.item_broken = false;
         this.item_lost = false;
@@ -23,9 +27,12 @@ class userRefundFlow{
         this.tracking_number = null;
     }
 
+    //main flow of the refund flow
     async userRefund(input, customer){
         const output = input;
 
+        // Directly return response to customer due as the questions is unable to answer by it
+        // specific intent that will trigger the alert notification module
         if(output.intent ==='additional_info'){
             output.intent = 'chatbot_confused'
             return output;
@@ -56,15 +63,15 @@ class userRefundFlow{
             }
         }
 
-        console.log('--------------------')
-        console.log(output.intent)
-        console.log(this.predicted_intent)
-        console.log(input.intent)
-        console.log('--------------------')
+        // can be uncomment to see the predicted intent by the chatbot
+        // console.log('--------------------')
+        // console.log(output.intent)
+        // console.log(this.predicted_intent)
+        // console.log(input.intent)
+        // console.log('--------------------')
 
 
         // if the user utterance is ask for refund, the next action should be note down the tracking number
-
         if(output.intent == 'user.refund' || output.intent == 'reason.item_broken' || output.intent =='reason.item_delayed'){
             this.nextintent = 'user.tracking_number';
             this.currentRequest = 'refund_mode'
@@ -81,6 +88,7 @@ class userRefundFlow{
             }
             return output;
         }
+        // if detect tracking number from the user message, check and compare the tracking number on purchase table in mongodb to see whether it is valid or not
         else if(output.intent == 'user.tracking_number'){
             console.log("plan to find purchase id")
             // get tracking number from user
@@ -110,6 +118,7 @@ class userRefundFlow{
                     return output;
                 }
             }
+        // if the information is correct that search by the tracking number, ask for the reason
         }else if(output.intent === 'agreement'){
 
             // if user has inform the specific reason
@@ -124,7 +133,9 @@ class userRefundFlow{
                 output.answer = "Thanks for confirmation. Could you please provide the reason why you want to refund?"
                 return output;
             }
-        }else if(output.intent ==='disagreement'){
+        }
+        // if the information is wrong, ask the user to enter again.
+        else if(output.intent ==='disagreement'){
             console.log("disagreement");
             this.item_list = undefined;
             output.answer = ["Sorry about that, the tracking number you have entered might be wrong or there is some problem.","Can you please re-enter again the tracking number or enter 'quit, leave etc' to exit the refund process?"]
@@ -132,6 +143,7 @@ class userRefundFlow{
             this.nextintent = 'user.trackingNumber';
             return output;
         }
+        // ask the user to describe the reason in more details
         else if(output.intent ==='user.reason'){
             if(this.predicted_intent =='reason.item_broken' || this.predicted_intent == 'reason.item_delayed'){
                 console.log("enter additional reason")
@@ -147,6 +159,7 @@ class userRefundFlow{
                 return output;
             }
         }
+        // the addition reason enter by the user will be process by chatbot in userIntent.js. If the intent is not recognized by the chatbot, reject it, else return the refund ticket number back to the user 
         else if(output.intent == 'additional_reason'){
             console.log('---------')
             console.log(input)
@@ -197,10 +210,8 @@ class userRefundFlow{
             
         
         }
-        else if(output.intent =='additional_info'){
-            output.intent = 'chatbot_confused'
-            return output;
-        }
+        // handle unrecognized intent
+        // intent detection
         else if(output.answer == undefined){
             output.answer = ['Sorry, I can\'t recognize what you are saying. Can you state your answer clearly or more details?', 'Please make sure that your asked questions is under the refund flow, if you want to quit, please type any command like "quit, leave"']
             output.intent = 'chatbot_confused';
@@ -209,6 +220,7 @@ class userRefundFlow{
         return output;
     } 
 
+    // function to generate refund ticket number
     makeid(length) {
         let result = '';
         const characters = '0123456789';
@@ -217,9 +229,6 @@ class userRefundFlow{
         while (counter < length) {
           result += characters.charAt(Math.floor(Math.random() * charactersLength));
           counter += 1;
-        //   if(counter == 5){
-        //     result += " ";
-        //   }
         }
         return result;
     }

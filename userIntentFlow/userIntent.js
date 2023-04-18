@@ -1,12 +1,12 @@
+// This class will decide the conversation flow to enter either purchase, refund, FAQ, or tracking flow
+
 const e = require('express');
 const mongoose = require('mongoose');
 const purchases = require('../model/purchase');
-const refundTicket = require('../model/refund_ticket');
-const itemlist = require('../itemlist');
+const itemlist = require('../item_list/itemlist');
 const userRefundFlow = require('./userRefundFlow');
 const userPurchaseFlow = require('./userPurchaseFlow');
 const userTrackingFlow = require('./userTrackingFlow');
-const itemList = new itemlist();
 
 
 
@@ -33,15 +33,8 @@ class userIntent{
         this.userPurchaseFlow = new userPurchaseFlow();
         this.userTrackingFlow = new userTrackingFlow();
     }
-
-    setCurrentRequest(currentRequest){
-        this.currentRequest = currentRequest;
-    }
-
-    getCurrentRequest(){
-        return this.currentRequest
-    }
-
+    
+    // this will check the intent whether the user is decided to enter which scenario set.
     checkmode(input){
         if(this.currentRequest == null){
             if(input.intent == 'user.refund' || input.intent =='reason.item_broken' || input.intent =='readon.item_delayed'){
@@ -59,6 +52,7 @@ class userIntent{
         }
     }
 
+    // this function will sent the user message to tracking flow in order to complete the tracking action
     async trackingProcess(input, customer){
         if(input.intent == 'action.quit'){
             this.currentRequest = undefined;
@@ -68,25 +62,29 @@ class userIntent{
             return input;
         }
 
+        // wait for the response from the flow
         var responses = await this.userTrackingFlow.userTrackingProcess(input,customer);
-        console.log(responses)
-        console.log('-------')
+
+        // if detect end of the flow, set the current request to null in order to proceed other steps
         if(responses.intent == 'end_tracking_flow'){
             console.log("end tracking flow")
             this.currentRequest = undefined;
         }
+        // if the intent is not recognized, triggered the notification alert variable
+        // intent detection
         else if(responses.intent =='chatbot_confused'){
             console.log("chatbot is confusing")
             this.counter +=1;
-            if(this.counter >= 2){
+            var count = this.counter
+            if(count % 2 == 0){
                 this.operator_alert = true;
-                this.counter = 0;
             }
         }
         return responses;
 
     }
 
+    // This function will process the FAQ questions
     async otherTask(input, customer){
         const output = input;
         console.log(output)
@@ -110,27 +108,29 @@ class userIntent{
             }
         }
 
-
+        // if the intent is not recognized, triggered the notification alert variable
+        // intent detection
         if(output.intent =='None'){
             this.counter += 1;
             output.answer = "Sorry, I don't understand what you are saying. Can you please re-enter you questions in more details?"
             if(this.counter >= 2){
                 this.operator_alert = true;
-                this.counter = 0;
             }
             return output;
         }
 
+        // if the intent is recognized as this specific intent, triggered the notification alert variable
+        // intent detection
+        // this intent indicated those complex questions that is unable to answer by chatbot clearly, hence, alert the human agents
         if(output.intent === 'additional_info'){
             this.counter +=1;
             if(this.counter >= 1){
                 this.operator_alert = true;
-                this.counter = 0;
             }
             return output;
         }
         
-
+        // this will return the item that the user has added into the basket
         if(output.intent === 'checkBasket'){
             console.log('check basket in other task')
             console.log(this.basket)
@@ -145,8 +145,9 @@ class userIntent{
         return output;
     }
 
+    // this processed message will be sent through here if deteremine the user is performing purchase action.
     async onPurchaseMode(input, customer){
-        // warn human operator about this customer has kept making chatbot confused
+        // quit the current action
         if(input.intent == 'action.quit'){
             this.basket = [];
             this.currentRequest = undefined;
@@ -156,7 +157,7 @@ class userIntent{
             return input;
         }
         var responses = await this.userPurchaseFlow.userPurchase(input, customer);
-        // console.log(responses)
+
         if(responses.intent == 'end_purchase_flow'){
             console.log("end purchase flow")
             this.currentRequest = undefined;
@@ -166,14 +167,13 @@ class userIntent{
             this.counter +=1;
             if(this.counter >= 2){
                 this.operator_alert = true;
-                this.counter = 0;
             }
         }
         this.basket = responses.basket;
         return responses;
     }
 
-
+    // this processed message will be sent through here if deteremine the user is performing refund action.
     async userRefund(input, customer){
 
         if(input.intent == 'action.quit'){
@@ -185,7 +185,7 @@ class userIntent{
         }
 
         var responses = await this.userRefundFlow.userRefund(input,customer);
-        console.log(responses)
+
         if(responses.intent == 'end_refund_flow'){
             console.log("end refund flow")
             this.currentRequest = undefined;
@@ -195,12 +195,12 @@ class userIntent{
             this.counter +=1;
             if(this.counter >= 2){
                 this.operator_alert = true;
-                this.counter = 0;
             }
         }
         return responses;
     }   
 
+    // create the id if for successful purchase or refund action to store the details into the database
     makeid(length) {
         let result = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

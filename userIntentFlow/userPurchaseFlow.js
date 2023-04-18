@@ -1,5 +1,8 @@
+// This class function indicated the purchase flow that has been implemented
+// The action about purchase request such as add item, remove item, checkout, enter shipping address and return tracking number have been implemented
+
 const purchases = require('../model/purchase');
-const itemlist = require('../itemlist');
+const itemlist = require('../item_list/itemlist');
 const itemList = new itemlist();
 
 
@@ -18,6 +21,7 @@ class userPurchaseFlow{
         this.chosen_item = [];
     }
 
+    // this function will clear the parameter once the purchase action completed in order to process the other tasks.
     clearparam(){
         this.item_number = [];
         this.item = [];
@@ -27,29 +31,34 @@ class userPurchaseFlow{
         this.previousintent = undefined;
     }
 
+    // This function will help to remove the item 1-by-1
     removeItemOnce(arr, value) {
-        console.log(arr)
-        console.log('---------')
-        console.log(value)
+        // console.log(arr)
+        // console.log(value)
+
         var index = arr.indexOf(value);
-        console.log(index)
+
+        // console.log(index)
         if (index > -1) {
           arr.splice(index, 1);
         }
-        console.log("xxxxxxxxxx")
+
         console.log(arr)
         return arr;
     }
 
+    // this is the main flow which will proceed the action based on the detected intent that related to purchase action
     async userPurchase(input, customer){
         const output = input;
 
         // Directly return response to customer due as the questions is unable to answer by it
+        // specific intent that will trigger the alert notification module
         if(output.intent ==='additional_info'){
             output.intent = 'chatbot_confused'
             return output;
         }
         
+        // return item added in the cart to customer
         if(output.intent === 'checkBasket'){
             if(!this.basket.length){
                 output.answer = 'There is no item in the cart. Would you like to add something on it?'
@@ -60,18 +69,21 @@ class userPurchaseFlow{
             return output;
         }
 
+        // clear the cart when user requested
         if(output.intent ==='basket.clean'){
             this.basket = [];
             output.basket = this.basket;
             return output;
         }
         
-
+        // guide the flow to make sure it will proceed to next step in purchase flow
+        // ex: add item -> checkout -> shipping address -> get tracking number
         if(this.nextintent){
             output.intent = this.nextintent;
             this.nextintent = undefined;
         }
 
+        // directly add item when user had indicated the item clearly
         if(output.intent ==='customer.want_purchase'){
             this.nextintent = 'add.item_1';
             return output;
@@ -114,6 +126,7 @@ class userPurchaseFlow{
             }
         }
 
+        // function to handle if the user add mulitple item in one times
         if(output.intent === 'multiple_item.amount'){
             console.log('user enter the multiple item amount')
             for(let i = 0; i<this.basket.length; i++){
@@ -158,16 +171,14 @@ class userPurchaseFlow{
             return output
         }
 
+        // detect the item that the user would like to add to the cart and ask the user to enter the amount for it
         if(output.intent == 'customer_purchase'){
-            console.log("hello there")
             console.log(this.item_number)
             if(this.item_number.length > 1){
                 console.log('array item list')
                 for(let i = 0; i<this.item_number.length; i++){
                     let item = itemList.getitem(this.item_number[i])
-                    // if(this.chosen_item.includes(item)){
-                    //     continue;
-                    // }
+  
                     this.chosen_item.push(item)
                 }
                 this.nextintent = 'multiple_item.amount';
@@ -189,14 +200,8 @@ class userPurchaseFlow{
                 return output;
             }
             return output;
-
-            // output.answer = [output.answer, "Is there anything I can do for you?"]
-            // this.basket.push(chosen_item + " x 1")
-            // this.item_number = [];
-            // this.item_count +=1;
-            // output["basket"] = this.basket;
-            // return output;
         }
+        // same function as above customer purchase item but with specific item mentioned
         else if(output.intent == 'add.item_1' || output.intent == 'add.item_2' || output.intent == 'add.item_3'){
             console.log("hello there")
             console.log(this.item)
@@ -232,17 +237,8 @@ class userPurchaseFlow{
             }
 
             return output;
-            // console.log("hello")
-            // console.log(this.item.length)
-            // for(let i = 0; i<this.item.length; i++){
-            //     const chosen_item = itemList.getitem(this.item[i])
-            //     this.basket.push(chosen_item + " x 1")
-            // }
-            // this.item = [];
-            // output.answer = [output.answer, "Cart:<br />" + this.basket, "Is there anything I can do for you?"]
-            // output["basket"] = this.basket;
-            // return output;
         }
+        // detect the amount of the item that user entered for the item would like to add into the cart
         else if(output.intent == 'item.amount'){
             console.log('user enter the amount')
             console.log(this.item_number)
@@ -270,6 +266,7 @@ class userPurchaseFlow{
             this.chosen_item = [];
             return output
         }
+        // function to remove the item from cart with specific amount mentioned by user
         else if(output.intent === 'remove.item_amount'){
             var original_length = this.basket.length;
             var remove_item;
@@ -292,14 +289,8 @@ class userPurchaseFlow{
                         break;
                     }
                 }
-                // console.log(this.basket)
-                // console.log(current[1])
-                // console.log(typeof(current[1]))
-                // console.log(current)
-                // console.log(';;;;;;;;')
 
             }
-            console.log('pppppppp')
             this.chosen_item.shift();
             console.log(this.chosen_item.length)
             if(this.chosen_item.length > 0){
@@ -323,6 +314,9 @@ class userPurchaseFlow{
             output.basket = this.basket;
             return output;
         }
+        
+        // determine whether the user is request to remove the item from cart.
+        // once detected, ask for the amount to remove. 
         else if(output.intent === 'remove.item' || output.intent === 'remove.item_1' || output.intent === 'remove.item_2' || output.intent === 'remove.item_3'){
             if(this.basket.length){
                 if(this.item.length){
@@ -333,7 +327,6 @@ class userPurchaseFlow{
                     this.nextintent = 'remove.item_amount'
                     for(let i = 0; i<this.item.length; i++){
                         this.chosen_item.push(itemList.getitem(this.item[i]))
-                        // this.basket.push(chosen_item + " x 1")
                     }
                     console.log(this.basket)
                     console.log(this.chosen_item)
@@ -341,17 +334,7 @@ class userPurchaseFlow{
                     this.item_number = []
                     output.answer = 'Please enter the amount you want to remove for ' + this.chosen_item[0];
                     return output;
-                    // for(let i = 0; i<this.item.length; i++){
-                    //     const chosen_item = itemList.getitem(this.item[i])
-                    //     console.log(this.basket)
-                    //     var new_basket = this.removeItemOnce(this.basket, chosen_item + " x 1")
-                    //     console.log(new_basket)
-                    //     this.item = []
-                    //     this.item_number = []
-                    //     this.item_count +=1;
-                    //     this.basket = new_basket;
-                    //     // this.basket.push(chosen_item + " x 1")
-                    // }
+
                 }
                 else if(this.item_number.length){
                     console.log("enter item number length")
@@ -367,17 +350,6 @@ class userPurchaseFlow{
                     this.item_number = []
                     output.answer = 'Please enter the amount you want to remove for ' + this.chosen_item[0];
                     return output;
-                    // for(let i = 0; i<this.item_number.length; i++){
-                    //     console.log(this.basket)
-                    //     const chosen_item = itemList.getitem(this.item_number[i])
-                    //     console.log(new_basket)
-                    //     var new_basket = this.removeItemOnce(this.basket, chosen_item + " x 1")
-                    //     this.item = []
-                    //     this.item_number = []
-                    //     this.item_count +=1; 
-                    //     this.basket = new_basket;
-                    //     // this.basket.push(chosen_item + " x 1")
-                    // }
                 }
                 output["basket"] = this.basket;
                 return output;
@@ -386,6 +358,7 @@ class userPurchaseFlow{
                 return output;
             }
         }
+        // detect whether user would like to checkout
         else if(output.intent === 'customer.checkout'){
             console.log("customer checkout")
             if(this.basket.length>0){
@@ -400,7 +373,9 @@ class userPurchaseFlow{
                 output.answer = 'There is no items added in the basket.'
                 return output;
             }
-        }else if(output.intent =='agreement'){
+        }
+        // ask whether user would like to add sim card and phone case or not before entering shipping address
+        else if(output.intent =='agreement'){
             if(this.additional_item == 'sim_card'){
                 console.log("add sim card")
                 this.additional_item = 'phone_cases';
@@ -437,6 +412,8 @@ class userPurchaseFlow{
             }  
             return output;  
         }
+        // Ask the user to enter the shipping address and determine whether it is available within UK Region
+        // after that return the tracking number
         else if(this.previousintent == 'customer.address'){
             console.log("customer provide location")
             if(output.intent == 'UK_location'){
@@ -472,116 +449,17 @@ class userPurchaseFlow{
                 return output;
             }
         }
+        // handle unrecognized intent
+        // intent detection
         else if(output.answer == undefined){
             output.answer = ['Sorry, I can\'t recognize what you are saying. Can you state your answer clearly or more details?', 'Please make sure that your asked questions is under the purchase flow, if you want to quit, please type any command like "quit, leave"']
             output.intent = 'chatbot_confused';
             return output;
         }
         return output;
-        
-
-
-        // if(output.intent == 'customer_purchase' || output.intent == 'add.item_1' || output.intent == 'add.item_2' || output.intent == 'add.item_3s'){
-        //     console.log("customer add things to basket")
-        //     console.log(this.item_number)
-        //     // target_item = ouput.ent
-        //     // const selected_id = output.answer.split(" ");
-        //     // this.nextintent = 'purchase_continue';
-        //     const chosen_item = itemList.getitem(this.item_number)
-
-        //     // return response to customer if they enter unrecognized item number
-        //     if(chosen_item == undefined){
-        //         output.answer = 'There is no such item number/ items in the store. Please re-enter again.'
-        //         return output;
-        //     }
-        //     this.additional_item = 'sim_card';
-        //     output.answer = [output.answer, "Do you want to buy SIM card too?"]
-        //     this.basket.push(chosen_item + " x 1")
-        //     console.log(this.basket)
-        // }
-        // else if(output.intent === 'agreement'){
-        //     console.log("ask for agreement for sim or phone cases")
-        //     if(this.additional_item == 'sim_card'){
-        //         console.log("add sim card")
-        //         this.additional_item = 'phone_cases';
-        //         this.basket.push("Sim Card x 1")
-        //         output.answer = ["Sim card will be added on", "Do you want to buy phone cases too?"];
-        //         return output;
-        //     }
-        //     if(this.additional_item =='phone_cases'){
-        //         console.log("add phone case")
-        //         this.basket.push("Phone case x 1")
-        //         output.answer = ["A phone cases will be added on.", "Is there anything I can do for you?"]
-        //         this.additional_item = undefined;
-        //         return output;
-        //     }
-        //     console.log("ask customer whether they want to continue or not");
-        // }
-        // else if(output.intent === 'disagreement'){
-        //     if(this.additional_item == 'sim_card'){
-        //         this.additional_item = 'phone_cases';
-        //         output.answer = ["Alright, Do you want to buy phone cases?"];
-        //         return output;
-        //     }
-        //     if(this.additional_item =='phone_cases'){
-        //         output.answer = ["Alright, Is there anything I can do for you?"]
-        //         this.nextintent = undefined;
-        //         return output;
-        //     }
-        //     console.log("ask customer whether they want to continue or not");
-        // }
-        // else if(output.intent === 'customer.checkout'){
-        //     if(this.basket != null){
-        //         output.answer = 'Alright, can you please provide your address?'
-        //         this.previousintent = 'customer.checkout';
-        //         this.nextintent = undefined;
-        //     }else if(this.basket = null){
-        //         console.log("the basket is empty");
-        //         output.answer = 'There is no items added in the basket.'
-        //         return output;
-        //     }
-        // }else if(this.previousintent == 'customer.checkout'){
-        //     if(output.intent == 'UK_location'){
-        //         if(this.basket != null){
-        //             console.log('customer checkout')
-        //             let purchaseId = this.makeid(10)
-        //             let basket = {
-        //                 trackingNumber: purchaseId,
-        //                 username: customer.username,
-        //                 item: this.basket,
-        //                 location: output.utterance,
-        //                 status: 'pending'
-        //             }
-        //             const m = new purchases(basket);
-        //             await m.save();
-        //             this.nextintent = undefined;
-        //             var successMsg = "Thank you for your patient. Your tracking number will be "+ purchaseId +"<br />Please keep this number with you"
-        //             output.answer = [successMsg];
-        //             this.basket = [];
-        //             this.previousintent = undefined;
-        //             output.intent = 'end_purchase_flow';
-        //             // this.currentRequest = undefined;
-        //             return output;
-        //         }
-        //     }
-        //     else{
-        //         console.log('User enter outside the uk region');
-        //         output.answer = ["Sorry, currently we are not provide delivery service outside UK region", "Could you please provide other address or do you want me to find an human operator for you?"]
-        //         output.intent = 'chatbot_confused';
-        //         return output;
-
-        //     }
-        // }
-        // else if(output.intent =='additional_info'){
-        //     output.intent = 'chatbot_confused'
-        // }
-        // else{
-        //     output.answer = ['Sorry, I can\'t recognize what you are saying. Can you state your answer clearly or more details?', 'Please make sure that your asked questions is under the purchase flow, if you want to quit, please type any command like "quit, leave"']
-        //     output.intent = 'chatbot_confused'
-        // }
-        // return output;
     }
 
+    // function to generate tracking number
     makeid(length) {
         let result = '';
         const characters = '0123456789';

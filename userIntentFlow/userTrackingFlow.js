@@ -1,3 +1,6 @@
+// This class function indicate the tracking flow that has been implemented
+// The action such as ask for tracking number or refund ticket number, validation and return status had been implemented
+
 const purchases = require('../model/purchase');
 const refundTicket = require('../model/refund_ticket');
 
@@ -7,26 +10,31 @@ class userTrackingFlow{
         this.tracking_number;
     }
 
+    // this function will clear the parameter once the tracking action completed in order to process the other tasks.
     clearintent(){
         this.nextintent = undefined;
         this.tracking_number = null;
     }
 
     
-
+    // main flow for tracking action
     async userTrackingProcess(input, customer){
         const output = input;
 
+        // Directly return response to customer due as the questions is unable to answer by it
+        // specific intent that will trigger the alert notification module
         if(output.intent ==='additional_info'){
             output.intent = 'chatbot_confused'
             return output;
         }
 
+        // continue the previous flow of the process
         if(this.nextintent){
             output.intent = this.nextintent;
             this.nextintent = undefined;
         }
 
+        //extract the tracking or refund ticket number from the input message
         if(output.intent === 'tracking_package' || output.intent === 'tracking_refund'){
             if(output.entities){
                 for(let i = 0; i < output.entities.length; i++){
@@ -39,16 +47,20 @@ class userTrackingFlow{
             }
         }
 
+        // determine whether the user want to track package status
         if(output.intent == 'track.purchase'){
             console.log("track purchase package");
             this.nextintent = 'tracking_package';
             return output;
         }
+        // determine whether the user want to track refund ticket status
         else if(output.intent == 'track.refund'){
             console.log("track refund process");
             this.nextintent = 'tracking_refund';
             return output;
         }
+        // check the validation of the tracking number from input message and search in database.
+        // if valid, return the information extracted
         else if(output.intent == 'tracking_package'){
             console.log('search in database')
             try{
@@ -75,6 +87,8 @@ class userTrackingFlow{
                 output.answer = error
             }
         }
+        // check the validation of the refund ticket number from input message and search in database.
+        // if valid, return the information extracted
         else if(output.intent == 'tracking_refund'){
             console.log('search in database')
             try{
@@ -101,10 +115,14 @@ class userTrackingFlow{
                 output.answer = error
             }
         }
+        // Directly return response to customer due as the questions is unable to answer by it
+        // specific intent that will trigger the alert notification module
         else if(output.intent =='additional_info'){
             output.intent = 'chatbot_confused'
             return output;
         }
+        // handle unrecognized intent
+        // intent detection
         else if(output.answer == undefined){
             output.answer = ['Sorry, I can\'t recognize what you are saying. Can you state your answer clearly or more details?', 'Please make sure that your asked questions is under the purchase flow, if you want to quit, please type any command like "quit, leave"']
             output.intent = 'chatbot_confused';
