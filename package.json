@@ -1,10 +1,10 @@
 {
-  "name": "agent-human-handoff-sample",
+  "name": "hybrod-chatbot-system",
   "version": "0.0.1",
   "description": "Code sample for agent-human handoff with Nlp.js",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server/app.js"
   },
   "author": "Google Inc.",
   "license": "Apache-2.0",
@@ -12,6 +12,7 @@
     "@google-cloud/dialogflow": "^5.4.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
+    "convert-array-to-csv": "^2.0.0",
     "dialogflow": "^1.2.0",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
@@ -22,7 +23,7 @@
     "natural": "^6.2.0",
     "node-nlp": "^4.26.1",
     "request": "^2.88.2",
-    "socket.io": "^2.0.1",
+    "socket.io": "^2.5.0",
     "stopword": "^2.0.7"
   }
 }
