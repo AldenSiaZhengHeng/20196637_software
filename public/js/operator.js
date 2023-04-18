@@ -384,7 +384,6 @@ function getExisitingId (){
   socket.on('system error', notifySystemError);
   socket.on('customer_feelings', notifyUserFeelings);
   socket.on('customer_alert', notifyCustomerAlert)
-  socket.on('chatbot_suggestion', chatbot_suggestion);
   socket.on('receive_old_message', receiveOldMessage);
   socket.on('testing',testing);
 
