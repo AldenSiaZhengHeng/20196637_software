@@ -1,5 +1,8 @@
+// This class is to create the purchase table in the database
+
 const mongoose = require('mongoose')
 
+// The table will store the tracking number, username, item, shipping location and status
 const purchaseSchema = new mongoose.Schema(
     {
         trackingNumber:{type: String, required:true, unique:true},

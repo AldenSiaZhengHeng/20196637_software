@@ -1,5 +1,7 @@
+// This class is to create the purchase table in the database
 const mongoose = require('mongoose')
 
+// The table will store the refund ticket id, tracking number, username, item, reason and status when the refund request done
 const refundTicketSchema = new mongoose.Schema(
     {
         RefundTicketId:{type: String, required:true, unique:true},
