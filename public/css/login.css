@@ -1,14 +1,5 @@
-
-
-  /* .container {
-    margin: 0 auto;
-    margin-top: 150px;
-    width: 30%;
-    border: 3px solid #d2691e;
-    padding: 10px;
-    box-shadow: 5px 5px;
-
-} */
+/* This file containt all css-styling for the admin dashboard panel
+which consists of customer tab, chat window and notification section */
 
 /*body background css*/
 body{
@@ -20,10 +11,6 @@ body{
 }
 
 
-/* .form .label {
-    margin-bottom: 100px;
-} */
-
 .form{
     font-family: "Roboto", sans-serif;
     position: relative;
@@ -34,7 +21,6 @@ body{
     margin: 200px auto 100px;
     padding: 10px 45px 30px 45px;
     text-align: center;
-    /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); */
     border-radius: 10px;
     box-shadow: 5px 5px;
 }
@@ -63,22 +49,7 @@ body{
     background-color: #D3F8F9;
     transition: all 1s ease 0s;
 }
-/* .form button{
-    text-transform: uppercase;
-    outline: 0;
-    border-radius: 10px;
-    background: #1ADBE5;
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    cursor: pointer;
-}
-.form button:hover, .form button:active, .form button:focus{
-    background-color: #06C5CF;
-    transition: all 1s ease 0s;
-} */
+
 .form .message{
     margin: 15px 0 0;
     color: #B3B3B3;

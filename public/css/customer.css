@@ -1,3 +1,4 @@
+/* This file containt all css-styling for the customer side and the chat container which will show once the username and agent type is selected and send */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +12,6 @@ body {
 }
 
 body{
-  /* background-color: #bfdbce; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,14 +44,9 @@ body{
 
 
 .div-hg{
-  /* background: url("bg_1.jpg") no-repeat; */
-  /* background-size: cover; */
-  /* background-position-y: 80%; */
   width: 100%;
   height: 100%;
-  display: flex;
-  /* border-right: 10px solid red; */
-  
+  display: flex;  
   background-color:rgb(187, 211, 226);
 }
 
@@ -85,13 +80,6 @@ input[type=text], select {
   border: none;
   padding: 5px 15px;
   width: 100%;
-  /* width: 100%;
-  padding: 12px 20px;
-  margin: 10px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; */
 }
 
 .begin-form {
@@ -116,11 +104,9 @@ input[type=text], select {
     text-transform: uppercase;
     outline: 0;
     border-radius: 10px;
-    /* background: #bde9eb; */
     width: 100%;
     border: 0;
     padding: 15px;
-    /* color: #FFFFFF; */
     font-size: 14px;
     cursor: pointer;
 }
@@ -141,15 +127,12 @@ input[type=text], select {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* text-align: center; */
     width: 400px;
     margin:auto;
   }
 
 #main-container{
   display: none;
-  /* display: block; */
-
 }
 
 .sendbutton {
@@ -163,20 +146,6 @@ input[type=text], select {
   background-color: rgb(157, 144, 144);
   display: flex;
   box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.15);
-  /* border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  background-color: white;
-  border: 8px solid #dddddd;
-  overflow: hidden;
-  font-family: 'Open Sans', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-  margin: 200px auto 100px; */
-
 }
 
 .form-section{
@@ -195,16 +164,6 @@ input[type=text], select {
   width: 100%;
   padding: 25px;
 }
-
-
-
-/* body {
-    font-family: 'Open Sans', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
 
 .message-container {
   display: flex;

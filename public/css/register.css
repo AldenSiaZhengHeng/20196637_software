@@ -1,14 +1,4 @@
-
-
-  /* .container {
-    margin: 0 auto;
-    margin-top: 150px;
-    width: 30%;
-    border: 3px solid #d2691e;
-    padding: 10px;
-    box-shadow: 5px 5px;
-
-} */
+/* This file containt all css-styling for the registration side for admin user */
 
 /*body background css*/
 body{
@@ -18,10 +8,6 @@ body{
     background-size: cover;
 }
 
-
-/* .form .label {
-    margin-bottom: 100px;
-} */
 
 .form{
     font-family: "Roboto", sans-serif;
@@ -33,7 +19,6 @@ body{
     margin: 200px auto 100px;
     padding: 10px 45px 30px 45px;
     text-align: center;
-    /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); */
     border-radius: 10px;
     box-shadow: 5px 5px;
 }

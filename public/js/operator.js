@@ -1,9 +1,10 @@
+// This file contain the JQuery functions for human operator sides to connect to the server and the customer sides with socket.io to perform several action
+
+// This function is to retrieve old message after the page refresh in order to continue the conversation
 function getExisitingId (){
-  socket.emit('retrieve_existing_id', 'makabaka')
-  socket.emit('getMessage','wtfe')
+  socket.emit('retrieve_existing_id', 'retrieve_existing_id')
+  socket.emit('getMessage','getMessage')
 
-
-  // socket.emit('getMessage','getMessage')
 }
 
   var socket = io('/operator');
@@ -17,11 +18,12 @@ function getExisitingId (){
   var messageObject = function(customerId, utterance) {
     return { customerId: customerId, utterance: utterance };
   };
-  // When the form is submitted, send an operator message to the server, referencing
-  // the current tab's customer
+
+  // When the form is submitted, send an operator message to the server and the customer
   $('form').submit(function(){
+
+    // if the customer is disconnected, the human operator should not able to send the message in that chat anymore
     if(currentTab.disconnected) {
-      // alert('This customer has disconnected');
       return false;
     }
     var messageText = $('#m').val();
@@ -34,7 +36,7 @@ function getExisitingId (){
     return false;
   });
 
-  // Switch to a different tab
+  // Switch to a different tab of different users
   var setCurrentTab = function(target) {
     console.log("change-tab")
       // Do nothing if this is already the current tab
@@ -54,10 +56,7 @@ function getExisitingId (){
       target.window.addClass("chat-window")
   };
 
-  // Create a set of UI elements for a new customer tab.
-  // The customerId is the ID used internally by for websocket communication.
-  // In your implementation, you could replace this with the customer's name
-  // after fetching it from your datastore.
+  // This will create new customer tab based on the customer id which reference from socket id
   var createNewCustomerTab = function(customer) {
     console.log('ethics')
     console.log(customer)
@@ -110,13 +109,9 @@ function getExisitingId (){
       .window
       .append($li))
     console.log("li:eq('"+customerId+"')")
-    // connectedCustomers[customerId].tab.remove();
-    // connectedCustomers[customerId].window.remove();
-    // socket.emit('delete_disconnect_id',customerId)
-    // alert('Customer: ' + customerId +' has disconnect')
   };
 
-  // Notify the operator of a system error
+  // Notify the operator of a system error met
   var notifySystemError = function(error) {
     var errorText;
     // If we get this custom error type, the error was due to an operator mistake; display it
@@ -134,7 +129,7 @@ function getExisitingId (){
     scrollToBottom(currentTab.window.append($li))
   };
 
-  // Display messages sent by any operator to the customers this operator knows about
+  // Display messages sent by any operator on the human operator interface
   var receivedOperatorMessage = function(msg) {
     console.log(msg)
     var customer = connectedCustomers[msg.customerId];
@@ -147,20 +142,16 @@ function getExisitingId (){
       .append($li);
     
     scrollToBottom(customer.window.append($li));
-    // addMessageToUI(msg.utterance, customer)
-    // customer.window
-    //   .append($('<li class="operator-message">').text(msg.utterance));
   };
 
-  // Display messages sent by customers
+  // Display messages sent by customers on the human operator interface.
   var receivedCustomerMessage = function(msg) {
     console.log(connectedCustomers)
     if(!connectedCustomers[msg.customerId]) {
       console.log('Received message for unknown customer id: ' + JSON.stringify(msg));
       return;
     }
-    // If your implementation has access to the customer's name,
-    // you can modify the next line to display it in the prefix.
+
     var prefix = msg.isAgentResponse ? 'Agent: ' : 'Customer: ';
     // var test = msg.utterance.replace(/<br \/>/g,"\n");
     // console.log(test)
@@ -172,31 +163,24 @@ function getExisitingId (){
     scrollToBottom(connectedCustomers[msg.customerId]
       .window
       .append($li))
-      // .toggleClass('agent-response', msg.isAgentResponse)
   };
 
+  // Automatically scroll down when new message added
   function scrollToBottom($li){
     console.log("scrolling")
-    // var offset = $('.customer-message').offset().top;
-    // $('.chat-window').animate({
-    //     scrollTop: offset
-    // }, 0)
     console.log($li.offset().top)
     $li.animate({
       scrollTop: $li.offset().top * 10000
    }, 0); 
-  //   $('.chat-window').animate({
-  //     scrollTop: $li.offset().top * 12
-  //  }, 0); 
-
   }
 
+  // function that will show the sentiment analysis result
   var notifyUserFeelings = function (customer_sentiment){
-    console.log(customer_sentiment)
-    console.log(customer_sentiment.sentiment.score)
+    // console.log(customer_sentiment)
+    // console.log(customer_sentiment.sentiment.score)
+
+    // It will only show the notification if the emotion is negative
     if(customer_sentiment.sentiment.feeling == 'negative'){
-        // .append($('<li class="notification-list>').append($('<p class="score">').text(customer_sentiment.sentiment.score)));
-      // .append('<br />')
       $('.notification')
         .append($('<li class="angry">')
         .append($('<p class="username">').text('Customer: ' + customer_sentiment.username))
@@ -204,26 +188,9 @@ function getExisitingId (){
         // .append($('<p class="score">').text(customer_sentiment.sentiment.score))
         .append($('<p class="customer_id">').text('CustomerID: ' +customer_sentiment.id)));
   
-          // console.log("hello world")
     }
-    // else if(customer_sentiment.sentiment.feeling == 'positive'){
-    //   $('.notification')
-    //   // .append($('<li class="notification-list>').append($('<p class="score">').text(customer_sentiment.sentiment.score)));
-    //       // .append('<br />')
-    //       .append($('<li class="happy">')
-    //       .append($('<p class="username">').text('Customer: ' + customer_sentiment.username))
-    //       .append($('<p class="feeling">').text('Status: ' + customer_sentiment.sentiment.feeling))
-    //       // .append($('<p class="score">').text(customer_sentiment.sentiment.score))
-    //       .append($('<p class="customer_id">').text('CustomerID: ' +customer_sentiment.id)));
-  
-    //       // console.log("hello world")
-    // }
 
-  // const ul = document.querySelector('.notification');
-
-  // ul.addEventListener('click', function(e) {
-  //   this.removeChild(e.target);
-  // })
+  // function to change the customer tabs to the target tab once clicked
   $( ".angry" ).click(function() {
     var $this = $(this);
     var customer_id = $this.text().split("/")
@@ -235,102 +202,14 @@ function getExisitingId (){
     console.log(target)
     setCurrentTab(connectedCustomers[target]);
     this.remove();
-    // alert("Enter " +  + " chatroom")
   });
-
-  // $( ".happy" ).click(function() {
-  //   var $this = $(this);
-  //   var customer_id = $this.text().split("/")
-  //   var target = "/" +customer_id[1];
-  //   setCurrentTab(connectedCustomers[target]);
-  //   // $(".happy").remove();
-  //   // alert("/" +customer_id[1])
-  // });
-
-  }
-
-
-
-  var chatbot_suggestion = function(chatbot_suggestion) {
-    if(!connectedCustomers[chatbot_suggestion.customerId]) {
-      console.log('Received message for unknown customer id: ' + JSON.stringify(chatbot_suggestion));
-      return;
-    }
-    console.log(chatbot_suggestion)
-    console.log(chatbot_suggestion.responses.answers.length)
-    answers_length = chatbot_suggestion.responses.answers.length;
-    answer_length = chatbot_suggestion.responses.answer.length
-    var intent = chatbot_suggestion.responses.intent;
-    let $li = undefined;
-    if(intent == 'user.tracking_number' || intent =='agreement' || intent =='disagremment' || intent == 'user.reason'){
-      $li = $('<li class="chatbot-suggestion">').append($('<p class="message">').html(chatbot_suggestion.responses.answer));
-            
-      console.log("suggestion")
-      console.log($li)
-      // const $li = $('<li class="chatbot-suggestion">').html(chatbot_suggestion.responses.answers[i].answer);
-      connectedCustomers[chatbot_suggestion.customerId]
-        .window
-        .append($li);
-    } else if(Array.isArray(chatbot_suggestion.responses.answer)){
-      console.log("get answer")
-      console.log("hi")
-      chatbot_suggestion.responses.answer.forEach(message =>{
-        console.log(message)
-        $li = $('<li class="chatbot-suggestion">').append($('<p class="message">').html(message));
-        connectedCustomers[chatbot_suggestion.customerId]
-          .window
-          .append($li);
-        scrollToBottom(connectedCustomers[chatbot_suggestion.customerId]
-          .window
-          .append($li))
-      })
-    } 
-    else{
-      for (let i =0; i< answers_length; i++){
-        // console.log(chatbot_suggestion.responses.answers[i].answer)
-        $li = $('<li class="chatbot-suggestion">').append($('<p class="message">').html(chatbot_suggestion.responses.answers[i].answer));
-        
-        console.log("suggestion")
-        console.log($li)
-        // const $li = $('<li class="chatbot-suggestion">').html(chatbot_suggestion.responses.answers[i].answer);
-        connectedCustomers[chatbot_suggestion.customerId]
-          .window
-          .append($li);
-        scrollToBottom(connectedCustomers[chatbot_suggestion.customerId]
-          .window
-          .append($li))
-      }
-    } 
-
-
-    $( ".message" ).click(function() {
-      if(Array.isArray(chatbot_suggestion.responses.answer)){
-        var $this = $(this);
-        socket.emit('operator message', messageObject(currentTab.customerId, $this.html()));
-        $this.remove();
-      }else{
-        var $this = $(this);
-        console.log("show message")
-        console.log($this.html())
-        socket.emit('operator message', messageObject(currentTab.customerId, $this.html()));
-        $(".chatbot-suggestion").remove();
-      }
-
-      // alert("/" +customer_id[1])
-    });
-    // const $li = $('<li class="chatbot-suggestion">').html(prefix + msg.utterance);
-    // connectedCustomers[msg.customerId]
-    //   .window
-    //   .append($li);
-    
-    // scrollToBottom($li)
   }
 
   var testing = function(message){
     console.log(message)
   }
 
-  // function to get old user message
+  // function to retrieve old user message
   var receiveOldMessage = function(msg){
     console.log(msg)
     console.log(moment(msg.createdAt).format('lll'))
@@ -403,10 +282,12 @@ function getExisitingId (){
     }
   }
 
+  // Send the alert notification to the human operator for triggering handover action
   var notifyCustomerAlert = function(msg){
     console.log("add customer alert")
     console.log(msg)
     var string = null;
+    var count_name = null;
     if(msg.response === 'purchase_mode'){
       string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is try for purchase action."
     }
@@ -418,7 +299,7 @@ function getExisitingId (){
       string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is try for tracking action."
     }
     else if(msg.response === 'chatbot_confused'){
-      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is confusing"    
+      string = "Customer: " + "<strong>" + msg.customer.username + "</strong><br />" + "Status: <strong>confusing</strong><br />" + "Reason: " + msg.intent  
     }
     else if(msg.response === 'quit_refund'){
       string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is quit for refund flow."    
@@ -428,14 +309,62 @@ function getExisitingId (){
     }
     else if(msg.response === 'quit_purchase'){
       string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is quit for purchase flow."    
+    } 
+    else if(msg.response === 'human_request'){
+      string = "Customer, " + "<strong>" + msg.customer.username + "</strong>" +" is asking for human operator."    
+    }
+
+    // there are 3 type of alert which are slim, medium or urgent require for handover action.
+    if(msg.hasOwnProperty('count')){
+      // console.log("count " + count)
+      if(msg.count >= 2 && msg.count < 4){
+        count_name = 'slim';
+      }else if(msg.count >= 4 && msg.count < 6){
+        count_name = 'medium';
+      }else if(msg.count >= 6){
+        count_name = 'urgent';
+      }else {
+        count_name = 'alert'
+      }
+    }
+    else if(msg.response === 'human_request'){
+      count_name = 'urgent'
+    }
+    else{
+      // console.log("alert_haha")
+      count_name = 'alert'
     }
     
+    console.log(msg)
+
     if(string!=null){
       $('.notification')
-      .append($('<li class="alert">')
+      .append($('<li class="' + count_name +'">')
       .append($('<p class="' + msg.customerId + '">').html(string))
       .append($('<p class="customer_id">').text('CustomerID: ' + msg.customerId)));
     }
+
+    $( ".slim" ).click(function() {
+      var $this = $(this);
+      var customer_id = $this.text().split("/")
+      var target = "/" +customer_id[1];
+      setCurrentTab(connectedCustomers[target]);
+      this.remove();
+    });
+    $( ".medium" ).click(function() {
+      var $this = $(this);
+      var customer_id = $this.text().split("/")
+      var target = "/" +customer_id[1];
+      setCurrentTab(connectedCustomers[target]);
+      this.remove();
+    });
+    $( ".urgent" ).click(function() {
+      var $this = $(this);
+      var customer_id = $this.text().split("/")
+      var target = "/" +customer_id[1];
+      setCurrentTab(connectedCustomers[target]);
+      this.remove();
+    });
 
     $( ".alert" ).click(function() {
       var $this = $(this);
@@ -443,8 +372,6 @@ function getExisitingId (){
       var target = "/" +customer_id[1];
       setCurrentTab(connectedCustomers[target]);
       this.remove();
-      // $(".happy").remove();
-      // alert("/" +customer_id[1])
     });
   }
 
@@ -463,6 +390,4 @@ function getExisitingId (){
 
 window.onload=function(){
   getExisitingId();
-  // getMessage();
 }
-// window.onload = codeAddress;

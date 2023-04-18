@@ -1,9 +1,10 @@
+/* This file containt all css-styling for home sides which will contain 3 components which is customer side, admin login and register side */
+
 body{
     background-color: aquamarine;
 }
 
 .container {
-    /* margin: 0 auto; */
     margin: 200px auto 100px;
     width: 50%;
     border: 3px solid #d2691e;
