@@ -1,3 +1,5 @@
+// This class contain all the product sold in this hybrid chatbot system
+
 class itemlist{
     constructor(){
         this.item_list = {
@@ -11,6 +13,7 @@ class itemlist{
 
     }
 
+    // This function will return the corresponding item that match to the specific value extracted by chatbot model.
     getitem(selected){
         const targeted = this.item_list[selected]
         // console.log("get item here")
