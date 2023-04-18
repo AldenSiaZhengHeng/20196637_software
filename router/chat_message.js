@@ -1,11 +1,11 @@
+// The chat_message contain the function to store the message from the conversation
+
 const userMessages = require('../model/userMessage')
 
 
 class chat_message {
-    // constructor(){
-        
-    // }
 
+    // main function to store chat message from operator sides.
     async _saveConversationChat (customer, operatorMessage){
         // console.log(operatorMessage)
         let messageAttributes = {
@@ -18,7 +18,7 @@ class chat_message {
         await m.save();
     }
 
-
+    // retrieve the previous message store in the database to human operator sides
     async retrieve_message(socket, customer){
         try{
             var username = customer.username;
