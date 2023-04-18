@@ -386,7 +386,6 @@ function getExisitingId (){
   socket.on('customer_alert', notifyCustomerAlert)
   socket.on('receive_old_message', receiveOldMessage);
   socket.on('testing',testing);
-  
 
 window.onload=function(){
   getExisitingId();
