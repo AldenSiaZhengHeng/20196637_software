@@ -3,7 +3,10 @@ const { NerManager } = require('node-nlp');
 
 class chatbot {
   constructor(){
-    this.manager = new NlpManager({ languages: ["en"] });
+    this.manager = new NlpManager({ 
+      languages: ["en"], 
+      threshold:0.6
+    });
     this.manager.load()
   }
 
