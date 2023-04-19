@@ -119,7 +119,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
 
     this.socket.on('retrieve_existing_name', async (message)=>{
       // console.log("hi")
-      var result  = await this.chat_message.run()
+      var result  = await this.chat_message.getusername()
       if(result.length>0){
         for(var i = 0; i<result.length; i++){
           this.socket.emit('old customer name',result[i])

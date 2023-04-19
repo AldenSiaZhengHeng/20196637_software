@@ -1,6 +1,6 @@
 // This file contain the JQuery functions for human operator sides to connect to the server and the customer sides with socket.io to perform several action
 
-// This function is to retrieve old message after the page refresh in order to continue the conversation
+// This function is to retrieve the past username and chat history from database once the page load
 function getExisitingName (){
     socket.emit('retrieve_existing_name', 'retrieve_existing_id')
     // socket.emit('getMessage','getMessage')
@@ -34,7 +34,7 @@ function getExisitingName (){
         target.window.addClass("chat-window")
     };
   
-    // This will create new customer tab based on the customer id which reference from socket id
+    // This will create new customer tab based on the usename
     var createoldCustomerTab = function(customer) {
       console.log('ethics')
       console.log(customer)
@@ -74,9 +74,7 @@ function getExisitingName (){
   
     // function to retrieve old user message
     var receivehistoryMessage = function(msg){
-      // console.log(msg)
-      // console.log(moment(msg.createdAt).format('lll'))
-      // console.log(connectedCustomers)
+
       if(!connectedCustomers[msg.customerName]) {
         console.log('Received message for unknown customer id: ' + JSON.stringify(msg));
         return;
@@ -149,7 +147,7 @@ function getExisitingName (){
     socket.on('old customer name', createoldCustomerTab);
     socket.on('receive_history_message', receivehistoryMessage);
     
-  
+  // trigger the function once the page load
   window.onload=function(){
     getExisitingName();
   }

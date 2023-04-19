@@ -37,24 +37,20 @@ class chat_message {
                 }
                 socket.emit('receive_old_message',msg)
             }
-            console.log("retrieve message here")
 
         }catch(ex){
             console.log(ex)
         }
     }
 
+    // retrieve the previous message store in the database to human operator sides
     async retrieve_history_message(socket, customer){
         try{
             var username = customer;
-            // console.log(username)
             const message = await userMessages
                 .find({
                     username:{$all:username}
                 })
-            // console.log(message)
-            // console.log(message.length)
-            // console.log(message[0])
             for(let i=0; i<message.length; i++){
                 var msg = {
                     customerName: customer,
@@ -62,19 +58,16 @@ class chat_message {
                 }
                 socket.emit('receive_history_message',msg)
             }
-            // console.log("retrieve message here")
 
         }catch(ex){
             console.log(ex)
         }
     }
 
-    async run(){
+    // function to get the existing username from database and return the result
+    async getusername(){
         var old_user = []
         await userMessages.distinct('username').then(results=>{
-            // console.log(results)
-            // console.log(typeof(results))
-            // console.log(results)
             old_user = results
         })
         return old_user;
