@@ -1,0 +1,26 @@
+{
+	"questions": [
+		"show the list",
+        "I want item list",
+        "item",
+        "things",
+        "sell item",
+        "what are you selling",
+        "what did you sell",
+        "sold item list",
+        "what can i buy",
+        "show me what you have sold",
+        "what product did you sell",
+        "what type of phone you got",
+        "show me the product list",
+        "show me the product you have sold",
+        "what product you have sold",
+        "what are the phones you have?",
+        "i would like to know more about your products",
+        "i would like to find out about your phones",
+        "what phone you have for me ?"
+	],
+	"answers": [
+		"Our product is:<br />• Iphone 14 pro<br />• Samsung S22<br />• ASUS ROG Phone 6<br /><br />*Each phone will not come with a sim card and other accessories."
+	]
+}

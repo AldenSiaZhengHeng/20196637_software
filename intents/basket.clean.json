@@ -1,0 +1,13 @@
+{
+	"questions": [
+		"clean basket",
+        "remove everything from basket",
+        "clean cart",
+        "remove everything from cart",
+        "initialize cart",
+        "initialize basket"
+	],
+	"answers": [
+        "Your cart will be clear. Is there anything I can do for you?"
+    ]
+}

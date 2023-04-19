@@ -1,0 +1,14 @@
+{
+	"questions": [
+		"do you have other phones?",
+        "Do you have other type of phones",
+        "I want to buy other phone",
+        "I want to buy airpods",
+        "I want to buy earphone",
+        "I want to buy phone case",
+        "I want to buy sim card"
+	],
+	"answers": [
+        "Sorry, currently we only have sold Iphone 14 pro, Samsung S22 and ASUS ROG Phone 6."
+    ]
+}

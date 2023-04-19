@@ -1,0 +1,16 @@
+{
+	"questions": [
+		"refund",
+        "I would like to refund my item",
+        "return",
+        "I would like to return the product",
+        "return product ",
+        "I would like to ask for a refund",
+        "I want refund!",
+        "refund",
+        "return item"
+	],
+	"answers": [
+        "I'm so sorry to hear about this, may I ask for the purchase ID that you want to refund?"
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"questions": [
+		"who are you",
+        "purpose",
+        "what are you",
+        "tell me about you"
+	],
+	"answers": [
+		"Hi, I am your assistant agent who will answer you about your query."
+	]
+}

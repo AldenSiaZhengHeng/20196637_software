@@ -1,0 +1,11 @@
+{
+	"questions": [
+		"I want to buy stuff",
+        "I want to buy things",
+        "I want to buy %phone%",
+        "I want to buy item"
+    ],
+	"answers": [
+        "Alright, please tell me what type of phone you want to add in to your cart?"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "questions": [
+    "show me my basket",
+    "list out my basket",
+    "show my cart",
+    "list my cart",
+    "check basket",
+    "basket list"
+],
+"answers": [
+    "Sure, you basket list will be show."
+]
+}

@@ -1,0 +1,21 @@
+{
+	"questions": [
+		"item 1",
+		"%iphone%",
+        "i want to know more about item 1",
+		"i want information about %iphone%",
+        "can i have more details about item 1",
+		"can i have more details about %iphone%",
+		"what are the specifications for %iphone%?",
+		"what is the screen size for %iphone%?",
+		"what is the processor about the %iphone%",
+		"tell me more about %iphone%",
+		"what is in a %iphone%",
+		"what is the price for %iphone%?"
+	],
+	"answers": [
+	"The iPhone 14 Pro:<br />1) It comes with 6.1-inch OLED display with 120Hz refresh rate<br />2) Apple's improved Bionic A16 processor.<br />3) There is a Triple camera setup with 48MP main camera.<br />4) The storage is 512GB.<br />5) It has 6GB capacity of RAM with the newer LPDDR5 memory type.<br />6) 3200 mAh battery capacity.<br />7) Cost £1369.00.",
+
+	"The iPhone 14 Pro:<br />1) Display: 6.1-inch OLED display<br />2) Refresh Rate: 120Hz<br />3) Processor: Bionic A16 processor<br />4) Camera: Triple camera setup with 48MP main camera.<br />5) Storage: 512GB<br />6) Memory: 6GB capacity of RAM with the newer LPDDR5 memory type.<br />7) Battery: 3200 mAh<br />8) Price: £1369.00."
+	]
+}

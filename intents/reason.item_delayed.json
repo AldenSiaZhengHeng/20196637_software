@@ -1,0 +1,19 @@
+{
+	"questions": [
+		"Help, i still haven't receive my package yet",
+        "my item is delayed",
+        "my package is delayed",
+        "I want to refund because i still haven't receive my package",
+        "item delayed",
+        "package delayed",
+        "i'm still haven't receive my package until now, today, by this time",
+        "i'm think my package is lost",
+        "my package is lost",
+        "my tracking status state that my package is missing, lost",
+        "my estimated delivery time is today, but i'm still haven't receive it yet",
+        "it state that my package will be delivered by today or now, but I'm didn't receive it yet"
+	],
+	"answers": [
+        "Alright, thanks for providing additional information."
+    ]
+}

@@ -1,0 +1,17 @@
+{
+	"questions": [
+		"I want to buy %iphone%",
+        "I want to add %iphone% to my basket or cart",
+        "can you help me to add %iphone% to my basket or cart",
+        "give me %iphone%",
+        "I want to buy %iphone%",
+        "add %iphone% for me",
+        "I want to add %iphone% to my basket or cart",
+        "add %iphone%",
+        "i want to buy %number% %iphone%"
+
+	],
+	"answers": [
+        "Alright, iphone 14 pro will be add to the cart."
+    ]
+}

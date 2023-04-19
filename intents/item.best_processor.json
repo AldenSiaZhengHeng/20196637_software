@@ -1,0 +1,12 @@
+{
+	"questions": [
+		"which phone has the best %processor%",
+        "best %processor%",
+        "good %processor%",
+        "nice %processor%",
+        "which phone has nice %processor%"
+	],
+	"answers": [
+        "Iphone 14 pro has the best processor which is Bionic A16 processor. Apple claims the A16 is about 40% faster than the competition, and it also has new efficiency cores, with their big advantage being they use a third of the power of the best efficiency cores of other phones on the market.<br /><br />Is there anything I can do for you?"
+    ]
+}

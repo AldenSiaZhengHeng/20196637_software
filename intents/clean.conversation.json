@@ -1,0 +1,10 @@
+{
+	"questions": [
+        "clean conversation",
+        "clear my chat history",
+        "clean my chat history"
+	],
+	"answers": [
+        "Current process will be quited, is there anything I can do for you?"
+    ]
+}

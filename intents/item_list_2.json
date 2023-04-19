@@ -1,0 +1,21 @@
+{
+	"questions": [
+		"item 2",
+        "%samsung%",
+        "i want to know more about item 2",
+        "i want information about %samsung%",
+        "can i have more details about item 2",
+		"can i have more details about %samsung%",
+        "what are the specifications for %samsung%?",
+		"what is the screen size for %samsung%?",
+        "what is the processor about the %samsung%?",
+		"tell me more about %samsung%",
+        "what is in a %samsung%",
+        "what is the price for %samsung%?"
+	],
+	"answers": [
+        "Samsung S22:<br />1) Display: 6.1-inch Dynamic AMOLED display<br />2) Refresh Rate: 120Hz<br />3) Processor: Snapdragon 8 Gen 1 chipset<br />4) Camera: Triple camera setup with 50MP main camera.<br />5) Storage: 256GB<br />6) Memory: 8GB capacity of RAM with the newer LPDDR5 memory type.<br />7) Battery: 3700 mAh<br />8) Price: £545.00.",
+
+        "The Samsung S22:<br />1) It comes with 6.1-inch Dynamic AMOLED display with 120Hz refresh rate<br />2) Snapdragon 8 Gen 1 chipset<br />3) There is a Triple camera setup with 50MP main camera.<br />4) The storage is 256GB.<br />5) It has 8GB capacity of RAM with the newer LPDDR5 memory type.<br />6) 3700 mAh battery capacity.<br />7) Cost £545.00"
+    ]
+}

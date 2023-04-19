@@ -1,0 +1,15 @@
+{
+	"questions": [
+	"I don't want to buy %samsung% anymore",
+        "can you please help me to remove %samsung% from my cart or basket?",
+        "remove %samsung% from cart, basket",
+        "delete %samsung% from cart, basket",
+        "remove %samsung%",
+        "delete %samsung%",
+        "remove item 2",
+        "delete item 2"
+	],
+	"answers": [
+        "Alright, selected item will be removed."
+	]
+}

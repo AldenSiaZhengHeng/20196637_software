@@ -1,0 +1,14 @@
+{
+	"questions": [
+		"I want to buy %rog%",
+        "I want to add %rog% to my basket or cart",
+        "can you help me to add %rog% to my basket or cart",
+        "give me %rog%",
+        "I want to buy %rog%",
+        "add %rog% for me",
+        "I want to add %rog% to my basket or cart"
+	],
+	"answers": [
+        "Alright, ASUS ROG Phone 6 will be add to the cart."
+    ]
+}

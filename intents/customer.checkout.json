@@ -1,0 +1,13 @@
+{
+        "questions": [
+        "I want to checkout",
+        "checkout",
+        "I want to pay",
+        "payment",
+        "pay",
+        "check out"
+	],
+	"answers": [
+        "Alright, your shopping basket will be ready to checkout."
+	]
+}

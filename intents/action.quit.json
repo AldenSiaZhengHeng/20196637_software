@@ -1,0 +1,25 @@
+{
+	"questions": [
+		"quit refund",
+        "quit purchase",
+        "quit this mode",
+        "I don't want to refund anymore",
+        "I don't want to refund",
+        "cancel refund",
+        "cancel return",
+
+        "quit purchase",
+        "I don't want to buy anymore",
+        "I don't want to add things anymore",
+        "I want to refund instead of buying things or items or phone",
+
+        "quit current mode",
+        "exit curremt mode",
+        "exit refund",
+        "leave current mode",
+        "left mode"
+	],
+	"answers": [
+        "Current process will be quit, is there anything I can do for you?"
+    ]
+}

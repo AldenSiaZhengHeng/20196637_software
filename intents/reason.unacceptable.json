@@ -1,0 +1,15 @@
+{
+	"questions": [
+        "The phone is not my type",
+        "The size is bigger which is not my favourite size",
+        "The phone storage is lesser",
+        "Because It's too ugly",
+        "Ok, it's actually I am out of budget",
+        "Because I have been waiting for ages",
+        "The items are wrong here",
+        "I ordered these items but it sends me wrong one "
+    ],
+	"answers": [
+        "Sorry, the reason provided is unacceptable. Please provide a new reason."
+    ]
+}

@@ -1,0 +1,9 @@
+{
+	"questions": [
+		"welcome event"
+	],
+	"answers": [
+        "Hi! I'm an agent designed to demonstrate operator requests. You can ask me about my purpose, or ask to speak with a person. If I fail to understand your statement, I'll connect you with a person automatically. How can I help you?",
+		"You can ask me for several tasks:<br/ >• Ask Information for product selling<br />• Purchase<br />• Refund<br />• Track package status<br />• Track Refund process<br /><br />*Please ask for the item list before start the purchase action to prevent any misunderstanding.*"
+    ]
+}

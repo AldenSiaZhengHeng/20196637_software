@@ -1,0 +1,41 @@
+{
+	"questions": [
+        "can i change the storage size of the phone?",
+        "modify storage or size",
+        "is there any option to choose larger or smaller storage or size for iphone, samsung, ROG phone",
+
+        "can i change ram or memory size",
+
+        "can i %upgrade% the battery capacity for the %samsung%",
+        "can i %upgrade% the battery capacity for the %iphone%",
+        "can i %upgrade% the battery capacity for the %rog%",
+
+
+        "can i %upgrade% the %memory% for the %samsung%",
+        "can i %upgrade% the %memory% for the %iphone%",
+        "can i %upgrade% the %memory% for the %rog%",
+
+
+        "is there any same types of phone?",
+        "is there any other %color% for %iphone% or %samsung% or %rog%?",
+        "Is there any %color% for %iphone%?",
+        "Is there any other %color% option for %rog%?",
+        "Is there any other %color% option for %samsung%?",
+
+        "what type of SIM card you have",
+
+        "I want more details for the phone case or sim card or and phone",
+
+        "what type of phone case you have",
+        "what type of phone cases you got",
+
+        "I have some questions would like to ask",
+        "I have more questions would like to ask",
+        "is there any additional information i can ask?",
+        "provide me more information , details , something else",
+        "Get me more details"
+	],
+	"answers": [
+                "I'm sorry that I might not able to answer your questions. Please try to ask different questions or maybe provide more details questions."
+        ]
+}

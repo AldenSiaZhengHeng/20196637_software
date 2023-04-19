@@ -1,0 +1,15 @@
+{
+	"questions": [
+		"no",
+        "No, it is not",
+        "it is incorrect",
+        "wrong",
+        "definintely wrong",
+        "nah",
+        "nay",
+        "no way this is my item"
+	],
+    "answers":[
+        "Alright, you can ask me any questions at anytime you want."
+    ]
+}

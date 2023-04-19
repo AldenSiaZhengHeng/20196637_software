@@ -1,0 +1,16 @@
+{
+	"questions": [
+		"I would like to purchase item %number%",
+        "I want item %number%",
+        "i want to buy item %number%",
+        "buy item %number%",
+        "purchase item %number%",
+        "add item %number%",
+        "I want to add item %number% to basket",
+        "add %number% to my cart",
+        "add %number% to my basket"
+	],
+	"answers": [
+        "item {{number}} will be add-on"
+    ]
+}

@@ -1,0 +1,22 @@
+{
+	"questions": [
+		"item 3",
+        "%rog%",
+        "i want to know more about item 3",
+        "i want information about %rog%",
+        "can i have more details about item 3",
+		"can i have more details about %rog%",
+        "what are the specifications for %rog%?",
+		"what is the screen size for %rog%?",
+        "what is the processor about the %rog%",
+		"tell me more about %rog%",
+        "what is in a %rog%",
+        "what is the price for %rog%?"
+
+	],
+	"answers": [
+        "ASUS ROG Phone 6:<br />1) Display: 6.78-inch Dynamic AMOLED display<br />2) Refresh Rate: 165Hz<br />3) Processor: Qualcomm Snapdragon 8+ Gen 1 SM8450<br />4) Camera: Triple camera setup with 50MP main camera.<br />5) Storage: 128GB<br />6) Memory: 12GB capacity of RAM with the newer LPDDR5 memory type.<br />7) Battery: 6000 mAh<br />8) Price: £645.00.",
+
+        "The ASUS ROG Phone 6:<br />1) It comes with 6.78-inch Dynamic AMOLED display with 165Hz refresh rate<br />2) It's processor is Qualcomm Snapdragon 8+ Gen 1 SM8450<br />3) There is a Triple camera setup with 50MP main camera.<br />4) The storage is 128GB.<br />5) It has 12GB capacity of RAM with the newer LPDDR5 memory type.<br />6) 6000 mAh battery capacity.<br />7) Cost £645.00"
+    ]
+}

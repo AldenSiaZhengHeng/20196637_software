@@ -1,0 +1,19 @@
+{
+	"questions": [
+		"yes",
+        "yup",
+        "yeah",
+        "yep",
+        "that's right",
+        "correct",
+        "yah",
+        "sounds good to me",
+        "i'm fine with that",
+        "yes, i would like to",
+        "please do so",
+        "I think so"
+	],
+    "answers":[
+        "Cool, please enter your questions and I will try to answer it."
+    ]
+}

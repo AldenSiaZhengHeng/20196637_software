@@ -1,0 +1,11 @@
+{
+	"questions": [
+		"I would like to talk to human",
+        "I want human",
+        "human",
+        "human agent"
+	],
+	"answers": [
+        "Alright, I will help you to transfer to human agent. Please stay still until the human operator get in touch with you."
+    ]
+}
