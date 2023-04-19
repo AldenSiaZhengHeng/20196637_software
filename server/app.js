@@ -333,7 +333,7 @@ app.get('/logout', (req,res)=> {
       res.send("Unable to logout")
     }
     else {
-      res.redirect('/home')
+      res.redirect('/')
     }
   })
 })
