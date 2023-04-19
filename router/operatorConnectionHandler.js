@@ -126,7 +126,6 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
           this.chat_message.retrieve_history_message(this.socket, result[i])
         }
       }
-      console.log(result)
     })
   }
 
