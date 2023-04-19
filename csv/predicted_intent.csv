@@ -1,0 +1,450 @@
+intent 
+{"input":"purhcase","label":"chatbot_confused"}
+{"input":"quit","label":"action.quit"}
+{"input":"No","label":"disagreement"}
+{"input":"no","label":"disagreement"}
+{"input":"leave","label":"action.quit"}
+{"input":"Refund","label":"user.refund"}
+{"input":"yes","label":"agreement"}
+{"input":"Wrong items","label":"chatbot_confused"}
+{"input":"a","label":"chatbot_confused"}
+{"input":"provide a new reason","label":"chatbot_confused"}
+{"input":"Refund","label":"user.refund"}
+{"input":"Ask information for product selling","label":"item.list"}
+{"input":"Also can i track the refund process for the last items ","label":"track.refund"}
+{"input":"quit","label":"action.quit"}
+{"input":"No","label":"disagreement"}
+{"input":"Ask information for product selling","label":"item.list"}
+{"input":"Yes","label":"agreement"}
+{"input":"quit","label":"action.quit"}
+{"input":"item 2","label":"item_list_2"}
+{"input":"Can i add more items into cart?","label":"item.list"}
+{"input":"Specific information","label":"chatbot_confused"}
+{"input":"leave","label":"action.quit"}
+{"input":"I just wanna ask the specific info of ROG","label":"item_list_3"}
+{"input":"item 3","label":"item_list_3"}
+{"input":"Which phone have the best screen? and for gaming ","label":"item.best_screen_size"}
+{"input":"Which phone have the best camera","label":"item.best_camera"}
+{"input":"Track Refund process","label":"item.amount"}
+{"input":"leave","label":"action.quit"}
+{"input":"jxcjkasbnc","label":"item.amount"}
+{"input":"quit","label":"action.quit"}
+{"input":"tracking refund","label":"item.amount"}
+{"input":"quit","label":"action.quit"}
+{"input":"tracking for refund ticket","label":"track.refund"}
+{"input":"Yes","label":"agreement"}
+{"input":"I mean no thanks","label":"gratitude"}
+{"input":"track refund","label":"track.refund"}
+{"input":"What products do you sell?","label":"item.list"}
+{"input":"Which devices have the best screen?","label":"item.best_resolution"}
+{"input":"How about Samsung S22?","label":"item_list_2"}
+{"input":"Do you sell iphone 15?","label":"remove.item_1"}
+{"input":"What colours do you have for Iphone 14 pro?","label":"item_list_1"}
+{"input":"Where is the colour?","label":"track.purchase"}
+{"input":"hI","label":"greetings.hello"}
+{"input":"HELLO","label":"greetings.hello"}
+{"input":"Add iphone 14 pro into my cart","label":"add.item_1"}
+{"input":"yup","label":"agreement"}
+{"input":"Add samsung s22 as well","label":"add.item_2"}
+{"input":"ya","label":"chatbot_confused"}
+{"input":"remove iphone 14","label":"remove.item_1"}
+{"input":"remove iphone 14","label":"remove.item_1"}
+{"input":"remove samsung","label":"remove.item_2"}
+{"input":"add phone","label":"add.item_1"}
+{"input":"checkout please","label":"customer.checkout"}
+{"input":"What types of SIM do you have?","label":"chatbot_confused"}
+{"input":"I would like to track my parcel","label":"track.purchase"}
+{"input":"Hi david","label":"greetings.hello"}
+{"input":"I would like to request a refund please","label":"user.refund"}
+{"input":"Yes","label":"agreement"}
+{"input":"Because It's too ugly","label":"chatbot_confused"}
+{"input":"Ok, it's actually I am out of budget","label":"chatbot_confused"}
+{"input":"Because I have been waiting for ages","label":"chatbot_confused"}
+{"input":"Ya ","label":"chatbot_confused"}
+{"input":"I would like to refund please","label":"chatbot_confused"}
+{"input":"call human agent","label":"operator_request"}
+{"input":"Continue my refund process","label":"track.refund"}
+{"input":"Ok","label":"tracking_refund"}
+{"input":"May I have a refund?","label":"user.refund"}
+{"input":"here is my purchase ID: 49547147710723315918","label":"user.tracking_number"}
+{"input":"yes","label":"agreement"}
+{"input":"The phone is not my type","label":"user.reason"}
+{"input":"The size is bigger which is not my favourite size","label":"additional_reason"}
+{"input":"The phone storage is lesser","label":"add.item_1"}
+{"input":"I would like to have refund","label":"user.refund"}
+{"input":"What products do you sell?","label":"item.list"}
+{"input":"Is there any other products?","label":"additional_info"}
+{"input":"Can you tell me more about Iphone 14 pro?","label":"agent.purpose"}
+{"input":"Can you tell me abouit Iphone 14 pro","label":"item_list_1"}
+{"input":"what is OLED display","label":"item.list"}
+{"input":"which product has the largest storage","label":"item.large_storage"}
+{"input":"What is thesize of Iphone 14","label":"add.item_1"}
+{"input":"What is the size of Iphone 14","label":"additional_info"}
+{"input":"what products do you sell?","label":"item.list"}
+{"input":"I would like to make a purchase","label":"track.purchase"}
+{"input":"May I know what products do you sell?","label":"item.list"}
+{"input":"What is the details of Iphone 14","label":"add.item_1"}
+{"input":"10?","label":"item.amount"}
+{"input":"Is it possible to change the colour black to other colours?","label":"chatbot_confused"}
+{"input":"I would like to know what products do you have","label":"agreement"}
+{"input":"What products do you sell?","label":"item.list"}
+{"input":"I would like to purchase Iphone 14","label":"add.item_1"}
+{"input":"Can you remove one Iphone 14 from my basket","label":"remove.item_1"}
+{"input":"I would like to checkout","label":"customer.checkout"}
+{"input":"Yes","label":"agreement"}
+{"input":"Sure why not","label":"action.quit"}
+{"input":"Yea is it possible to buy a Xiami phone","label":"add.item_1"}
+{"input":"I would  like to buy a Xiaomi phone","label":"item.amount"}
+{"input":"I would like to buy 2 phone of Iphone","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"hi","label":"greetings.hello"}
+{"input":"refund","label":"user.refund"}
+{"input":"quit","label":"action.quit"}
+{"input":"refund","label":"user.refund"}
+{"input":"quit","label":"action.quit"}
+{"input":"add item 1","label":"customer_purchase"}
+{"input":"quit","label":"action.quit"}
+{"input":"hi","label":"greetings.hello"}
+{"input":"add item 1","label":"customer_purchase"}
+{"input":"quit","label":"action.quit"}
+{"input":"refund","label":"user.refund"}
+{"input":"quit","label":"action.quit"}
+{"input":"phone","label":"customer.want_purchase"}
+{"input":"i want to buy iphone 14 pro","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"phone","label":"customer.want_purchase"}
+{"input":"show me item list","label":"item.list"}
+{"input":"i want to buy iphone 14 pro","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to buy xiaomi phone","label":"customer.want_purchase"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"what phone did you sell","label":"item.list"}
+{"input":"iphone 14 pro","label":"item_list_1"}
+{"input":"i want buy phone","label":"item.phone_case"}
+{"input":"check basket","label":"checkBasket"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"iphone 14 pro","label":"add.item_1"}
+{"input":"i would like to buy samsung s22","label":"add.item_2"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"show me product list","label":"add.item_1"}
+{"input":"phone","label":"item.best_camera"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"show me the product list","label":"add.item_1"}
+{"input":"show me the product list","label":"item.list"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"shoe me product list","label":"add.item_1"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"show me product list","label":"add.item_1"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"show me item list","label":"add.item_1"}
+{"input":"i want to add iphone 14 pro","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"show me item list","label":"add.item_1"}
+{"input":"iphone 14 pro","label":"item_list_1"}
+{"input":"add this to my baskert","label":"add.item_1"}
+{"input":"samsung s22","label":"item_list_2"}
+{"input":"add this to my cart","label":"add.item_1"}
+{"input":"rog phone","label":"item_list_3"}
+{"input":"add this to my basket","label":"checkBasket"}
+{"input":"rog phone","label":"item_list_3"}
+{"input":"add this to my carr","label":"add.item_1"}
+{"input":"add this to my basket","label":"checkBasket"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"show me item list","label":"add.item_1"}
+{"input":"iphone","label":"item_list_1"}
+{"input":"add this to my basket","label":"checkBasket"}
+{"input":"buy phone","label":"customer.want_purchase"}
+{"input":"item lsit","label":"add.item_1"}
+{"input":"iphone","label":"item_list_1"}
+{"input":"add this to my basket","label":"checkBasket"}
+{"input":"add this to my cart","label":"add.item_1"}
+{"input":"buy phone","label":"customer.want_purchase"}
+{"input":"show me item list","label":"add.item_1"}
+{"input":"iphone","label":"item_list_1"}
+{"input":"i want to buy this","label":"customer.want_purchase"}
+{"input":"buy phone","label":"customer.want_purchase"}
+{"input":"iphone","label":"add.item_1"}
+{"input":"show me item lsit","label":"item.list"}
+{"input":"iphone","label":"item_list_1"}
+{"input":"add this to my basket","label":"checkBasket"}
+{"input":"add this to my cart","label":"chatbot_confused"}
+{"input":"item list","label":"item.list"}
+{"input":"iphone","label":"item_list_1"}
+{"input":"add this to my cart","label":"chatbot_confused"}
+{"input":"buy phone","label":"customer.want_purchase"}
+{"input":"item list","label":"add.item_1"}
+{"input":"iphone","label":"item_list_1"}
+{"input":"add this to my cart","label":"add.item_1"}
+{"input":"item list","label":"item.list"}
+{"input":"samsung","label":"item_list_2"}
+{"input":"i want to buy this","label":"customer.want_purchase"}
+{"input":"what is in a iphone 13pro","label":"add.item_1"}
+{"input":"what phone do you guys sell ?","label":"item.list"}
+{"input":"can you tell me more about the iphone 14 pro ?","label":"item_list_1"}
+{"input":"what about the samsung s22 what is the display size ?","label":"item_list_2"}
+{"input":"can u add the iphone 14 pro into my basket ?","label":"add.item_1"}
+{"input":"one","label":"item.amount"}
+{"input":"can you also add a samsung s20 to my basket ?","label":"add.item_2"}
+{"input":"one","label":"item.amount"}
+{"input":"is the samsung s23 better than the s22 ?","label":"item_list_2"}
+{"input":"what is the price for samsung s23 ?","label":"chatbot_confused"}
+{"input":"Hi I have a problem with my recent purchase ","label":"track.purchase"}
+{"input":"are you sure !","label":"tracking_package"}
+{"input":"Hi may I know when is my item arriving ","label":"greetings.hello"}
+{"input":"may i know when my items are arriving","label":"reason.unacceptable"}
+{"input":"no","label":"disagreement"}
+{"input":"i want to track my items !","label":"track.purchase"}
+{"input":"there you go","label":"greetings.bye"}
+{"input":"fine","label":"tracking_package"}
+{"input":"what ?","label":"tracking_package"}
+{"input":"i order so long ago","label":"gratitude"}
+{"input":"can you track my refund request then ?","label":"track.refund"}
+{"input":"bye","label":"greetings.bye"}
+{"input":"i want to buy item 1","label":"customer_purchase"}
+{"input":"angry","label":"item.amount"}
+{"input":"yes","label":"agreement"}
+{"input":"add item 1","label":"item_list_1"}
+{"input":"add item 1","label":"item_list_1"}
+{"input":"i want to add item 1","label":"customer_purchase"}
+{"input":"angry","label":"chatbot_confused"}
+{"input":"hey, i would like to get a refund for some purchases i made recently","label":"user.refund"}
+{"input":"i think so","label":"gratitude"}
+{"input":"i would like to get a refund for them","label":"user.refund"}
+{"input":"Yes","label":"agreement"}
+{"input":"i am out of cash, i need to get the refund so i can get the cash","label":"chatbot_confused"}
+{"input":"i do not like my items","label":"chatbot_confused"}
+{"input":"hi there","label":"greetings.hello"}
+{"input":"what products do u have on hand now?","label":"item.list"}
+{"input":"do you have other phones?","label":"action.quit"}
+{"input":"yes","label":"agreement"}
+{"input":"i would like to know more about ihpone 14 pro","label":"item_list_1"}
+{"input":"do you have more details about this phone?","label":"agent.purpose"}
+{"input":"can i know more about the  ASUS ROG Phone 6 too","label":"item_list_3"}
+{"input":"is there any discounts?","label":"additional_info"}
+{"input":"i would like to buy ASUS ROG Phone 6","label":"add.item_3"}
+{"input":"i would like to buy 293829483985t948934892483948 of the other phones too","label":"customer.want_purchase"}
+{"input":"all of them","label":"add.item_1"}
+{"input":"all 3","label":"customer_purchase"}
+{"input":"32294029402940294029 please","label":"item.amount"}
+{"input":"i would like to know your product range","label":"user.refund"}
+{"input":"i would like to order a phone","label":"item.best_camera"}
+{"input":"what is my cart again?","label":"checkBasket"}
+{"input":"i would like to know more about your products","label":"user.refund"}
+{"input":"i dont want a refund, i want to know what phones you sell","label":"chatbot_confused"}
+{"input":"I dont have a tracking number though","label":"chatbot_confused"}
+{"input":"what phones do u sell?","label":"chatbot_confused"}
+{"input":"quit","label":"action.quit"}
+{"input":"i would like to find out about your phones","label":"customer.checkout"}
+{"input":"what phones do u sell?","label":"item.list"}
+{"input":"what is the storage size of the samsung","label":"additional_info"}
+{"input":"what are the samsung phone specifications?","label":"agent.purpose"}
+{"input":"i would like to know about the samsung s22 details","label":"item_list_2"}
+{"input":"what about the samsung s22 screen size?","label":"item_list_2"}
+{"input":"can i upgrade the storage?","label":"item.list"}
+{"input":"can i upgrade the storage for Samsung s22","label":"item_list_2"}
+{"input":"can i upgrade the battery capacity","label":"item.large_battery_size"}
+{"input":"can i upgrade the battery capacity for the samsung","label":"item.large_battery_size"}
+{"input":"can i upgrade the battery capacity for the samsung s22","label":"item.large_battery_size"}
+{"input":"track refund","label":"track.refund"}
+{"input":"what item do you sell here?","label":"item.list"}
+{"input":"what is the screen size for Iphone 14 pro?","label":"item.best_screen_size"}
+{"input":"i would like to add Iphone 14 pro in my basket please","label":"add.item_1"}
+{"input":"one","label":"item.amount"}
+{"input":"can i add another phone?","label":"item.list"}
+{"input":"i would like to add another Samsung S22 in my basket","label":"add.item_2"}
+{"input":"nope, that's it","label":"agreement"}
+{"input":"i would like to checkout now","label":"customer.checkout"}
+{"input":"yes please","label":"agreement"}
+{"input":"yes, for both phones","label":"agreement"}
+{"input":"I am sorry can i remove an item?","label":"chatbot_confused"}
+{"input":"2, Beldover House","label":"customer_purchase"}
+{"input":"what should i do if i want a refund?","label":"user.refund"}
+{"input":"yes","label":"agreement"}
+{"input":"I have too many phones","label":"chatbot_confused"}
+{"input":"the phone I received is broken","label":"user.reason"}
+{"input":"The screen cracked","label":"additional_reason"}
+{"input":"what phones do you sell?","label":"item.list"}
+{"input":"what is the screen size for Samsung S22?","label":"item.best_screen_size"}
+{"input":"I want to know more about Samsung S22","label":"item_list_2"}
+{"input":"can i know more about iphone?","label":"item_list_1"}
+{"input":"Can I know more about the Asus ROG Phone?","label":"item_list_3"}
+{"input":"I would like to add this into my basket","label":"add.item_1"}
+{"input":"I am sorry but can i remove it?","label":"chatbot_confused"}
+{"input":"I want to remove item","label":"chatbot_confused"}
+{"input":"Sure","label":"chatbot_confused"}
+{"input":"what are the specifications for Iphone 14 pro?","label":"item_list_1"}
+{"input":"tell me more about iphone","label":"agent.purpose"}
+{"input":"more details about iphone","label":"item_list_1"}
+{"input":"can i have more details for rog?","label":"additional_info"}
+{"input":"can i have more details for rog?","label":"additional_info"}
+{"input":"can i have more details for asus rog phone 6??","label":"additional_info"}
+{"input":"can i have more details for samsung?","label":"item_list_2"}
+{"input":"can i have more details for rog phone 6?","label":"additional_info"}
+{"input":"item 3","label":"item_list_3"}
+{"input":"can i have more details about rog?","label":"item_list_3"}
+{"input":"can i have more details for samsung?","label":"item_list_2"}
+{"input":"can i have more details about asus rog phone 6?","label":"item_list_3"}
+{"input":"can i have more details about rog?","label":"item_list_3"}
+{"input":"can i have more details for rog?","label":"item_list_3"}
+{"input":"can i have more details about rog?","label":"item_list_3"}
+{"input":"can i have more details for rog?","label":"item_list_3"}
+{"input":"can i have more details for rog?","label":"item_list_3"}
+{"input":"can i have more details for rog?","label":"item_list_3"}
+{"input":"show me more details about iphone 14 pro","label":"item_list_1"}
+{"input":" show me more details about iphoen 14 pro","label":"customer_purchase"}
+{"input":" show me more details about iphone 14 pro","label":"item.amount"}
+{"input":" show me more details about iphoen 14 pro","label":"customer_purchase"}
+{"input":"quit","label":"action.quit"}
+{"input":" show me more details about iphone 14 pro","label":"item_list_1"}
+{"input":" show me more details about iphoe 14 pro","label":"customer_purchase"}
+{"input":"what is the price for iphone","label":"item_list_1"}
+{"input":"what is the price for rog","label":"item_list_3"}
+{"input":"what is the screen size for rog","label":"item_list_3"}
+{"input":"can i change the storage for rog phone?","label":"additional_info"}
+{"input":"Can you give me details on the products you sell","label":"item.list"}
+{"input":"which of these phones has the largest storage ?","label":"item.large_storage"}
+{"input":"which of these phones has the best processor ?","label":"item.best_camera"}
+{"input":"Could you tell me what colors do you have for the iphone ?","label":"item_list_1"}
+{"input":"and what is the color ?","label":"item.list"}
+{"input":"I would like to know the colors of the iphones you have","label":"additional_info"}
+{"input":"what colors do you have for iphone ?","label":"item.list"}
+{"input":"I would like to know the colors for the iphone please","label":"additional_info"}
+{"input":"Can I know what color options are there for Iphone 14 pro ?","label":"additional_info"}
+{"input":"which of the phones have the largest screen size ?","label":"item.best_screen_size"}
+{"input":"and which has the best camera ?","label":"item.best_camera"}
+{"input":"what colors do you have for samsung s22 ?","label":"item.list"}
+{"input":"May I know the colors do you have for Samsung S22 ?","label":"item.list"}
+{"input":"what phones do you have ?","label":"item.list"}
+{"input":"what is the screen size of the iphone 14 pro ?","label":"item_list_1"}
+{"input":"I would like to buy the Iphone 14 pro","label":"add.item_1"}
+{"input":"please update my cart and remove one iphone 14 from the basket","label":"remove.item_1"}
+{"input":"I would like to checkout","label":"customer.checkout"}
+{"input":"no","label":"disagreement"}
+{"input":"what are the colors of the phone cases ?","label":"chatbot_confused"}
+{"input":"I would like to know the colors you have for the phone cases of the iphone 14 pro","label":"chatbot_confused"}
+{"input":"I would like to get a refund","label":"user.refund"}
+{"input":"yes","label":"agreement"}
+{"input":"I don't like the seller's attitude","label":"chatbot_confused"}
+{"input":"I didn't like the seller","label":"chatbot_confused"}
+{"input":"there is no other reason. I just didn't like the seller","label":"chatbot_confused"}
+{"input":"I don't think you know what is reasonable ","label":"chatbot_confused"}
+{"input":"I didn't like the seller and I would like a refund","label":"chatbot_confused"}
+{"input":"Yes. I would like to cancel and recieve a refund","label":"action.quit"}
+{"input":"Did you process my refund ?","label":"track.refund"}
+{"input":"quit","label":"action.quit"}
+{"input":"no","label":"disagreement"}
+{"input":"which phone has the best processor","label":"item.best_processor"}
+{"input":"processor","label":"item.best_processor"}
+{"input":"tell me more about iphone 14 pro","label":"item_list_1"}
+{"input":"tell me something funny","label":"agent.purpose"}
+{"input":"can i upgrade the storage for iphone 14 pro?","label":"additional_info"}
+{"input":"i want to upgrade!!!!","label":"customer.want_purchase"}
+{"input":"quit","label":"action.quit"}
+{"input":"what item list you gave","label":"item.list"}
+{"input":"i want to buy iphone 14 pro","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to upgrade the phone memory","label":"item.large_memory"}
+{"input":"i want to upgrade the iphone memory","label":"item.large_memory"}
+{"input":"i want to upgrade the iphone memory","label":"customer.want_purchase"}
+{"input":"i want to upgrade the memory for iphone","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to upgrade the memory for iphone","label":"additional_info"}
+{"input":"i want to upgrade the iphone 14 pro storage.","label":"item.large_storage"}
+{"input":"i want to upgrade iphone 14 pro storage","label":"item.large_storage"}
+{"input":"hi","label":"greetings.hello"}
+{"input":"i want to buy item","label":"customer.want_purchase"}
+{"input":"fuck you","label":"add.item_1"}
+{"input":"hi","label":"greetings.hello"}
+{"input":"I want to refund","label":"user.refund"}
+{"input":"yes","label":"agreement"}
+{"input":"i don't want it anymore","label":"action.quit"}
+{"input":"no","label":"disagreement"}
+{"input":"i want to refund","label":"user.refund"}
+{"input":"yes","label":"agreement"}
+{"input":"I am tired","label":"chatbot_confused"}
+{"input":"what item do you sell","label":"item.list"}
+{"input":"which one of them has a better camera","label":"item.best_camera"}
+{"input":"what is the price of iphone 14","label":"item_list_1"}
+{"input":"what iphone color do you have","label":"item.list"}
+{"input":"what iphone color do you have","label":"item.list"}
+{"input":"what is the specification of ASUS","label":"additional_info"}
+{"input":"I want to look at iphone 14","label":"add.item_1"}
+{"input":"I want an ASUS ROG","label":"add.item_3"}
+{"input":"I want to remove ","label":"customer.want_purchase"}
+{"input":"I want to remove the phone from my cart","label":"add.item_1"}
+{"input":"I want to remove item from my cart","label":"customer_purchase"}
+{"input":"Remove ASUS ROG Phone 6","label":"item.amount"}
+{"input":"I want to buy a Iphone Pro Max","label":"add.item_1"}
+{"input":"I want to clean the basket","label":"basket.clean"}
+{"input":"yes","label":"agreement"}
+{"input":"I want to buy iphone 14","label":"add.item_1"}
+{"input":"I want to buy Airpods","label":"customer.want_purchase"}
+{"input":"no","label":"add.item_1"}
+{"input":"I want to checkout","label":"customer.checkout"}
+{"input":"yes","label":"agreement"}
+{"input":"yes","label":"agreement"}
+{"input":"i want to buy airpods","label":"customer.want_purchase"}
+{"input":"i want to buy airpods","label":"customer.want_purchase"}
+{"input":"i want to buy phone","label":"item.extra"}
+{"input":"i want to buy phone","label":"item.extra"}
+{"input":"i want to buy airpods","label":"item.extra"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"iphone 14 pro","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to buy phone","label":"customer.want_purchase"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to buy airpods","label":"item.extra"}
+{"input":"i want to buy clothes","label":"customer.want_purchase"}
+{"input":"clothes","label":"add.item_1"}
+{"input":"quit","label":"action.quit"}
+{"input":"i want to buy clothes","label":"customer.want_purchase"}
+{"input":"clothes","label":"add.item_1"}
+{"input":"i want to buy clothes","label":"customer.want_purchase"}
+{"input":"clothes","label":"add.item_1"}
+{"input":"i want to buy clothes","label":"customer.want_purchase"}
+{"input":"clothes","label":"add.item_1"}
+{"input":"i want to buy clothes","label":"customer.want_purchase"}
+{"input":"clothes","label":"add.item_1"}
+{"input":"qut","label":"chatbot_confused"}
+{"input":"quit","label":"action.quit"}
+{"input":"refund","label":"user.refund"}
+{"input":"yes","label":"agreement"}
+{"input":"i don't want it anymore","label":"action.quit"}
+{"input":"hello","label":"greetings.hello"}
+{"input":"hello","label":"greetings.hello"}
+{"input":"i want to know more about iphone","label":"item_list_1"}
+{"input":"tell me more about rog","label":"item_list_3"}
+{"input":"i want to buy rog phone 6","label":"item.extra"}
+{"input":"i want to buy rog","label":"add.item_3"}
+{"input":"quit","label":"action.quit"}
+{"input":"check basket","label":"checkBasket"}
+{"input":"track package","label":"track.purchase"}
+{"input":"thank you","label":"gratitude"}
+{"input":"rog phone","label":"item.list"}
+{"input":"asus rog phone 6","label":"item.list"}
+{"input":"iphone 14 pro","label":"additional_info"}
+{"input":"tell me more about you","label":"agent.purpose"}
+{"input":"item list","label":"item.list"}
+{"input":"which phone has the best color","label":"item.best_camera"}
+{"input":"which phone has the largest storage","label":"item.large_storage"}
+{"input":"i want to buy the phone that has storage between 512gb - 128gb","label":"customer.want_purchase"}
+{"input":"quit","label":"action.quit"}
+{"input":"which phone that has storage between 512gb - 128gb","label":"item.large_storage"}
+{"input":"which phone that has storage between 1gb","label":"item.large_storage"}
+{"input":"hello","label":"greetings.hello"}
+{"input":"which phone has storage between 1gb","label":"item.large_storage"}
+{"input":"i want to know the color of the phone","label":"customer.want_purchase"}
+{"input":"iphone 14 pro","label":"additional_info"}
+{"input":"color","label":"additional_info"}
+{"input":"what color phone you got","label":"item.list"}
+{"input":"what color you have?","label":"item.list"}
+{"input":"what color you have for iphone 14 pro","label":"item.list"}
+{"input":"rog phone 6","label":"item.list"}
+{"input":"rog","label":"additional_info"}
+{"input":"what color do you have?","label":"item.list"}
+{"input":"which phone has storage between 1gb","label":"item.large_storage"}
