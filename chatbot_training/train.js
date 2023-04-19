@@ -1,7 +1,8 @@
+// This file contain the function to process the intent file created and learn the intent and answer with NLP, NLU and NLG with NLPManager
+
 const fs = require("fs");
 const { NlpManager } = require("node-nlp");
 
-// const manager = new NlpManager({ languages: ['en'], forceNer:true, classifier:'nb'});
 const manager = new NlpManager({
 	languages: ['en'],
 	forceNER: true,
@@ -12,15 +13,8 @@ const manager = new NlpManager({
 		builtins: [],
 		threshold: 0.6
 	}
-	// threshold: 0.8
-	// classifier: {
-//   type: 'svm',
-//   kernelType: 'linear',
-//   C: 1.0,
-// },
 });
 
-// manager.addCorpus("./corpus.json");
 const files = fs.readdirSync("./intents");
 
 for (const file of files) {
@@ -47,27 +41,7 @@ for (const file of files) {
 	manager.addNamedEntityText('memory','memory',['en'],['memory'])
 	manager.addNamedEntityText('upgrade','upgrade',['en'],['upgrade'])
 	
-
-	// manager.addCorpus("corpus.json")
-
-	// manager.addNamedEntityText(
-	// 	'doctor',
-	// 	'alden',
-	// 	['en'],
-	// 	['Alden', 'alden']
-	// )
-
 }
-
-// const trainingOptions = {
-// 	epochs: 50,
-// 	learningRate: 0.1,
-// 	lossThresh: 0.1,
-// 	onEpoch: (epoch, loss) => {
-// 	  console.log(`Epoch ${epoch} completed with a loss of ${loss}`);
-// 	},
-//   };
-
 
 (async () => {
 	await manager.train();

@@ -194,7 +194,6 @@ intent
 {"input":"Hi I have a problem with my recent purchase ","label":"track.purchase"}
 {"input":"are you sure !","label":"tracking_package"}
 {"input":"Hi may I know when is my item arriving ","label":"greetings.hello"}
-{"input":"may i know when my items are arriving","label":"reason.unacceptable"}
 {"input":"no","label":"disagreement"}
 {"input":"i want to track my items !","label":"track.purchase"}
 {"input":"there you go","label":"greetings.bye"}
