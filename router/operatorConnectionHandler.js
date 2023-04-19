@@ -59,7 +59,7 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
     })
   }
 
-  // retrieve old message from customer
+  // retrieve active user message if the page accidentally reload
   getMessage(){
     this.socket.on('getMessage', (message) =>{
       var customerData = this.customerStore.getAllCustomer()
@@ -81,6 +81,29 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
     })
   }
 
+    // retrieve old message that either activate or non-activate user to evaluate the handover moment
+    getHistroyMessage(){
+      this.socket.on('getMessage', (message) =>{
+        var customerData = this.customerStore.getAllCustomer()
+        var string = JSON.stringify(customerData);
+        var objectiveValue = JSON.parse(string);
+        for(var customer in customerData){
+          var customer_details = JSON.parse(objectiveValue[customer])
+          console.log(customer_details)
+          if(customer_details.username != null){
+            console.log("go to get message")
+            this.chat_message.retrieve_message(this.socket, customer_details)
+  
+            // this.socket.emit('testing','check socket path')
+          }
+        }
+        // console.log(customer.username)
+        // console.log(message)
+        console.log("getMessage here")
+      })
+    }
+  
+
   // Attach event handlers and begin handling connections
   attachHandlers () {
     this.socket.on(AppConstants.EVENT_OPERATOR_MESSAGE, (message) => {
@@ -93,7 +116,22 @@ class OperatorConnectionHandler extends ChatConnectionHandler {
       console.log('operator disconnected');
       this.onDisconnect();
     });
+
+    this.socket.on('retrieve_existing_name', async (message)=>{
+      // console.log("hi")
+      var result  = await this.chat_message.run()
+      if(result.length>0){
+        for(var i = 0; i<result.length; i++){
+          this.socket.emit('old customer name',result[i])
+          this.chat_message.retrieve_history_message(this.socket, result[i])
+        }
+      }
+      console.log(result)
+    })
   }
+
+
+
 
   // Called on receipt of input from the operator
   _gotOperatorInput (message) {

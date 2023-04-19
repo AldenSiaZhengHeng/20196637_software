@@ -1,0 +1,141 @@
+<!--  The human operator web pages to monitor whole conversation-->
+
+<!doctype html>
+<html>
+  <head>
+    <title>Operator Interface</title>
+    <meta charset="UTF-8">
+    <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
+    <link rel="stylesheet" href="css/admin_sidebar.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/chat_history.css">
+    <style>
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+          <div class="logo_name">Customer Admin Panel</div>
+          <i class='bx bx-menu' id="btn" ></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="/getAdmin">
+            <i class='bx bx-chat'></i>
+            <span class="links_name">Chat</span>
+          </a>
+           <span class="tooltip">Chat</span>
+        </li>
+        <li>
+          <a href="/getPurchase">
+            <i class='bx bx-purchase-tag-alt'></i>
+            <span class="links_name">Purchase</span>
+          </a>
+          <span class="tooltip">Purchase</span>
+        </li> 
+        <li>
+          <a href="/getRefund">
+            <i class='bx bxs-package'></i>
+            <span class="links_name">Refund</span>
+          </a>
+          <span class="tooltip">Refund</span>
+        </li> 
+        <li>
+          <a href="/getHistory">
+            <i class='bx bx-history'></i>              
+              <span class="links_name">Chat History</span>
+          </a>
+          <span class="tooltip">Chat History</span>
+        </li>  
+        
+       <li class="profile">
+           <div class="profile-details">
+             <!--<img src="profile.jpg" alt="profileImg">-->
+             <div class="name_job">
+               <div class="name"> <%= session.username %></div>
+               <!-- <div class="job">Web designer</div> -->
+             </div>
+             <a href="/logout">
+              <i class='bx bx-log-out' id="log_out" ></i>
+            </a>
+           </div>
+       </li>
+      </ul>
+    </div>
+
+
+    <section class="section">
+      <div class="main">
+        <div class="title">
+          <h1>Phone Store Admin Panel</h1>
+        </div>
+
+        <div class="border"></div>
+
+        <div class="tab-container">
+          <h1>Customer Tabs</h1>
+          <div class="customer-Tabs">
+            <ul class="chatTabs" id="chatTabs">
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="chatWindow" id="chatWindow">
+          <h1>Chat History</h1>
+          <div class="chatWindows"></div>
+          <div class="user-input">
+            <!-- <form class="message-form">
+              <input class="message-input" id="m" autocomplete="off" />
+              <div class="v-divider"></div>
+              <button class="send-button">Send</button>
+            </form> -->
+          </div>
+        </div>
+
+        <!-- <div class="notify-container">
+          <h1>Notification</h1>
+
+          <div class="notification-container">
+            <ul class="notification">
+  
+            </ul>
+          </div>
+        </div> -->
+        
+      </div>
+    </section>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/chat_history.js"></script>
+    <script>
+      let sidebar = document.querySelector(".sidebar");
+      let closeBtn = document.querySelector("#btn");
+      let searchBtn = document.querySelector(".bx-search");
+    
+      closeBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("open");
+        menuBtnChange();//calling the function(optional)
+      });
+    
+      searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+        sidebar.classList.toggle("open");
+        menuBtnChange(); //calling the function(optional)
+      });
+    
+      // following are the code to change sidebar button(optional)
+      function menuBtnChange() {
+       if(sidebar.classList.contains("open")){
+         closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+       }else {
+         closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+       }
+      }
+      </script>
+
+  </body>
+</html>
+

@@ -87,7 +87,7 @@ const messageRouter = new MessageRouter({
 });
 
 // get and show the home web pages
-app.get('/home',(req, res) => {
+app.get('/',(req, res) => {
   res.render("../static/home.html")
   // res.sendFile(`${__dirname}/static/home.html`);
 })
@@ -105,7 +105,7 @@ app.get('/getAdmin', (req,res) => {
   }
 })
 
-// get and show the pages to perform purchase request order at human operator sides
+// get and show the purchase pages to perform purchase request order at human operator sides
 app.get('/getPurchase' ,(req,res) =>{
   if(req.session.username){
     res.render("../static/purchase.html",{username: req.session.user, session: req.session})
@@ -116,16 +116,28 @@ app.get('/getPurchase' ,(req,res) =>{
   }
 })
 
-// get and show the pages to perform refund request order at human operator sides
+// get and show the refund pages to perform refund request order at human operator sides
 app.get('/getRefund' ,(req,res) =>{
   if(req.session.username){
     res.render("../static/refund.html",{username: req.session.user, session: req.session})
     // res.render(`${__dirname}/static/operator.html`,{username: req.session.user, session: req.session})
   }
   else{
-    res.sendFile(`${__dirname}/static/login.html`)
+    res.sendFile(path.join(__dirname, '../static/login.html'))
   }
 })
+
+// get and show the refund pages to perform refund request order at human operator sides
+app.get('/getHistory' ,(req,res) =>{
+  if(req.session.username){
+    res.render("../static/chat_history.html",{username: req.session.user, session: req.session})
+    // res.render(`${__dirname}/static/operator.html`,{username: req.session.user, session: req.session})
+  }
+  else{
+    res.sendFile(path.join(__dirname, '../static/login.html'))
+  }
+})
+
 
 // get and show the login page for human operator
 app.get('/login', (req,res) => {
