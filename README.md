@@ -20,9 +20,16 @@
     - operator page: http://localhost:3000/getAdmin
     - customer page: http://localhost:3000/getCustomer
 
+4. Registed Admin Account
+    - username: aszh
+    - password: 1234
+
+    - username: alden
+    - password
+
 # How to train the chatbot model <br />
 1. Change the parameter settings in "nlp.js" package install before training the model to get a more accurate chatbot model.<br />
-    a) open node_modules -> @nlpjs -> @neural -> src -> neural-network.js
+    a) open node_modules -> @nlpjs -> @neural -> src -> neural-network.js <br />
     b) set the defaultSettings to below variable:
         {
             iterations: 20000,
@@ -37,10 +44,7 @@
 3. The training will be based on the file in intents folder
 
 
-**********************************************
-    Instruction of the web pages implement
-**********************************************
-
+# Instruction of the web pages implement
 1. There are 3 differernt component to select which is register admin, admin login and customer
     - Register admin will allow admin to register an account to login to the human operator dashboard
     - Admin login will redirect to the login page which the human operator could enter the username and password to login
@@ -72,27 +76,26 @@
 5. There are side bar where the human operator could choose to direct to other pages to perform purchase or refund request order, review chat history or logout.
 
 
-*************************************
-    Instruction of each folder 
-*************************************
 
-* All of the file contain comment to further illustrate the function.
-* this section will only brief explain how each file function in the project.
+# Instruction of each folder 
 
-1. chatbot folder
+* **All of the file contain comment to further illustrate the function.**
+* **this section will only brief explain how each file function in the project.**
+
+1. chatbot folder<br />
 a) chatbot.js
 - this file contain the function to process the user input message and return the predicted intent.
 - if the message is not recognized, it will return "None" as the intent
 
-2. chatbot_training folder
+2. chatbot_training folder<br />
 a) train.js
 - this file will help to extract the questiosn and answer from the intent file from intents folder to train the chatbot
 - the model will be saved as model.nlp in JSON format
 
 3. evaluation & csv folder
-a) accuracy.js
-- this file will calculate the accuracy by predicting the input message and compare the predicted intent with actual intent 
-- those testing data is obtained with several participant before actual experiment from database.
+- accuracy.js
+    - this file will calculate the accuracy by predicting the input message and compare the predicted intent with actual intent 
+    - those testing data is obtained with several participant before actual experiment from database.
 
 b) process_intent.js
 - this file will retrieve the user message and intent stored in the database and saved into the csv file which contain in csv folder as predicted_intent. 
@@ -111,49 +114,49 @@ a) database.js
 - it will try to match the item with extracted keywrod from user message to return the item.
 
 7. model folder
-- this folder contain 4 different file to create the database table in mongodb connected.
-    a) purchase.js -> purchase table that store the information of purchase action completed by the customer
+- this folder contain 4 different file to create the database table in mongodb connected.<br />
+    a) purchase.js -> purchase table that store the information of purchase action completed by the customer<br />
 
-    b) refund_ticket.js -> refund table that store the information about the refund details
+    b) refund_ticket.js -> refund table that store the information about the refund details<br />
 
-    c) user.js -> store the information for the registered admin
+    c) user.js -> store the information for the registered admin<br />
 
-    d) userMessage.js -> store all message with several details such as time, response time etc for further action
+    d) userMessage.js -> store all message with several details such as time, response time etc for further action<br />
 
 - the table will automatically created if there is no such table in the databae.
 
 8. public folder
 - this folder contain the css, images, and js files used by the web pages.
 
-- js folder contain 3 significant file which contain the jquery function for several action:
+- js folder contain 3 significant file which contain the jquery function for several action:<br />
     a) chat_history.js
-    - this file contain the function that allow the human operator to review the chat history of all use.
+    - this file contain the function that allow the human operator to review the chat history of all use.<br />
 
     b) operator.js
-    - this file contain the function to show, sent, and receive message from customer or notificaiotn.
+    - this file contain the function to show, sent, and receive message from customer or notificaiotn.<br />
 
     c) customer.js
-    - this file contain the function to show, sent, and receive message from the human operator.
+    - this file contain the function to show, sent, and receive message from the human operator.<br />
 
-9. router folder
+9. router folder<br />
 a) appConstants.js
-- this file stored the general message to trigger the event
+- this file stored the general message to trigger the event<br />
 
 b) chat_message.js
-- this file will help to retrieve and process the old message, username and save the converstion from the human operator.
+- this file will help to retrieve and process the old message, username and save the converstion from the human operator.<br />
 
 c) chatConnectionHandler.js
-- initialize the connection when the server start
+- initialize the connection when the server start<br />
 
 d) customerConnectionHandler.js
 - handle and route the customer input message and send to main message component to process by chatbot and return response.
-- the new customer information will be sent to customerStore to save the details and a welcome event will send back to customer.
+- the new customer information will be sent to customerStore to save the details and a welcome event will send back to customer.<br />
 
 e) customerStore.js
-- this file will store the customer details that have been created such as customer id, customer name, agent type etc
+- this file will store the customer details that have been created such as customer id, customer name, agent type etc<br />
 
 f) messageRouter
-- the main router to process the message from user and human operator and send back to both customer ad human operator. It will send the message to process by chatbot and receive result to decide next action. 
+- the main router to process the message from user and human operator and send back to both customer ad human operator. It will send the message to process by chatbot and receive result to decide next action.<br /> 
 
 g) operatorConnectionHandler
 - handle and route the customer input message and send to main message component to process.
@@ -162,7 +165,7 @@ g) operatorConnectionHandler
 9. sentiment_analysis folder
 - the user input message will be sent through the sentiment_analysis.js in order to calculate the sentiment score and return.
 
-10. server folder
+10. server folder<br />
 a) app.js
 - the main component to run the server to host all web pages created.
 
@@ -171,16 +174,16 @@ a) app.js
 
 12. userIntentFlow folder
 - this folder contain 4 file to handle several scenario for customer serivce chatbot.
-- if the user is asking FAQ questions, the response will directly return back to message router
+- if the user is asking FAQ questions, the response will directly return back to message router<br />
 
 a) userIntent.js
-- this file will determine which scenario will be applied based on the predicted intent at the beginning stage.
+- this file will determine which scenario will be applied based on the predicted intent at the beginning stage.<br />
 
 b) userPurchaseFlow.js
-- contain the IF-THEN scripts to handle the purchase flow create in order to achieve it
+- contain the IF-THEN scripts to handle the purchase flow create in order to achieve it<br />
 
 c) userRefundFlow.js
-- contain the IF-THEN scripts to handle the refund flow create in order to achieve it
+- contain the IF-THEN scripts to handle the refund flow create in order to achieve it<br />
 
 d) userTrackingFlow.js
 - contain the IF-THEN scripts to handle the tracking flow create in order to achieve it
