@@ -1,15 +1,12 @@
 # This file will explain each of the files that has been created
 
-****************
-    Summary
-****************
+# Summary <br />
+
 1. This project is to simulate a real-life customer service chatbot to compare and evaluate several handover strategies method in different scenarios created.
 2. Hence, there is no authentication of customers since the experiment will not require entering any sensitive information but simulate a customer service chatbot.
 
-****************************
-    How to run project
-****************************
 
+#    How to run project <br />
 1. Several folder had been created and each of the files are significant to run a hybrid chatbot system web applications
 
 2. To run the project:
@@ -19,15 +16,12 @@
     - the web pages will be live in "localhost:3000", you can copy this and paste on the browser.
 
 3. URl to run the project in localhost
+    - home page: http://localhost:3000/
+    - operator page: http://localhost:3000/getAdmin
+    - customer page: http://localhost:3000/getCustomer
 
-home page: http://localhost:3000/
-operator page: http://localhost:3000/getAdmin
-customer page: http://localhost:3000/getCustomer
-
-****************************************
-    How to train the chatbot model
-****************************************
-1. Change the parameter settings in "nlp.js" package install before training the model to get a more accurate chatbot model.
+# How to train the chatbot model <br />
+1. Change the parameter settings in "nlp.js" package install before training the model to get a more accurate chatbot model.<br />
     a) open node_modules -> @nlpjs -> @neural -> src -> neural-network.js
     b) set the defaultSettings to below variable:
         {
@@ -54,11 +48,11 @@ customer page: http://localhost:3000/getCustomer
 
 2. Once the human operator login, it will redirect to the admin dashboard panel and thee are 4 pages that could select by the human operator which are:
     - dashboard: monitor the conversation of active user with chatbot. The dashboard contain three components which are:
-        a) customer tabs: show the active user which is clickable allow to enter those active conversation channel
+        - customer tabs: show the active user which is clickable allow to enter those active conversation channel
 
-        b) chat window: show the message of the user, chatbot and the human operator
+        - chat window: show the message of the user, chatbot and the human operator
 
-        c) notification: the sentiment result, alert notification will be shown here to alert human operator to decide handover timing and action.
+        - notification: the sentiment result, alert notification will be shown here to alert human operator to decide handover timing and action.
 
     - purchase page: perform the purchase request order when the handover occur manually. After sucessfully submit, the tracking number will be shown in below
 
