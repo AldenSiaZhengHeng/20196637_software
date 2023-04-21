@@ -4,6 +4,13 @@
 
 1. This project is to simulate a real-life customer service chatbot to compare and evaluate several handover strategies method in different scenarios created.
 2. Hence, there is no authentication of customers since the experiment will not require entering any sensitive information but simulate a customer service chatbot.
+3. This project can be acted as a baseline to create a hybrid customer service chatbot system but several important security strategies might need to consider and implement.
+4. There will not be any request for the user enter their personal information in both sides as this project is to determine and examine different strategies of handover between human agent and chatbot to improve customer service.
+
+**No personal information will be required**
+
+# Limitations
+1. Since this project is just for research purpose, the customer will not require for register but just enter the username and select agent to preform action.
 
 
 #    How to run project <br />
@@ -25,7 +32,7 @@
     - password: 1234
 
     - username: alden
-    - password
+    - password: 1234
 
 # How to train the chatbot model <br />
 1. Change the parameter settings in "nlp.js" package install before training the model to get a more accurate chatbot model.<br />
@@ -49,6 +56,8 @@
     - Register admin will allow admin to register an account to login to the human operator dashboard
     - Admin login will redirect to the login page which the human operator could enter the username and password to login
     - customer component will direct the user to the customer side to enter username and select agent to start conversation
+
+2. For admin register page, the new admin can enter the new username and password and register. After that, they can login in admin login pages.
 
 2. Once the human operator login, it will redirect to the admin dashboard panel and thee are 4 pages that could select by the human operator which are:
     - dashboard: monitor the conversation of active user with chatbot. The dashboard contain three components which are:
@@ -82,28 +91,28 @@
 * **All of the file contain comment to further illustrate the function.**
 * **this section will only brief explain how each file function in the project.**
 
-1. chatbot folder<br />
-a) chatbot.js
-- this file contain the function to process the user input message and return the predicted intent.
-- if the message is not recognized, it will return "None" as the intent
+1. chatbot folder
+    - a) chatbot.js
+        - this file contain the function to process the user input message and return the predicted intent.
+        - if the message is not recognized, it will return "None" as the intent
 
-2. chatbot_training folder<br />
-a) train.js
-- this file will help to extract the questiosn and answer from the intent file from intents folder to train the chatbot
-- the model will be saved as model.nlp in JSON format
+2. chatbot_training folder
+    - a) train.js
+        - this file will help to extract the questiosn and answer from the intent file from intents folder to train the chatbot
+        - the model will be saved as model.nlp in JSON format
 
 3. evaluation & csv folder
-- accuracy.js
-    - this file will calculate the accuracy by predicting the input message and compare the predicted intent with actual intent 
-    - those testing data is obtained with several participant before actual experiment from database.
+    - a) accuracy.js
+        - this file will calculate the accuracy by predicting the input message and compare the predicted intent with actual intent 
+        - those testing data is obtained with several participant before actual experiment from database.
 
-b) process_intent.js
-- this file will retrieve the user message and intent stored in the database and saved into the csv file which contain in csv folder as predicted_intent. 
+    - b) process_intent.js
+        - this file will retrieve the user message and intent stored in the database and saved into the csv file which contain in csv folder as predicted_intent. 
 
 4. database folder
-a) database.js
-- this file will connect to the databae in mongodb with the url set
-* if you want to use own database, please change the link as this is just for demonstration
+    - a) database.js
+        - this file will connect to the databae in mongodb with the url set
+        **if you want to use own database, please change the link as this is just for demonstration**
 
 5. intents folder
 - this folder contain all of the intent require to train the chatbot
@@ -115,78 +124,78 @@ a) database.js
 
 7. model folder
 - this folder contain 4 different file to create the database table in mongodb connected.<br />
-    a) purchase.js -> purchase table that store the information of purchase action completed by the customer<br />
+    - a) purchase.js -> purchase table that store the information of purchase action completed by the customer
 
-    b) refund_ticket.js -> refund table that store the information about the refund details<br />
+    - b) refund_ticket.js -> refund table that store the information about the refund details
 
-    c) user.js -> store the information for the registered admin<br />
+    - c) user.js -> store the information for the registered admin
 
-    d) userMessage.js -> store all message with several details such as time, response time etc for further action<br />
+    - d) userMessage.js -> store all message with several details such as time, response time etc for further action
 
-- the table will automatically created if there is no such table in the databae.
+- **the table will automatically created if there is no such table in the databae.**
 
 8. public folder
 - this folder contain the css, images, and js files used by the web pages.
 
-- js folder contain 3 significant file which contain the jquery function for several action:<br />
-    a) chat_history.js
-    - this file contain the function that allow the human operator to review the chat history of all use.<br />
+- js folder contain 3 significant file which contain the jquery function for several action:
+    - a) chat_history.js
+        - this file contain the function that allow the human operator to review the chat history of all use.
 
-    b) operator.js
-    - this file contain the function to show, sent, and receive message from customer or notificaiotn.<br />
+    - b) operator.js
+        - this file contain the function to show, sent, and receive message from customer or notificaiotn.
 
-    c) customer.js
-    - this file contain the function to show, sent, and receive message from the human operator.<br />
+- c) customer.js
+    - this file contain the function to show, sent, and receive message from the human operator.
 
-9. router folder<br />
-a) appConstants.js
-- this file stored the general message to trigger the event<br />
+9. router folder
+    - a) appConstants.js
+        - this file stored the general message to trigger the event<br />
 
-b) chat_message.js
-- this file will help to retrieve and process the old message, username and save the converstion from the human operator.<br />
+    - b) chat_message.js
+        - this file will help to retrieve and process the old message, username and save the converstion from the human operator.<br />
 
-c) chatConnectionHandler.js
-- initialize the connection when the server start<br />
+    - c) chatConnectionHandler.js
+        - initialize the connection when the server start
 
-d) customerConnectionHandler.js
-- handle and route the customer input message and send to main message component to process by chatbot and return response.
-- the new customer information will be sent to customerStore to save the details and a welcome event will send back to customer.<br />
+    - d) customerConnectionHandler.js
+        - handle and route the customer input message and send to main message component to process by chatbot and return response.
+        - the new customer information will be sent to customerStore to save the details and a welcome event will send back to customer.
 
-e) customerStore.js
-- this file will store the customer details that have been created such as customer id, customer name, agent type etc<br />
+    - e) customerStore.js
+        - this file will store the customer details that have been created such as customer id, customer name, agent type etc
 
-f) messageRouter
-- the main router to process the message from user and human operator and send back to both customer ad human operator. It will send the message to process by chatbot and receive result to decide next action.<br /> 
+    - f) messageRouter
+        - the main router to process the message from user and human operator and send back to both customer ad human operator. It will send the message to process by chatbot and receive result to decide next action.
 
-g) operatorConnectionHandler
-- handle and route the customer input message and send to main message component to process.
-- it also contain the event handler for operator side for several action that had been mentioned.
+    - g) operatorConnectionHandler
+        - handle and route the customer input message and send to main message component to process.
+        - it also contain the event handler for operator side for several action that had been mentioned.
 
 9. sentiment_analysis folder
 - the user input message will be sent through the sentiment_analysis.js in order to calculate the sentiment score and return.
 
 10. server folder<br />
-a) app.js
-- the main component to run the server to host all web pages created.
+- a) app.js
+    - the main component to run the server to host all web pages created.
 
 11. static folder
 - this folder contain all of the web pages created for both customer and human operator to simulate a real-life customer service chatbot system
 
 12. userIntentFlow folder
 - this folder contain 4 file to handle several scenario for customer serivce chatbot.
-- if the user is asking FAQ questions, the response will directly return back to message router<br />
+- if the user is asking FAQ questions, the response will directly return back to message router
 
-a) userIntent.js
-- this file will determine which scenario will be applied based on the predicted intent at the beginning stage.<br />
+    - a) userIntent.js
+        - this file will determine which scenario will be applied based on the predicted intent at the beginning stage.
 
-b) userPurchaseFlow.js
-- contain the IF-THEN scripts to handle the purchase flow create in order to achieve it<br />
+    - b) userPurchaseFlow.js
+        - contain the IF-THEN scripts to handle the purchase flow create in order to achieve it
 
-c) userRefundFlow.js
-- contain the IF-THEN scripts to handle the refund flow create in order to achieve it<br />
+    - c) userRefundFlow.js
+        - contain the IF-THEN scripts to handle the refund flow create in order to achieve it
 
-d) userTrackingFlow.js
-- contain the IF-THEN scripts to handle the tracking flow create in order to achieve it
+    - d) userTrackingFlow.js
+        - contain the IF-THEN scripts to handle the tracking flow create in order to achieve it
 
 13. model.nlp file
 - the chatbot model that has been trained and will be load in chatbot.js to process customer messages.
