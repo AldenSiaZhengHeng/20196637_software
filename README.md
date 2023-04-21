@@ -28,17 +28,19 @@
     - customer page: http://localhost:3000/getCustomer
 
 4. Registed Admin Account
+**********************
     - username: aszh
     - password: 1234
-
+**********************
     - username: alden
     - password: 1234
+**********************
 
 # How to train the chatbot model <br />
 1. Change the parameter settings in "nlp.js" package install before training the model to get a more accurate chatbot model.<br />
-    a) open node_modules -> @nlpjs -> @neural -> src -> neural-network.js <br />
-    b) set the defaultSettings to below variable:
-        {
+    - a) open node_modules -> @nlpjs -> @neural -> src -> neural-network.js 
+    - b) set the defaultSettings to below variable:
+        - {
             iterations: 20000,
             errorThresh: 0.00005,
             deltaErrorThresh: 0.000001,
