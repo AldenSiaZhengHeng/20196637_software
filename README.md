@@ -146,8 +146,8 @@
     - b) operator.js
         - this file contain the function to show, sent, and receive message from customer or notificaiotn.
 
-- c) customer.js
-    - this file contain the function to show, sent, and receive message from the human operator.
+    - c) customer.js
+        - this file contain the function to show, sent, and receive message from the human operator.
 
 9. router folder
     - a) appConstants.js
