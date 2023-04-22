@@ -101,6 +101,8 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <!-- function to add item to textarea to show in GUI -->
     <script>
       function myFunction() {
         const item = document.getElementById('item').value;
@@ -109,6 +111,8 @@
         document.getElementById("purchase").value += item + " - " + amount + ", \n";
       }
     </script>
+
+<!-- function to send the information filled in purchase page to create a tracking number for user once success insert into database -->
 <script>
     const form = document.getElementById('submit')
     const add = document.getElementById('add')
