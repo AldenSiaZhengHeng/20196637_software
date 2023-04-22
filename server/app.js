@@ -278,13 +278,9 @@ app.post('/api/login', async (req, res) => {
   const username = req.body.username
   const password = req.body.password
   sess = req.session
-  console.log(sess)
   req.session.username = req.body.username
   req.session.password = req.body.password
-  console.log(username)
-  console.log(password)
   const user = await User.findOne({username}).lean()
-  console.log(user)
   if(!user) {
     return res.json({status:'error', error:'Invalid Username/ Password!'})
   }
@@ -292,6 +288,7 @@ app.post('/api/login', async (req, res) => {
   if(await bcrypt.compare(password, user.password)) {
     req.session.regenerate(function(err) {
       if(err){
+        console.log(err)
         return res.json({status:'error', error:'Failed to Login'})
       }
       req.session.username = username
@@ -306,6 +303,8 @@ app.post('/api/login', async (req, res) => {
         })
       return res.json({status:'ok', data: token})
     })
+  }else{
+    return res.json({status:'error', error:'Invalid Username/ Password!'})
   }
 })
 
