@@ -75,8 +75,7 @@ body {
     /* overflow-y: scroll; */
     /* height: 600px; */
     min-height: 80vh;
-    width: auto;
-    max-width: 25%;
+    width: 25%;
     /* padding: 5px; */
     padding-bottom: 50%;
     margin-bottom: -50%;
