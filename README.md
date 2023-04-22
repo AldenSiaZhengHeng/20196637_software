@@ -1,5 +1,11 @@
 # This file will explain each of the files that has been created
 
+# Library require
+1. This hybrid chatbot system is built with Node.js, html/css and jQuery
+2. Please ensure you have installed below library before:
+    - Node.js
+
+
 # Summary
 1. This project is to simulate a real-life customer service chatbot to compare and evaluate several handover strategies method in different scenarios created.
 2. Hence, there is no authentication of customers since the experiment will not require entering any sensitive information but simulate a customer service chatbot.
@@ -16,7 +22,7 @@
 #    How to run project <br />
 1. Several folder had been created and each of the files are significant to run a hybrid chatbot system web applications
 
-2. To run the project:
+2. **To run the project:**
     - enter "npm install"
     - make sure every package required in package.json is installed.
     - enter "npm start" to run the project
