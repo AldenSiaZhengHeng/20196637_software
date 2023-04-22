@@ -1,6 +1,6 @@
 # This file will explain each of the files that has been created
 
-# Summary <br />
+# Summary
 1. This project is to simulate a real-life customer service chatbot to compare and evaluate several handover strategies method in different scenarios created.
 2. Hence, there is no authentication of customers since the experiment will not require entering any sensitive information but simulate a customer service chatbot.
 3. This project can be acted as a baseline to create a hybrid customer service chatbot system but several important security strategies might need to consider and implement.
@@ -36,7 +36,7 @@
     - password: 1234
 **********************
 
-5. For the customer:
+5. For the customer to ask chatbot for tracking:
 - Example of tracking number available
 *********************************************************
     - tracking number: 19193525531583104822
@@ -52,13 +52,14 @@
 
 - Example of refund ticket available
 *********************************************************
-    - refund ticket number: 25332187872458572678
-    - result: 
+    - Refund Ticket Number: 78444042221741685047
+    -  result: 
     {
-        Username: alden
-        Tracking Number: 19193525531583104822
-        Item: Iphone 14 pro - 1,Samsung Galaxy S22 - 3,Sim Card x 1,Phone case x 1
-        Location: Liverpool
+        Refund Ticket Number: 78444042221741685047
+        Tracking Number: 24659629944376933799
+        Username: A-3
+        Item: Iphone 14 pro - 1, ASUS ROG Phone 6 - 5, Phone Case - 6, SIM Card - 1,
+        Reason: The screen is broken,When I received the package, i hear the screen is cracked
         Status: pending
     }
 *********************************************************
