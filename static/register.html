@@ -39,9 +39,10 @@
 					})
 				}).then((res) => res.json())
 
+				// if success return back to home pages
 				if (result.status === 'ok') {
 					// everythign went fine
-                    window.location.href = '/home.html'
+                    window.location.href = '/'
 					alert('Success')	
 				} else {
 					alert(result.error)
