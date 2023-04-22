@@ -159,7 +159,7 @@ app.get('/getCustomer', (req,res) => {
   res.sendFile(path.join(__dirname, '../static/customer.html'))
 })
 
-// check the validation of tracking number when performing refund request by the human operator when handover occur
+// check the validation of tracking number when performing refund or tracking request by the human operator when handover occur
 app.post('/api/checking_trackNum', async (req,res)=>{
   console.log(req.body)
   const tracking_number = req.body.tracking_number;
@@ -172,6 +172,24 @@ app.post('/api/checking_trackNum', async (req,res)=>{
       var item_list = result[0].item; 
       console.log(result)
       console.log(item_list)
+      return res.json({status:'ok', result:result[0]})
+    }
+  }catch(e){
+
+  }
+})
+
+// check the validation of refund number when performing tracking request by the human operator when handover occur
+app.post('/api/checking_refundNum', async (req,res)=>{
+  console.log(req.body)
+  const refund_number = req.body.refund_number;
+  try{
+    const result = await refundTicket
+    .find({
+        RefundTicketId:refund_number
+    })
+    if(result.length > 0){
+      console.log(result)
       return res.json({status:'ok', result:result[0]})
     }
   }catch(e){

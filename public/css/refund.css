@@ -67,6 +67,7 @@ input[type="submit"]{
     font-size: .8em;
 }
 
+.refund_list,   
 .refund_status,
 .item_list{
     border: 2px solid red;
@@ -74,6 +75,8 @@ input[type="submit"]{
     border-radius: 25px;
     width: 80%;
 }
+
+.show_refund,
 .show{
     margin: 0 auto; 
     justify-content: center;

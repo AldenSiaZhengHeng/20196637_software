@@ -1,7 +1,6 @@
 # This file will explain each of the files that has been created
 
 # Summary <br />
-
 1. This project is to simulate a real-life customer service chatbot to compare and evaluate several handover strategies method in different scenarios created.
 2. Hence, there is no authentication of customers since the experiment will not require entering any sensitive information but simulate a customer service chatbot.
 3. This project can be acted as a baseline to create a hybrid customer service chatbot system but several important security strategies might need to consider and implement.
@@ -11,6 +10,7 @@
 
 # Limitations
 1. Since this project is just for research purpose, the customer will not require for register but just enter the username and select agent to preform action.
+2. The mongodb database provided is without any encryption as this project is to demonstrate a simple chatbot system. Hence, it is better to encrypt the url string if applied for business purpose.
 
 
 #    How to run project <br />
@@ -27,7 +27,7 @@
     - operator page: http://localhost:3000/getAdmin
     - customer page: http://localhost:3000/getCustomer
 
-4. Registed Admin Account
+4. Registered Admin Account
 **********************
     - username: aszh
     - password: 1234
@@ -35,6 +35,33 @@
     - username: alden
     - password: 1234
 **********************
+
+5. For the customer:
+- Example of tracking number available
+*********************************************************
+    - tracking number: 19193525531583104822
+    - result: 
+    {
+        Username: alden
+        Tracking Number: 19193525531583104822
+        Item: Iphone 14 pro - 1,Samsung Galaxy S22 - 3,Sim Card x 1,Phone case x 1
+        Location: Liverpool
+        Status: pending
+    }
+*********************************************************
+
+- Example of refund ticket available
+*********************************************************
+    - refund ticket number: 25332187872458572678
+    - result: 
+    {
+        Username: alden
+        Tracking Number: 19193525531583104822
+        Item: Iphone 14 pro - 1,Samsung Galaxy S22 - 3,Sim Card x 1,Phone case x 1
+        Location: Liverpool
+        Status: pending
+    }
+*********************************************************
 
 # How to train the chatbot model <br />
 1. Change the parameter settings in "nlp.js" package install before training the model to get a more accurate chatbot model.<br />
@@ -106,15 +133,20 @@
 3. evaluation & csv folder
     - a) accuracy.js
         - this file will calculate the accuracy by predicting the input message and compare the predicted intent with actual intent 
+        - 100 input with label have been randomly chosen for testing
         - those testing data is obtained with several participant before actual experiment from database.
+        - the data that use to perform accuracy evaluation has been labeled and include within this file.
+        - you could add more input with correct labelling to test for more result.
 
     - b) process_intent.js
-        - this file will retrieve the user message and intent stored in the database and saved into the csv file which contain in csv folder as predicted_intent. 
+        - this file will retrieve the user message and intent stored in the database and saved into the csv file which contain in csv folder as predicted_intent.
+        - the tester can modify or extract the data from the predicted_intent.csv file and label with correct label before testing.
+        - please make sure that there are data contain in the database.
 
 4. database folder
     - a) database.js
         - this file will connect to the databae in mongodb with the url set
-        **if you want to use own database, please change the link as this is just for demonstration**
+- **if you want to use own database, please change the link as this is just for demonstration**
 
 5. intents folder
 - this folder contain all of the intent require to train the chatbot

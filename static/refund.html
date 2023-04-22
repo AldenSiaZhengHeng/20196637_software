@@ -81,6 +81,26 @@
                 </div>
             </fieldset>
         </div>
+
+        <div class="find_refund">
+            <form id="submit_refundNum" onsubmit="return false">
+                <fieldset>
+                    <legend>Search Refund Ticket</legend>
+                    <label for="refundNum">Refund Number:</label>
+                    <input name="refundNum" type="text" id="refundNum" required placeholder=""/>
+                    <br />
+                    <input type="submit" value="Submit Form" />
+                </fieldset>
+            </form>
+        </div>
+        <div class="show_refund">
+            <fieldset>
+                <legend>Item Found</legend>
+                <div class="refund_list" id="refund_list">
+                    <p id="refund_details"></p>
+                </div>
+            </fieldset>
+        </div>
   
         <div class="main">
             <form id="refund" onsubmit="return false">
@@ -111,6 +131,8 @@
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <!-- Function to submit the details filled for refund purpose, and the refund ticket will show once the insert the data into database successfully -->
     <script>
         const form2 = document.getElementById('refund')
         form2.addEventListener('submit',submit_refund)
@@ -157,6 +179,37 @@
 
             // console.log(user_reason)
             // console.log(typeof(item_list))
+
+        }
+    </script>
+    
+    <!-- function to search for the validation of refund ticket for tracking purpose -->
+    <script>
+        const refund = document.getElementById('submit_refundNum')
+        refund.addEventListener('submit', submit)
+
+        async function submit(event){
+            const refund_number = document.getElementById('refundNum').value; 
+            console.log(refund_number)
+            const result = await fetch('/api/checking_refundNum', {
+                method:'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    refund_number
+                })
+            }).then((res)=> res.json())
+
+            if(result.status =='ok'){
+                console.log("successful find the item")
+                alert("Success Found\n")
+                var text = "Refund Ticket Number: " + "<strong>" + result.result.RefundTicketId + "</strong><br />" + "Tracking Number: " + "<strong>" + result.result.TrackingNumber + "</strong><br />" + "Username: " + "<strong>" + result.result.username + "</strong><br />" + "Item: " + "<strong>" + result.result.item + "</strong><br />" + "Reason: " + "<strong>" + result.result.reason + "</strong><br />" + "Status: " + "<strong>" + result.result.status + "</strong>" ;
+                document.getElementById('refund_details').innerHTML = text;
+            } else{
+                alert(result.error)
+            }
+            event.preventDefault();
 
         }
     </script>
