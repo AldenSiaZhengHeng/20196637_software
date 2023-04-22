@@ -5,21 +5,7 @@
 2. Please ensure you have installed below library before:
     - Node.js
 
-
-# Summary
-1. This project is to simulate a real-life customer service chatbot to compare and evaluate several handover strategies method in different scenarios created.
-2. Hence, there is no authentication of customers since the experiment will not require entering any sensitive information but simulate a customer service chatbot.
-3. This project can be acted as a baseline to create a hybrid customer service chatbot system but several important security strategies might need to consider and implement.
-4. There will not be any request for the user enter their personal information in both sides as this project is to determine and examine different strategies of handover between human agent and chatbot to improve customer service.
-
-**No personal information will be required**
-
-# Limitations
-1. Since this project is just for research purpose, the customer will not require for register but just enter the username and select agent to preform action.
-2. The mongodb database provided is without any encryption as this project is to demonstrate a simple chatbot system. Hence, it is better to encrypt the url string if applied for business purpose.
-
-
-#    How to run project <br />
+#    How to run project
 1. Several folder had been created and each of the files are significant to run a hybrid chatbot system web applications
 
 2. **To run the project:**
@@ -70,9 +56,22 @@
     }
 *********************************************************
 
-# How to train the chatbot model <br />
+# Summary
+1. This project is to simulate a real-life customer service chatbot to compare and evaluate several handover strategies method in different scenarios created.
+2. Hence, there is no authentication of customers since the experiment will not require entering any sensitive information but simulate a customer service chatbot.
+3. This project can be acted as a baseline to create a hybrid customer service chatbot system but several important security strategies might need to consider and implement.
+4. There will not be any request for the user enter their personal information in both sides as this project is to determine and examine different strategies of handover between human agent and chatbot to improve customer service.
+
+**No personal information will be required**
+
+# Limitations
+1. Since this project is just for research purpose, the customer will not require for register but just enter the username and select agent to preform action.
+2. The mongodb database provided is without any encryption as this project is to demonstrate a simple chatbot system. Hence, it is better to encrypt the url string if applied for business purpose.
+
+
+# How to train the chatbot model
 1. Change the parameter settings in "nlp.js" package install before training the model to get a more accurate chatbot model.<br />
-    - a) open node_modules -> @nlpjs -> @neural -> src -> neural-network.js 
+    - a) open the file node_modules -> @nlpjs -> @neural -> src -> neural-network.js 
     - b) set the defaultSettings to below variable:
         - {
             iterations: 20000,
