@@ -65,7 +65,7 @@ fieldset{
     min-width: 200px;
 }
 
-button,
+input[type="button"],
 input[type="submit"]{
     margin-top: 1em;
     padding: .5em 1em;

@@ -78,7 +78,8 @@
                 </select>
                 <input name="amount" type="amount" id="amount" placeholder="amount" />
                 <br />
-                <button onclick="myFunction()">Add</button>
+                <input type="button" id="add" onclick="myFunction()" value="Add"/>
+                <!-- <button id="add" onclick="myFunction()">Add</button> -->
                 <br />
                 <br />
                 <textarea id="purchase" rows="5" cols="50" name="product"></textarea>
@@ -88,7 +89,7 @@
                 <label for="location">Location:</label>
                 <input id="location" name="location" type="text" required placeholder=""/>
                 <br />
-                <input type="submit" value="Submit Form" />
+                <input type="submit" id="submit" value="Submit Form" />
 
             </fieldset>
 
@@ -104,11 +105,13 @@
       function myFunction() {
         const item = document.getElementById('item').value;
         const amount = document.getElementById('amount').value;
-        document.getElementById("purchase").innerHTML += item + " - " + amount + ",";
+        console.log(document.getElementById("purchase").value)
+        document.getElementById("purchase").value += item + " - " + amount + ", \n";
       }
     </script>
 <script>
     const form = document.getElementById('submit')
+    const add = document.getElementById('add')
     form.addEventListener('submit', submit)
 
     async function submit(event){

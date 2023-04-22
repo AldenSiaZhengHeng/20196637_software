@@ -8,11 +8,9 @@ const { NlpManager, Language } = require('node-nlp');
 const test_data = [
     {input:"i want to upgrade the phone memory",label:"additional_info"},
 {input:"i want to upgrade the iphone memory",label:"additional_info"},
-{input:"i want to upgrade the iphone memory",label:"additional_info"},
 {input:"i want to upgrade the memory for iphone",label:"additional_info"},
 {input:"quit",label:"action.quit"},
 {input:"i want to upgrade the memory for iphone",label:"additional_info"},
-{input:"i want to upgrade the iphone 14 pro storage.",label:"additional_info"},
 {input:"i want to upgrade iphone 14 pro storage",label:"additional_info"},
 {input:"hi",label:"greetings.hello"},
 {input:"i want to buy item",label:"customer.want_purchase"},
@@ -45,6 +43,7 @@ const test_data = [
 {input:"yes",label:"agreement"},
 {input:"agree",label:"agreement"},
 {input:"i want to buy airpods",label:"customer.want_purchase"},
+{input:"i want to upgrade the iphone 14 pro storage.",label:"additional_info"},
 {input:"i want to buy airpods",label:"customer.want_purchase"},
 {input:"i want to buy phone",label:"customer.want_purchase"},
 {input:"clothes",label:"None"},
@@ -86,6 +85,7 @@ const test_data = [
 {input:"asus rog phone 6",label:"item.list"},
 {input:"iphone 14 pro",label:"additional_info"},
 {input:"tell me more about you",label:"agent.purpose"},
+{input:"i want to upgrade the iphone memory",label:"additional_info"},
 {input:"item list",label:"item.list"},
 {input:"which phone has the best color",label:"item.best_camera"},
 {input:"which phone has the largest storage",label:"item.large_storage"},
@@ -123,6 +123,7 @@ const nlpManager = new NlpManager({
 const util = require('util');
 const readdir = util.promisify(fs.readdir);
 
+// get the intents name created
 async function readfile() {
     try {
     const files = await readdir(directoryPath);
