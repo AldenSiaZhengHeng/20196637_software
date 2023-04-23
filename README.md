@@ -12,6 +12,7 @@ https://github.com/AldenSiaZhengHeng/20196637_software
 1. Several folder had been created and each of the files are significant to run a hybrid chatbot system web applications
 
 2. **To run the project:**
+    - open the terminal where the project located
     - enter "npm install"
     - make sure every package required in package.json is installed.
     - enter "npm start" to run the project
