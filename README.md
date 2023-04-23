@@ -110,7 +110,7 @@ https://github.com/AldenSiaZhengHeng/20196637_software
 
 2. For admin register page, the new admin can enter the new username and password and register. After that, they can login in admin login pages.
 
-2. Once the human operator login, it will redirect to the admin dashboard panel and thee are 4 pages that could select by the human operator which are:
+3. Once the human operator login, it will redirect to the admin dashboard panel and thee are 4 pages that could select by the human operator which are:
     - dashboard: monitor the conversation of active user with chatbot. The dashboard contain three components which are:
         - customer tabs: show the active user which is clickable allow to enter those active conversation channel
 
@@ -124,19 +124,24 @@ https://github.com/AldenSiaZhengHeng/20196637_software
 
     - chat history: show all the past chat history to review, investigate and evaluate the conversation between user, chatbot, and human operator with handover occur.
 
+4. There are side bar where the human operator could choose to direct to other pages to perform purchase or refund request order, review chat history or logout.
+
 # Method to trigger handover in human operator sides
-4. The human operator could enter specific keyword: **"handover"** or **"takeover"** to take control from the chatbot to chat with human. After that, they can enter **"return"** to return control back to chatbot to answer user questions.
+5. The human operator could enter specific keyword: **"handover"** or **"takeover"** to take control from the chatbot to chat with human. After that, they can enter **"return"** to return control back to chatbot to answer user questions.
 
 # Customer Side
-4. On the customer sides, the user will be requested to enter the username and there are 3 types of agent allow them to select which are:
+6. On the customer sides, the user will be requested to enter the username and there are 3 types of agent allow them to select which are:
     - Martin: Explicit Handover Method which will inform user when the handover action happend with a inform message sent to them.
 
     - Louis: Implicit Handover Method which the handover occur hiddenly without user knowledge to achieve seamless handover. The human operator will act as chatbot to answer user questions which similar to Wizard-Of-Oz method.
 
     - David: Provide Guidance message instead handover (still can perform handover action if user insist or request)
 
-5. There are side bar where the human operator could choose to direct to other pages to perform purchase or refund request order, review chat history or logout.
-
+7. The customer can ask for purchase, refund, tracking or FAQ action.
+    - purchase action: Ask the chatbot that to buy phone or add the product shown in the product list into the cart
+    - refund action: Ask the chatbot for refund
+    - tracking action: Ask the chatbot for tracking package or refund status
+    - FAQ: Ask the chatbot about item sold, and the details about it
 
 
 # Instruction of each folder 
