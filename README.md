@@ -124,8 +124,8 @@ https://github.com/AldenSiaZhengHeng/20196637_software
 
     - chat history: show all the past chat history to review, investigate and evaluate the conversation between user, chatbot, and human operator with handover occur.
 
-## Method to trigger handover in human operator sides
-3. The human operator could enter specific keyword: **"handover"** or **"takeover"** to take control from the chatbot to chat with human. After that, they can enter **"return"** to return control back to chatbot to answer user questions.
+# Method to trigger handover in human operator sides
+4. The human operator could enter specific keyword: **"handover"** or **"takeover"** to take control from the chatbot to chat with human. After that, they can enter **"return"** to return control back to chatbot to answer user questions.
 
 # Customer Side
 4. On the customer sides, the user will be requested to enter the username and there are 3 types of agent allow them to select which are:
