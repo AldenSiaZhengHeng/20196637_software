@@ -127,6 +127,7 @@ https://github.com/AldenSiaZhengHeng/20196637_software
 ## Method to trigger handover in human operator sides
 3. The human operator could enter specific keyword: **"handover"** or **"takeover"** to take control from the chatbot to chat with human. After that, they can enter **"return"** to return control back to chatbot to answer user questions.
 
+# Customer Side
 4. On the customer sides, the user will be requested to enter the username and there are 3 types of agent allow them to select which are:
     - Martin: Explicit Handover Method which will inform user when the handover action happend with a inform message sent to them.
 
