@@ -24,19 +24,19 @@
     - username: aszh
     - password: 1234
 **********************
-    - username: alden
-    - password: 1234
+    - username: abcde
+    - password: 123456
 **********************
 
 5. For the customer to ask chatbot for tracking:
 - Example of tracking number available
 *********************************************************
-    - tracking number: 19193525531583104822
+    - tracking number: 62101611441945223842
     - result: 
     {
-        Username: alden
-        Tracking Number: 19193525531583104822
-        Item: Iphone 14 pro - 1,Samsung Galaxy S22 - 3,Sim Card x 1,Phone case x 1
+        Username: A-2
+        Tracking Number: 62101611441945223842
+        Item: Iphone 14 pro - 4,ASUS ROG phone 6 - 1,Sim Card x 1,Phone case x 1
         Location: Liverpool
         Status: pending
     }
@@ -47,11 +47,11 @@
     - Refund Ticket Number: 78444042221741685047
     -  result: 
     {
-        Refund Ticket Number: 78444042221741685047
-        Tracking Number: 24659629944376933799
-        Username: A-3
-        Item: Iphone 14 pro - 1, ASUS ROG Phone 6 - 5, Phone Case - 6, SIM Card - 1,
-        Reason: The screen is broken,When I received the package, i hear the screen is cracked
+        Refund Ticket Number: 51333586212902073068
+        Tracking Number: 62101611441945223842
+        Username: A-2
+        Item: Iphone 14 pro - 4,ASUS ROG phone 6 - 1,Sim Card x 1,Phone case x 1
+        Reason: the screen is cracked,when i open the package when received, the iphone 14 pro screen is broken when i unboxed it
         Status: pending
     }
 *********************************************************
