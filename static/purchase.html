@@ -61,6 +61,7 @@
          </li>
         </ul>
     </div>    
+    <!-- this section will show the purchase order interface which allow user to enter the details -->
     <section class="section">
         <div class="main">
             <form id="submit" onsubmit="return false">
@@ -79,7 +80,6 @@
                 <input name="amount" type="amount" id="amount" placeholder="amount" />
                 <br />
                 <input type="button" id="add" onclick="myFunction()" value="Add"/>
-                <!-- <button id="add" onclick="myFunction()">Add</button> -->
                 <br />
                 <br />
                 <textarea id="purchase" rows="5" cols="50" name="product"></textarea>
@@ -107,7 +107,6 @@
       function myFunction() {
         const item = document.getElementById('item').value;
         const amount = document.getElementById('amount').value;
-        console.log(document.getElementById("purchase").value)
         document.getElementById("purchase").value += item + " - " + amount + ", \n";
       }
     </script>

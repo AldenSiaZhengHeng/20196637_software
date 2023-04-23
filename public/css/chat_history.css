@@ -22,14 +22,12 @@ h1 { text-align: center; padding: 20px; }
     padding: 30px; 
     float: left; 
     border: 1px solid black; 
-    /* border-radius: 10px 10px 0 0;  */
     cursor: default; 
     width: 100%;
     margin-bottom: 5px;
 
 }
 #chatTabs li.chat-tab.selected { 
-    /* display:flex;  */
     font-weight: bold; 
     color: white; 
     background-color: black; 
@@ -67,16 +65,11 @@ body {
 
 .tab-container{  
     float:left;
-    /* width:25%; */
     border: 10px  #dddddd;
     border-right: 10px solid grey ;
-    /* border-radius: 24px; */
     overflow: hidden; 
-    /* overflow-y: scroll; */
-    /* height: 600px; */
     min-height: 80vh;
     width: 25%;
-    /* padding: 5px; */
     padding-bottom: 50%;
     margin-bottom: -50%;
     background-color: white;
@@ -95,17 +88,11 @@ body {
     margin-bottom: -50%;
     background-color: #f6f6f6;
     width:100%
-    /* width: auto;
-    max-width: 100%; */
 }
 
 .customer-Tabs::-webkit-scrollbar {
     display: none;
 }
-
-/* .chat-tab {
-    width: 100%;
-} */
 
 .section {
     width: 80%;
@@ -114,16 +101,13 @@ body {
 .chatWindow{
     float: left;
     border: 20px #dddddd;
-    /* border-right: 10px solid grey ; */
     display: flex;
     flex-direction: column;
     background-color: #f6f6f6;
     width: 75%;
-    /* height: 600px; */
     min-height: 85vh;
     padding-bottom: 50%;
     margin-bottom: -50%;
-    /* overflow-y: scroll; */
     overflow-x: hidden;
 }
 
@@ -143,28 +127,20 @@ body {
 
 .notify-container {
     border: solid #dddddd;
-    /* border-radius: 24px;     */
     display: flex;
     flex-direction: column;
     background-color: #f6f6f6;
-    /* width: 15%; */
-    /* height: 600px; */
     min-height: 86vh;
-    /* border-left: 10px solid #dddddd ; */
-    /* overflow-y: scroll; */
     overflow-x: hidden;
 }
 
 .notification-container {
     border: solid #dddddd;
-    /* border-radius: 24px;     */
     display: flex;
     flex-direction: column;
     background-color: #f6f6f6;
     width: 25%;
-    /* height: 630px; */
     height: 77vh;
-    /* min-height: 85vh; */
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -291,22 +267,6 @@ body {
     color: blue;
 }
 
-/* form { 
-    background: #000; 
-    padding: 3px; 
-    position: fixed; 
-    bottom: 0; 
-    width: 100%; 
-} */
-
-
-/* form input { 
-    border: 0; 
-    padding: 10px;  
-    width: 50%;  
-    margin-right: .5%; 
-}  */
-
 .message-form {
     display: flex;
     justify-content: space-between;
@@ -324,7 +284,6 @@ body {
     outline: none;
     padding: 0 12px;
     background-color: #fff;
-    /* background-color: #fff; */
 } 
 
 .v-divider {

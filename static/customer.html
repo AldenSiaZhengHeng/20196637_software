@@ -33,15 +33,12 @@
                 <i class="fas fa-user-tie"></i>
               </div>
               <select name="agent" id="agent">
-                <option value="chatbot-show">Martin</option>
+                <!-- Explicit method option -->
+                <option value="chatbot-show">Martin</option>  
+                <!--  Implicit method option -->
                 <option value="chatbot-hidden">Louis</option>
+                <!-- Guidance method option -->
                 <option value="chatbot-guide">David</option>
-                <!-- <option value="chatbot-determine">Martin</option> -->
-                <!-- <option value="direct-control">Louis</option>
-                <option value="work-together">David</option> -->
-                <!-- <option value="human-only">Rose</option>
-                <option value="audi">Audi</option>
-                <option value="audi">Audi</option> -->
               </select>
             </div>
             <div>
@@ -52,13 +49,8 @@
         </div>
     
     </div>
-
+      <!-- Chat container  -->
       <div class="container">
-        <!-- <div class="basket">
-          <h1>basket</h1>
-          <ul></ul>
-        </div> -->
-
         <div class="main" id="main-container">
           <h1 class="customer-tag" id="customer-tag">Customer</h1>
 
@@ -81,6 +73,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="../js/customer.js"></script>
+    <!-- function to send the user input message to server side -->
     <script>
       $("#username-input").keyup(function(event) {
         var disableButton = false;

@@ -102,12 +102,6 @@ function getExisitingName (){
       }
       if(msg.message.agentMessage){
         var agentMsg = msg.message.agentMessage[0];
-        console.log(agentMsg)
-        // if(Array.isArray(msg.message.agentMessage)){
-        //   msg.message.agentMessage.forEach(agentMessage => {
-        //     agentMsg = agentMessage;
-        //   })
-        // }
         if(Array.isArray(agentMsg)){
           agentMsg.forEach(message =>{
             console.log(message)

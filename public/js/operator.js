@@ -38,7 +38,7 @@ function getExisitingId (){
 
   // Switch to a different tab of different users
   var setCurrentTab = function(target) {
-    console.log("change-tab")
+    // console.log("change-tab")
       // Do nothing if this is already the current tab
       if(currentTab === target) return;
       // Set the current tab
@@ -58,8 +58,6 @@ function getExisitingId (){
 
   // This will create new customer tab based on the customer id which reference from socket id
   var createNewCustomerTab = function(customer) {
-    console.log('ethics')
-    console.log(customer)
     var newChatElements = {};
     newChatElements.customerId = customer.id;
     // A tab displaying the customer id
@@ -73,7 +71,6 @@ function getExisitingId (){
     newChatElements.tab.click(clickHandler);
 
     connectedCustomers[customer.id] = newChatElements;
-    console.log(connectedCustomers)
     if(!currentTab) {
       console.log('Setting current tab');
       clickHandler();
@@ -122,7 +119,6 @@ function getExisitingId (){
     } else {
       errorText = error.type + ' - ' + error.message;
     }
-    console.log(errorText);
     if(!currentTab) return;
     const $li = $('<li class="operator-error">').text(errorText)
     currentTab.window.append($li);
@@ -131,7 +127,6 @@ function getExisitingId (){
 
   // Display messages sent by any operator on the human operator interface
   var receivedOperatorMessage = function(msg) {
-    console.log(msg)
     var customer = connectedCustomers[msg.customerId];
     if(!customer) {
       console.log('Received operator message to unknown customer id: ' + JSON.stringify(msg));
@@ -146,7 +141,6 @@ function getExisitingId (){
 
   // Display messages sent by customers on the human operator interface.
   var receivedCustomerMessage = function(msg) {
-    console.log(connectedCustomers)
     if(!connectedCustomers[msg.customerId]) {
       console.log('Received message for unknown customer id: ' + JSON.stringify(msg));
       return;
@@ -194,12 +188,8 @@ function getExisitingId (){
   $( ".angry" ).click(function() {
     var $this = $(this);
     var customer_id = $this.text().split("/")
-    console.log('--------')
     const arr = $this.text().split(" ")
-    console.log(arr[1])
-    console.log(customer_id)
     var target = "/" +customer_id[1];
-    console.log(target)
     setCurrentTab(connectedCustomers[target]);
     this.remove();
   });
@@ -211,9 +201,6 @@ function getExisitingId (){
 
   // function to retrieve old user message
   var receiveOldMessage = function(msg){
-    console.log(msg)
-    console.log(moment(msg.createdAt).format('lll'))
-    // console.log(connectedCustomers)
     if(!connectedCustomers[msg.customerId]) {
       console.log('Received message for unknown customer id: ' + JSON.stringify(msg));
       return;
