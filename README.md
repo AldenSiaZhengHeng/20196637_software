@@ -1,5 +1,8 @@
 # This file will explain each of the files that has been created
 
+Github repo:
+https://github.com/AldenSiaZhengHeng/20196637_software
+
 # Library require
 1. This hybrid chatbot system is built with Node.js, html/css and jQuery
 2. Please ensure you have installed below library before:
