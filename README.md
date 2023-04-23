@@ -143,9 +143,16 @@ https://github.com/AldenSiaZhengHeng/20196637_software
     - tracking action: Ask the chatbot for tracking package or refund status
     - FAQ: Ask the chatbot about item sold, and the details about it
 
+# How to host the web application
+- This project is using Render website to host the web applications for experiemtn.
+1. Create a gitub repo and push this whole project folder into github
+2. Create an account in Render website.
+3. Click web service and link to the github repo that contain the project folder.
+4. After that, click connect and fill up the name of the website, select Frankfurt region, choose "Node" as runtime, enter "npm install" on build command and enter "npm start" on start command.
+5. Then, select free service and click the button to create web service.
+
 
 # Instruction of each folder 
-
 * **All of the file contain comment to further illustrate the function.**
 * **this section will only brief explain how each file function in the project.**
 
