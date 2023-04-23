@@ -173,9 +173,11 @@ app.post('/api/checking_trackNum', async (req,res)=>{
       console.log(result)
       console.log(item_list)
       return res.json({status:'ok', result:result[0]})
+    }else{
+      return res.json({status:'error', error:'Invalid tracking number!'})
     }
   }catch(e){
-
+    return res.json({status:'error', error:'Invalid tracking number!'})
   }
 })
 
@@ -192,8 +194,11 @@ app.post('/api/checking_refundNum', async (req,res)=>{
       console.log(result)
       return res.json({status:'ok', result:result[0]})
     }
+    else{
+      return res.json({status:'error', error:'Invalid refund ticket number!'})
+    }
   }catch(e){
-
+    return res.json({status:'error', error:'Invalid refund ticket number!'})
   }
 })
 
