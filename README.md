@@ -128,7 +128,9 @@ https://github.com/AldenSiaZhengHeng/20196637_software
 4. There are side bar where the human operator could choose to direct to other pages to perform purchase or refund request order, review chat history or logout.
 
 # Method to trigger handover in human operator sides
-5. The human operator could enter specific keyword: **"handover"** or **"takeover"** to take control from the chatbot to chat with human. After that, they can enter **"return"** to return control back to chatbot to answer user questions.
+5. The human operator could enter specific keyword: **handover** or **takeover** to take control from the chatbot to chat with customer. After that, they can enter **return** to return control back to chatbot to answer user questions.
+
+**remember the handover only trigger with these specific keyword, you can modify the code to make it more convenience.**
 
 # Customer Side
 6. On the customer sides, the user will be requested to enter the username and there are 3 types of agent allow them to select which are:
