@@ -93,7 +93,7 @@ https://github.com/AldenSiaZhengHeng/20196637_software
 
 # How to create database and connect to it
 1. The Mongodb is chosen for storing all of the information in this sytem.
-2. This project provide a simple database but if you want to use your own database, you could head to MongoDB official website and build your own database.
+2. This project provide a simple database but if you want to use your own database for further evaluation, you could head to MongoDB official website and build your own database.
     - Register and sign in to the Mongodb
     - create a database
     - go to database access in security session and add new database user by adding username and password
